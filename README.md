@@ -4,7 +4,10 @@ Revised Spherical Cap Harmonic Analysis (R-SCHA), with OpenMP and MPI applicatio
 
 Repository: https://github.com/ZhangPan-666/RSCHA-v2.0
 
-The release ZIP contains both complete source trees, the mathematical foundations handbook, validation records, build wrappers, and the canonical-residual lookup table. Download the ZIP from the repository's Releases page; GitHub's automatically generated source archives contain only files committed to the repository.
+Software: [MIT](LICENSE). Mathematical handbook and its accompanying notes:
+[CC BY 4.0](LICENSES/CC-BY-4.0.txt). See [licensing scope](LICENSING.md).
+
+The release ZIP contains both complete source trees, the mathematical foundations handbook, validation records, build wrappers, the canonical-residual lookup table, and license texts. Download [the complete v2.0.1 ZIP](https://github.com/ZhangPan-666/RSCHA-v2.0/releases/download/v2.0.1/RSCHA-v2.0.1.zip); GitHub's automatically generated source archives contain only files committed to the repository.
 
 ## Contents
 
@@ -41,4 +44,4 @@ This distribution also includes later application, progress-reporting, and compi
 
 ## Licensing and external data
 
-No software or document license has been selected for this release. Public availability alone does not grant a separate reuse license. Third-party model, geology, and coastline datasets are not included or relicensed here.
+Project-authored software and supporting material are licensed under [MIT](LICENSE). The mathematical handbook and its accompanying project-authored notes are licensed under [CC BY 4.0](LICENSES/CC-BY-4.0.txt). See [LICENSING.md](LICENSING.md) for scope and attribution. Third-party model, geology, and coastline datasets retain their own terms and are not relicensed here.

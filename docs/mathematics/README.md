@@ -1,5 +1,13 @@
 # Mathematical Foundations of Revised Spherical Cap Harmonic Analysis
 
+## License
+
+Copyright (c) 2026 R-SCHA contributors. The project-authored handbook PDF and
+the accompanying notes in this directory are licensed under
+[Creative Commons Attribution 4.0 International](../../LICENSES/CC-BY-4.0.txt).
+See [LICENSING.md](../../LICENSING.md) for attribution and third-party exclusions.
+Canonical license: <https://creativecommons.org/licenses/by/4.0/>.
+
 This is the corrected pure-mathematics edition of the R-SCHA handbook.  It
 develops the closed-shell three-dimensional theory from the Laplace equation
 and complementary mixed boundary-value problems, rather than treating the

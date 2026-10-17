@@ -1,4 +1,4 @@
-# R-SCHA v2.0 distribution
+# R-SCHA v2.0.1 distribution
 
 Target public repository: https://github.com/ZhangPan-666/RSCHA-v2.0
 
@@ -8,4 +8,6 @@ Included: complete OpenMP/MPI source trees, SHRSCHA localization modules, mathem
 
 The complete ZIP is intended as a GitHub Release attachment. It exceeds the ordinary per-file Git repository limit. Download the attached distribution ZIP rather than the automatically generated source-code archive.
 
-See validation/BUILD_CHECKS_20261017.md for the local six-program compilation check and validation/VALIDATION_SUMMARY.md for numerical-validation scope. Reuse licenses have not yet been selected.
+Software and supporting material use the MIT License; the mathematical handbook and its accompanying notes use CC BY 4.0. License texts and scope are included in LICENSE, LICENSES/CC-BY-4.0.txt, and LICENSING.md. See validation/BUILD_CHECKS_20261017.md for the local six-program compilation check and validation/VALIDATION_SUMMARY.md for numerical-validation scope.
+
+This licensing-only update changes no C++ sources, lookup-table bytes, handbook PDF bytes, or numerical results from v2.0.0. The complete asset is RSCHA-v2.0.1.zip.
