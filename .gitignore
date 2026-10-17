@@ -1,0 +1,20 @@
+# Generated and machine-specific files
+*.exe
+*.obj
+*.o
+*.pdb
+*.lib
+*.dwf
+*.log
+*.tmp
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.toc
+*.out
+.vscode/
+.idea/
+.DS_Store

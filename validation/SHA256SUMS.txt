@@ -1,0 +1,3 @@
+# File hashes for the initial public release candidate
+069CFB605B40A9AEE53FDF0F393880AAE6E5747A640F3CD1B63398C9E4D6FEE2  docs\mathematics\Mathematical Foundations of Revised Spherical Cap Harmonic.pdf
+A92DF35AF7C1A924A01C3C02558BCE68CEDBA0CAA155A3D312151D1650801385  validation\acceptance.json

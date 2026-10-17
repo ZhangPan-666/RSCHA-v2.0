@@ -1,0 +1,785 @@
+{
+  "verified": "2026-10-12T08:56:43.763728+00:00",
+  "accuracy_goal": 1e-07,
+  "root_goal": 1e-10,
+  "identity": {
+    "Legendre": {
+      "points": 252365,
+      "median": 2.006728117009982e-14,
+      "p90": 2.6435853506247025e-12,
+      "p99": 9.810674494747368e-11,
+      "maximum": 7.023891517786441e-09
+    },
+    "Mehler": {
+      "points": 24684,
+      "median": 1.1080044674802237e-12,
+      "p90": 2.0323652829699008e-11,
+      "p99": 4.2461254056475605e-10,
+      "maximum": 2.016113429508527e-09
+    },
+    "Constant": {
+      "points": 2397,
+      "median": 0.0,
+      "p90": 1.1368683772162895e-13,
+      "p99": 3.637978807104948e-12,
+      "maximum": 7.275957614236365e-12
+    }
+  },
+  "extended_identity": {
+    "Legendre": {
+      "points": 69156,
+      "median": 2.0594637106620956e-14,
+      "p90": 5.946040679169199e-11,
+      "p99": 5.411726147164914e-09,
+      "maximum": 7.730374719408865e-08
+    },
+    "above_1e5": {
+      "points": 32147,
+      "median": 4.152228914522094e-14,
+      "p90": 6.166552379078091e-10,
+      "p99": 9.402387652184749e-09,
+      "maximum": 7.730374719408865e-08
+    }
+  },
+  "mpmath": {
+    "results": {
+      "points": 39950,
+      "controls": 24,
+      "reference_seconds": 872.2778353000031,
+      "families": {
+        "Mehler": {
+          "value_scaled_error": {
+            "points": 14450,
+            "median": 3.731360788005369e-13,
+            "p90": 6.15693897056011e-11,
+            "p99": 4.739500388655149e-10,
+            "maximum": 1.3037530500556276e-09
+          },
+          "d1_scaled_error": {
+            "points": 14450,
+            "median": 6.898750084018177e-13,
+            "p90": 7.609615585679172e-11,
+            "p99": 5.00486560314679e-10,
+            "maximum": 1.3578591479346963e-09
+          },
+          "d2_scaled_error": {
+            "points": 14450,
+            "median": 1.915755283825554e-12,
+            "p90": 1.3708729469570955e-10,
+            "p99": 8.131367142420144e-10,
+            "maximum": 2.152962828809139e-09
+          }
+        },
+        "Constant": {
+          "value_scaled_error": {
+            "points": 1700,
+            "median": 1.456465813868098e-14,
+            "p90": 9.758815619012737e-13,
+            "p99": 3.7139230921644595e-11,
+            "maximum": 4.409189059446499e-11
+          },
+          "d1_scaled_error": {
+            "points": 1700,
+            "median": 3.642626445169218e-14,
+            "p90": 1.0845659225991466e-12,
+            "p99": 3.308986848859401e-11,
+            "maximum": 4.4092017293222926e-11
+          },
+          "d2_scaled_error": {
+            "points": 1700,
+            "median": 3.424396209309457e-13,
+            "p90": 3.693745395251305e-12,
+            "p99": 4.3528790691359175e-11,
+            "maximum": 4.409365146152463e-11
+          }
+        },
+        "Legendre": {
+          "value_scaled_error": {
+            "points": 23800,
+            "median": 1.2514253680260004e-15,
+            "p90": 4.525168211869519e-12,
+            "p99": 8.038210900151308e-11,
+            "maximum": 6.388832247380371e-10
+          },
+          "d1_scaled_error": {
+            "points": 23800,
+            "median": 4.0177737345764384e-15,
+            "p90": 3.3395358813651566e-12,
+            "p99": 4.3400252604554357e-11,
+            "maximum": 1.7320675695387374e-10
+          },
+          "d2_scaled_error": {
+            "points": 23800,
+            "median": 1.707826331480478e-14,
+            "p90": 1.7381369634061564e-11,
+            "p99": 1.1702331490029207e-10,
+            "maximum": 2.914625610494909e-10
+          }
+        }
+      }
+    },
+    "degree_sensitivity_results": {
+      "points": 510,
+      "controls": 24,
+      "reference_seconds": 7.866706000000704,
+      "families": {
+        "Legendre": {
+          "value_scaled_error": {
+            "points": 510,
+            "median": 6.171240923336143e-16,
+            "p90": 3.3001872376263803e-13,
+            "p99": 5.7085308584416705e-11,
+            "maximum": 2.0529695592489927e-10
+          },
+          "d1_scaled_error": {
+            "points": 510,
+            "median": 1.0271370536480154e-15,
+            "p90": 2.5848154828981707e-13,
+            "p99": 3.157401116480865e-11,
+            "maximum": 1.7320675695387374e-10
+          },
+          "d2_scaled_error": {
+            "points": 510,
+            "median": 3.2745709999367725e-15,
+            "p90": 2.0177764048459603e-12,
+            "p99": 1.7259915742983078e-10,
+            "maximum": 2.5406240166060684e-10
+          },
+          "dnu_scaled_error": {
+            "points": 510,
+            "median": 1.213041944548226e-13,
+            "p90": 3.2183085054892717e-12,
+            "p99": 1.0546848929080018e-10,
+            "maximum": 1.0562998582312336e-10
+          },
+          "dtheta_dnu_scaled_error": {
+            "points": 510,
+            "median": 1.8940693790113125e-13,
+            "p90": 4.4471991433899935e-12,
+            "p99": 8.481846040550666e-11,
+            "maximum": 1.0288188612254805e-10
+          }
+        }
+      }
+    },
+    "edge_results": {
+      "points": 439,
+      "controls": 24,
+      "reference_seconds": 28.19328530000348,
+      "families": {
+        "Legendre": {
+          "value_scaled_error": {
+            "points": 148,
+            "median": 7.92162899355409e-21,
+            "p90": 1.5637951387072017e-15,
+            "p99": 4.077626691386256e-10,
+            "maximum": 3.7109507610641802e-09
+          },
+          "d1_scaled_error": {
+            "points": 148,
+            "median": 9.287638056400143e-18,
+            "p90": 3.488520628910032e-15,
+            "p99": 2.374357428298211e-10,
+            "maximum": 6.427555935640347e-09
+          },
+          "d2_scaled_error": {
+            "points": 148,
+            "median": 1.2092238352746852e-16,
+            "p90": 1.7774953166950863e-14,
+            "p99": 1.499666073635601e-09,
+            "maximum": 1.1132855297392075e-08
+          }
+        },
+        "Mehler": {
+          "value_scaled_error": {
+            "points": 221,
+            "median": 1.810280254353723e-16,
+            "p90": 3.507158391066624e-12,
+            "p99": 1.6360299412441218e-09,
+            "maximum": 3.772861372270733e-09
+          },
+          "d1_scaled_error": {
+            "points": 221,
+            "median": 1.0300521488006002e-15,
+            "p90": 9.098391232952801e-12,
+            "p99": 1.3947577868011244e-09,
+            "maximum": 3.6418344949902226e-09
+          },
+          "d2_scaled_error": {
+            "points": 221,
+            "median": 3.683073942584943e-15,
+            "p90": 1.9193699219387395e-11,
+            "p99": 1.592015479383229e-09,
+            "maximum": 7.726212013516835e-09
+          }
+        },
+        "Constant": {
+          "value_scaled_error": {
+            "points": 70,
+            "median": 5.467566499995005e-18,
+            "p90": 3.819839172523971e-14,
+            "p99": 1.6887390260290537e-11,
+            "maximum": 1.68875043554494e-11
+          },
+          "d1_scaled_error": {
+            "points": 70,
+            "median": 2.225933346859067e-20,
+            "p90": 5.549749828848396e-14,
+            "p99": 1.3003432130836753e-11,
+            "maximum": 1.6887792864920797e-11
+          },
+          "d2_scaled_error": {
+            "points": 70,
+            "median": 1.778197798034108e-15,
+            "p90": 1.687985752519111e-11,
+            "p99": 1.689335983035622e-11,
+            "maximum": 1.6893359830358288e-11
+          }
+        }
+      }
+    },
+    "edge_degree_results": {
+      "points": 96,
+      "controls": 24,
+      "reference_seconds": 1.0524240000013378,
+      "families": {
+        "Legendre": {
+          "value_scaled_error": {
+            "points": 96,
+            "median": 2.5227173745787595e-16,
+            "p90": 2.677242120944225e-15,
+            "p99": 2.1632370275158374e-13,
+            "maximum": 2.572624076740514e-13
+          },
+          "d1_scaled_error": {
+            "points": 96,
+            "median": 2.6990836866101963e-16,
+            "p90": 3.5839437117496864e-14,
+            "p99": 1.726764749382274e-13,
+            "maximum": 1.8025572022330647e-13
+          },
+          "d2_scaled_error": {
+            "points": 96,
+            "median": 3.3911901690924204e-16,
+            "p90": 2.570566583097592e-15,
+            "p99": 2.510147202128024e-13,
+            "maximum": 2.9996269571258456e-13
+          },
+          "dnu_scaled_error": {
+            "points": 96,
+            "median": 1.4263113993364448e-14,
+            "p90": 4.520130930511499e-13,
+            "p99": 3.6063573850581633e-11,
+            "maximum": 3.606404862171238e-11
+          },
+          "dtheta_dnu_scaled_error": {
+            "points": 96,
+            "median": 3.848939080355616e-14,
+            "p90": 1.016762598102913e-12,
+            "p99": 2.4790300080156287e-11,
+            "maximum": 3.395342289375519e-11
+          }
+        }
+      }
+    }
+  },
+  "global_validation": {
+    "Legendre/cap_norm": {
+      "points": 930,
+      "median": 7.067624263612515e-12,
+      "p90": 2.1331879596075969e-10,
+      "p99": 8.366030190831709e-10,
+      "maximum": 1.2807714888651844e-09
+    },
+    "Legendre/boundary_zero": {
+      "points": 930,
+      "median": 8.356730638784904e-17,
+      "p90": 2.3819177074810057e-16,
+      "p99": 1.2833084911965918e-14,
+      "maximum": 2.8329449310442378e-14
+    },
+    "Legendre/angular_ode_signed_log_self_check": {
+      "points": 2455,
+      "median": 4.440892098500924e-16,
+      "p90": 2.0872192863309615e-15,
+      "p99": 1.3893330930159173e-14,
+      "maximum": 4.785061236134212e-14
+    },
+    "Mehler/cap_norm": {
+      "points": 242,
+      "median": 5.625500065775668e-13,
+      "p90": 7.513489830301978e-12,
+      "p99": 7.610949315228769e-11,
+      "maximum": 2.7394464474639335e-10
+    },
+    "Mehler/angular_ode_signed_log_self_check": {
+      "points": 572,
+      "median": 1.3933298959046355e-14,
+      "p90": 7.228662113319718e-13,
+      "p99": 2.3154811401500145e-12,
+      "maximum": 2.3154811401500145e-12
+    },
+    "Constant/cap_norm": {
+      "points": 126,
+      "median": 3.7414515929867775e-13,
+      "p90": 3.3626101902939354e-11,
+      "p99": 8.062195355762469e-11,
+      "maximum": 8.424350106395195e-11
+    },
+    "Constant/angular_ode_signed_log_self_check": {
+      "points": 322,
+      "median": 4.440892098500628e-16,
+      "p90": 2.129407761230332e-13,
+      "p99": 7.370770660471554e-13,
+      "maximum": 7.370770660471554e-13
+    },
+    "all/angular_ode": {
+      "points": 3349,
+      "median": 5.551115123125781e-16,
+      "p90": 3.4861002973230736e-14,
+      "p99": 7.861489237353773e-13,
+      "maximum": 2.3154811401500145e-12
+    },
+    "audit/boundary_and_solver": {
+      "points": 68,
+      "median": 1.0274254694642066e-26,
+      "p90": 7.726762638732051e-16,
+      "p99": 4.3600043197859325e-14,
+      "maximum": 4.3600043197859325e-14
+    }
+  },
+  "performance": {
+    "Legendre": {
+      "one_thread": 3665.280375825559,
+      "best": 27985.05620966981,
+      "threads": 20,
+      "speedup": 7.635174758865895,
+      "latency_ns": {
+        "points": 400,
+        "median": 7653.50341796875,
+        "p90": 312824.4531250003,
+        "p99": 10789777.124999998,
+        "maximum": 15177300.0
+      }
+    },
+    "Mehler": {
+      "one_thread": 92040.08767069432,
+      "best": 899446.9381683919,
+      "threads": 16,
+      "speedup": 9.77233899848595,
+      "latency_ns": {
+        "points": 245,
+        "median": 10258.154296875,
+        "p90": 23116.660156249956,
+        "p99": 52602.0390625,
+        "maximum": 52779.39453125
+      }
+    },
+    "Constant": {
+      "one_thread": 3840850.8777055875,
+      "best": 5396410.401063585,
+      "threads": 2,
+      "speedup": 1.4050038840058385,
+      "latency_ns": {
+        "points": 75,
+        "median": 243.93463134765625,
+        "p90": 249.46380615234375,
+        "p99": 258.86242675781256,
+        "maximum": 263.8256072998047
+      }
+    }
+  },
+  "bremer": {
+    "seconds": 21600,
+    "completed_counter": 25247552,
+    "recorded_points": 24821889,
+    "production_status_failures": 0,
+    "raw": {
+      "valid_count": "16330318",
+      "main_sample_count": "10333345",
+      "failures": "0",
+      "dispatch_fraction": "0.34694155272851479",
+      "disputes": "15636886",
+      "p50": "6.5165650653185763e-12",
+      "p90": "2.2916027035408972e-08",
+      "p99": "6.6136545577941322e-07",
+      "p999": "3.6217766522728672e-06",
+      "maximum": "0.73280035611915451",
+      "all_maximum": "0.75475789028103168",
+      "rmse": "0.0026144397564664404",
+      "max_new_ode": "1.0544048968387681e-10",
+      "max_bremer_ode": "0.00079145618180759042",
+      "accuracy_goal": "9.9999999999999995e-08",
+      "uncomparable": "8491571",
+      "comparable_count": "16330318",
+      "paired_surfaces": "1308381",
+      "accepted_branch_changes": "143477",
+      "main_domain_count": "17739083",
+      "valid_surface_count": "6154425"
+    },
+    "independent": {
+      "points": 264,
+      "unique_points": 249,
+      "unresolved": 0,
+      "new_failures": 0,
+      "maximum_new_error": 4.710151865443767e-09,
+      "scale": "maximum of |F|, |D1|/k, |D2|/k^2; k=n+0.5",
+      "passed": true,
+      "scope": "Retained exact-bit dispute queue; no claim about every unavailable Bremer comparison."
+    },
+    "limitation": "Only the retained exact-bit dispute queue was independently adjudicated; unavailable Bremer comparisons are not counted as agreement."
+  },
+  "workflow": {
+    "passed": true,
+    "scope": "Complete current serial/MPI workflows; 70264 forward coordinates and 20 inversion iterations per implementation.",
+    "comparisons": [
+      {
+        "file": "Results_RSCHAModel_work3.dat",
+        "rows": 7136,
+        "values": 7136,
+        "relative_l2": 0.0,
+        "p99_scaled_error": 0.0,
+        "maximum_scaled_error": 0.0,
+        "maximum_absolute_error": 0.0
+      },
+      {
+        "file": "Results_RSCHASpectrum_work3.dat",
+        "rows": 81,
+        "values": 81,
+        "relative_l2": 2.009094370188204e-16,
+        "p99_scaled_error": 4.0276186194769853e-16,
+        "maximum_scaled_error": 4.698240634264905e-16,
+        "maximum_absolute_error": 2.1316282072803006e-14
+      },
+      {
+        "file": "Results_ForwardResults.dat",
+        "rows": 70264,
+        "values": 702640,
+        "relative_l2": 3.6884765767289056e-15,
+        "p99_scaled_error": 4.751979041451563e-14,
+        "maximum_scaled_error": 6.024070131616099e-13,
+        "maximum_absolute_error": 2.5295321393059567e-12
+      },
+      {
+        "file": "Results_RSCHAModel.dat",
+        "rows": 7136,
+        "values": 7136,
+        "relative_l2": 1.783773738433091e-12,
+        "p99_scaled_error": 5.543010495046012e-13,
+        "maximum_scaled_error": 1.3539724896816097e-12,
+        "maximum_absolute_error": 1.3539724896816097e-12
+      },
+      {
+        "file": "Results_RSCHASpectrum.dat",
+        "rows": 81,
+        "values": 81,
+        "relative_l2": 4.571716201502152e-13,
+        "p99_scaled_error": 1.888140683301664e-12,
+        "maximum_scaled_error": 1.9665844524484296e-12,
+        "maximum_absolute_error": 5.6147086979763117e-11
+      },
+      {
+        "file": "Recons_TMIData.dat",
+        "rows": 73070,
+        "values": 73070,
+        "relative_l2": 1.8092429181505937e-12,
+        "p99_scaled_error": 9.760333511195219e-11,
+        "maximum_scaled_error": 3.564140094169943e-10,
+        "maximum_absolute_error": 4.1599435007810825e-10
+      },
+      {
+        "file": "Recons_VectorData.dat",
+        "rows": 2806,
+        "values": 8418,
+        "relative_l2": 1.3480114880973416e-12,
+        "p99_scaled_error": 8.7274897808173e-12,
+        "maximum_scaled_error": 1.462399645824064e-11,
+        "maximum_absolute_error": 2.6692426047247864e-11
+      },
+      {
+        "file": "Recons_ALongTrackDiffTMIData.dat",
+        "rows": 2736,
+        "values": 5472,
+        "relative_l2": 1.3285323255281745e-12,
+        "p99_scaled_error": 9.623147558582302e-12,
+        "maximum_scaled_error": 1.4146017690563895e-11,
+        "maximum_absolute_error": 2.3431923068528704e-11
+      },
+      {
+        "file": "Recons_ALongTrackDiffVectorData.dat",
+        "rows": 2736,
+        "values": 16416,
+        "relative_l2": 1.352511735440492e-12,
+        "p99_scaled_error": 8.79382510154522e-12,
+        "maximum_scaled_error": 1.462399645824064e-11,
+        "maximum_absolute_error": 2.6692426047247864e-11
+      }
+    ],
+    "tensor_trace": {
+      "serial": {
+        "points": 70264,
+        "maximum": 1.0392422420417299e-13,
+        "p99": 1.6168680593571856e-14
+      },
+      "mpi": {
+        "points": 70264,
+        "maximum": 1.251771961810584e-13,
+        "p99": 1.5140052612103776e-14
+      }
+    },
+    "iterations": {
+      "serial": {
+        "misfit": [
+          9.844908,
+          3.675093,
+          1.85143,
+          1.49604,
+          1.324532,
+          1.246995,
+          1.167966,
+          1.127894,
+          1.049201,
+          1.025021,
+          1.07897,
+          1.062742,
+          0.968854,
+          0.955193,
+          0.921705,
+          0.91211,
+          0.883426,
+          0.874111,
+          0.862547,
+          0.847944
+        ]
+      },
+      "mpi": {
+        "misfit": [
+          9.844908,
+          3.675093,
+          1.85143,
+          1.49604,
+          1.324532,
+          1.246995,
+          1.167966,
+          1.127894,
+          1.049201,
+          1.025021,
+          1.07897,
+          1.062742,
+          0.968854,
+          0.955193,
+          0.921705,
+          0.91211,
+          0.883426,
+          0.874111,
+          0.862547,
+          0.847944
+        ]
+      }
+    },
+    "misfit_history_comparison": {
+      "relative_l2": 0.0,
+      "maximum_scaled_error": 0.0
+    },
+    "policy": "All finite; exact shapes, model metadata and observations; relative L2 <= 1e-8; maximum abs(a-b)/max(1,abs(a),abs(b)) <= 1e-7 for outputs and misfit histories; scaled tensor trace <= 1e-7."
+  },
+  "projection_localization": {
+    "passed": true,
+    "finished": "2026-10-11T19:27:02.236666+00:00",
+    "scope": "Installed Windows serial/MPI Work3 analytical projection, Wigner rotation, forward boundary controls, legacy API and Work2 interoperability. Does not replace the historical full Work1/Work2 inversion or six-hour special-function suite.",
+    "source_sha256": {
+      "build.bat": "cc4f4fcdc993aaf00d079aa743f263e199dbab4dba16591dcbb7c30dd35f8551",
+      "CR-Atlas/build_tables.cpp": "66531eb33b7b884d215a8621b76c839dc5cbb462fc05c0267f374cbf71fccf73",
+      "CR-Atlas/CRNearFallback.h": "7b9795e33f4b079580692a19e52318acf5b961da9584b6da16fd2be00bfb6ab8",
+      "CR-Atlas/CRTable.h": "1ee47f1d643b807f8d125a439452ff6b8ffa6a963e29d0710f24c2921b4460f6",
+      "Testv2.0/09_ProjectionLocalization/build_tests.bat": "698c530401cfc7d194ab57212e4e25eb53391f1653d47f87a37a80f94f54321a",
+      "Testv2.0/09_ProjectionLocalization/reference/LocalizeSH2RSCHA.h": "68f075d2407b9ac8e9ab5ebef170a172769889138fee2131f59d30ff5391cb6a",
+      "Testv2.0/09_ProjectionLocalization/run.bat": "678ae4a9818aa75401f732ed514ef9dfeb8032cb39d5cc7cb3442e52d679070e",
+      "Testv2.0/09_ProjectionLocalization/tests/test_api.cpp": "c9eec8d8b5460756f1fe78287c0a5c8a0ce4dff6f3cc96011ae18124204aadd2",
+      "Testv2.0/09_ProjectionLocalization/tests/test_boundary.cpp": "5037d3152eb589db077367f21bb0d5392b7d7a409c41239b433dfa00680fce11",
+      "Testv2.0/09_ProjectionLocalization/tests/test_rotation.cpp": "ddabc43894a26fb7c283aeb2eb7671c6b7a1d2f4b64fd2fb6a7b570380f516fd",
+      "Testv2.0/09_ProjectionLocalization/validate.py": "f3f361e8e6f21acaaabd298804212ccaa5cdd796f5e73471422af6b600a2c1c3",
+      "v2.0/Basis Function.h": "a4e55fd07226e2c6f604d4b5351d7ee3dd52edeb42cd6947974b1581dccbe4e8",
+      "v2.0/CanonicalResidualLegendre.h": "6ddeadb1631f568b0110942168960c0ca992ebb65e342c0ecdd957c545c71f82",
+      "v2.0/CoordinateTransformation.h": "2fe91cced0761c1fce9208b7939c41c2d9378d2c4bfa4da860d62ccf045856fb",
+      "v2.0/CRTable.h": "864b01dd439cbabd3c4744c070d30f7dbaf51584bee3749a0cdf5c01ee1f47d6",
+      "v2.0/Inversion.h": "c0f843f8c3c672f6e8ad3db763c8397891d1e4dccedec585ea7ad0b71e77aa83",
+      "v2.0/Legendre.h": "851eb3c1c0b4eb13420dad65871f4d6b21ba3decca9fa999206b4dff485696fb",
+      "v2.0/LocalizeSH2RSCHA.h": "ae8ff8f46d658cf26da2e8f953a8755ee4edb2e50bc08a56bc1738829ff6bf7c",
+      "v2.0/R_SCHA.h": "0902e8489568795eb339f94e8189e2cedfe38afebd851b13cd4ceed263b2db10",
+      "v2.0/RSCHARoots.h": "9940bfaf2880d2268af73fe704f2032f7fa02c717a1af239d2c160d117852699",
+      "v2.0/SHRSCHA/AnalyticForward.h": "431517edc2a4170fe674dce8f3671a5cfb38ec500f639051571ddae8c416a1e3",
+      "v2.0/SHRSCHA/BoundaryProjection.h": "e4378d97c9dd7dd03b44479951ca6880b39802c81fe2fbd457593b0e169093a9",
+      "v2.0/SHRSCHA/Execution.h": "76cd8d905ebd30c2ad29ff71c40966e2a154ad8d813eb80ca931fea96eeb018f",
+      "v2.0/SHRSCHA/ModelIO.h": "fdcaaee7f60c1a9576ed0f8ad626416cdc7ae7247333d8fa3dfb4d0327bda8be",
+      "v2.0/SHRSCHA/Numerics.h": "fc5bb6639a9f73816141e527d84087fe7ec36340327800ac9d53f10acc79c40f",
+      "v2.0/SHRSCHA/SHRotation.h": "6146630d6d8ff37c7fdb5686b79b26a5fa15e374b74571584a2bd2912f2c0cc0",
+      "v2.0/SHRSCHA/Work3_Unified.cpp": "a9b443b2d447fd0126d207303b9b9b5ca33ad7e384fcb2644f06d0552142363d",
+      "v2.0/Work1_RSCHAInversion.cpp": "769894c5f8995d6807cf5f6dee0786dd7157ac103e4800990b5ffd9dae5068c1",
+      "v2.0/Work2_RSCHAForward.cpp": "d0dce35ad5ed58848185b1215663ae8b52c115b9adf0a317f2f70bc89ce3864e",
+      "v2.0/Work3_LocalizeSHModel.cpp": "3da2d93a72951b3bb67b3c0dcc838ba2c36cdbb569cf34eb51d08327a86a8121",
+      "v2.0mpi/Inversion.h": "239d6ffb08613d80a2d4401466e36959e652140cf90fc12209e968414d4b357e",
+      "v2.0mpi/LocalizeSH2RSCHA.h": "b4fa95452da9df650f9ff9df02159a01db2d61b1a3f00a35acbcd35df9d0b547",
+      "v2.0mpi/MPIParallel.h": "4514f67ffd7eaa3feb8b7686ff37e77878be131e848cec825797b92f716ccd49",
+      "v2.0mpi/R_SCHA.h": "9de13197528e7c34a27297ba4ce5bfe9672f80095528413b34026eb72c27ec91",
+      "v2.0mpi/Work1_RSCHAInversion.cpp": "4cf83bf4b253f39779132e36b3c8908b6d5e0856dfbdffeaae4d20e395e1a2d2",
+      "v2.0mpi/Work2_RSCHAForward.cpp": "a8c6fcdb5963f27857b91ecb059b67614152fdff7c4105badfbe24e2e1f3cdbf",
+      "v2.0mpi/Work3_LocalizeSHModel.cpp": "ec299bc7331f4676f33079f26161b6170b34d62d98e04d8bad612b9705d302b5"
+    },
+    "executable_sha256": {
+      "v2.0/Work1_RSCHAInversion.exe": "478de32744f834aba07406d0b0eac54226a3c90aee538d15f12f7cc7ccb43c15",
+      "v2.0/Work2_RSCHAForward.exe": "ec7ba2f9154014cdf51390cbfa7fac8fe73ddc9242db095f875481fec9988150",
+      "v2.0/Work3_LocalizeSHModel.exe": "6dd90b25f1eb95c6a6830d044aff55d336c5651d872c9c7d6a483089fff8a5cf",
+      "v2.0mpi/Work1_RSCHAInversion.exe": "8ad1fa4c146e499d7973c24ddafcfdbd661c17ce8b8722e487a1f798c3d25eb3",
+      "v2.0mpi/Work2_RSCHAForward.exe": "4342ad54fc40e315b40fccbf467f82d5ea338c2c1b9d8bfd1113c130a1771ef0",
+      "v2.0mpi/Work3_LocalizeSHModel.exe": "c5670931030c5c3809767f6bbb9c0adca84605757fdb091d21e642a8d11e62b5"
+    },
+    "input_sha256": {
+      "Parameters_Modelling.dat": "b4bcc378d84f74e7fedfa80b85afeee7c15bb79ea8436fdeacadbd3239383188",
+      "Parameters_SHModel.dat": "b578d4e70af75b5d722f196136a7ea655ed542f243d9c6fa1c51ca09fa23a657"
+    },
+    "comparisons": {
+      "serial_Work2_potential_truth": {
+        "relative_l2": 9.987026224876611e-13,
+        "max_scaled_error": 1.2610653517749169e-12
+      },
+      "serial_tensor_trace": 1.3010426069826053e-18,
+      "mpi_Work2_potential_truth": {
+        "relative_l2": 9.987026224876611e-13,
+        "max_scaled_error": 1.2610653517749169e-12
+      },
+      "mpi_tensor_trace": 1.3010426069826053e-18,
+      "MPI_Results_RSCHAModel.dat": {
+        "relative_l2": 0.0,
+        "max_scaled_error": 0.0
+      },
+      "MPI_Results_RSCHASpectrum.dat": {
+        "relative_l2": 0.0,
+        "max_scaled_error": 0.0
+      },
+      "MPI_forward/Results_ForwardResults.dat": {
+        "relative_l2": 3.07857708037628e-26,
+        "max_scaled_error": 3.2526065174565133e-19
+      },
+      "superposition": {
+        "relative_l2": 0.0,
+        "max_scaled_error": 0.0
+      },
+      "optional_external": {
+        "relative_l2": 0.0,
+        "max_scaled_error": 0.0
+      },
+      "formal185_MPI": {
+        "relative_l2": 0.0,
+        "max_scaled_error": 0.0
+      },
+      "formal185_prototype": {
+        "relative_l2": 3.322418490555703e-11,
+        "max_scaled_error": 8.627282221951305e-11
+      },
+      "formal185_legacy_with_side_correction": {
+        "relative_l2": 3.322044348326044e-11,
+        "max_scaled_error": 8.628653347386717e-11
+      }
+    },
+    "timings": [
+      {
+        "program": "Work3_LocalizeSHModel",
+        "mode": "serial",
+        "seconds": 0.5180095999967307,
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "program": "Work2_RSCHAForward",
+        "mode": "serial",
+        "seconds": 0.5060897000075784,
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "program": "Work3_LocalizeSHModel",
+        "mode": "mpi",
+        "seconds": 1.0367522000015015,
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "program": "Work2_RSCHAForward",
+        "mode": "mpi",
+        "seconds": 1.1062653999979375,
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "program": "Work3_LocalizeSHModel",
+        "mode": "serial",
+        "seconds": 0.5367069999920204,
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "program": "Work3_LocalizeSHModel",
+        "mode": "serial",
+        "seconds": 0.43484929999976885,
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "program": "Work3_LocalizeSHModel",
+        "mode": "serial",
+        "seconds": 0.4140415000001667,
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "program": "Work3_LocalizeSHModel",
+        "mode": "serial",
+        "seconds": 0.03926839999621734,
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "program": "Work3_LocalizeSHModel",
+        "mode": "mpi",
+        "seconds": 0.5845673000003444,
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "program": "Work3_LocalizeSHModel",
+        "mode": "serial",
+        "seconds": 73.86780639999779,
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "program": "Work3_LocalizeSHModel",
+        "mode": "mpi",
+        "seconds": 60.07881750000524,
+        "exit_code": 0,
+        "expected_success": true
+      }
+    ],
+    "numerical_check_rows": {
+      "rotation": 36,
+      "boundary": 35
+    },
+    "mpi_ranks": 3,
+    "unicode_paths_verified": true,
+    "malformed_MPI_input_aborted": true,
+    "optional_external_input_verified": true,
+    "retained_programs": [
+      "Work1",
+      "Work2",
+      "Work3"
+    ]
+  },
+  "versions": {
+    "python": "3.12.14",
+    "mpmath": "1.3.0",
+    "gmpy2": "2.2.2",
+    "numpy": "2.3.5"
+  },
+  "passed": true
+}

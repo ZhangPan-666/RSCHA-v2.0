@@ -1,0 +1,2 @@
+# Keep the large optional numerical table out of ordinary Git objects.
+*.bin filter=lfs diff=lfs merge=lfs -text

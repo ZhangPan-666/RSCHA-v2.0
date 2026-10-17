@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+#SBATCH --job-name=RSCHA_OMP
+#SBATCH --partition=cpu
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=45
+#SBATCH --time=0
+#SBATCH --output=RSCHA_%j.out
+#SBATCH --error=RSCHA_%j.err
+
+# ==================== USER SETTINGS ====================
+WORK=1                         # 1=inversion; 2=VBT forward; 3=SH to R-SCHA
+DATA_DIR="data/Work1"           # Input/output directory; keep unchanged for the same study area
+# Set DATA_DIR to "." when input files are stored with the source code
+# Submit directly: sbatch run.pbs; the Intel environment is initialized below
+# ====================================================
+
+set -eo pipefail
+case "$WORK" in
+  1) EXE=Work1_RSCHAInversion
+     INPUTS=(Parameters_Modelling.dat Parameters_Inversion.dat Parameters_InitialModel.dat Parameters_ModelWeight.dat Parameters_PriorModel.dat)
+     RESULT=Results_RSCHAModel.dat;;
+  2) EXE=Work2_RSCHAForward
+     INPUTS=(Results_RSCHAModel.dat Parameters_Coordinates.dat)
+     RESULT=Results_ForwardResults.dat;;
+  3) EXE=Work3_LocalizeSHModel
+     INPUTS=(Parameters_Modelling.dat Parameters_SHModel.dat)
+     RESULT=Results_RSCHAModel.dat;;
+  *) echo 'WORK must be 1, 2, or 3'; exit 2;;
+esac
+
+# Directory resolution, table checks, thread setup, compilation, and execution are handled below.
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SUBMIT_DIR="$(cd -- "${SLURM_SUBMIT_DIR:-$SCRIPT_DIR}" && pwd)"
+if [[ -f "$SUBMIT_DIR/Makefile" && -f "$SUBMIT_DIR/cr.bin" ]]; then
+  CODE_DIR="$SUBMIT_DIR"
+elif [[ -f "$SUBMIT_DIR/v2.0/Makefile" && -f "$SUBMIT_DIR/v2.0/cr.bin" ]]; then
+  CODE_DIR="$SUBMIT_DIR/v2.0"
+else
+  echo "Source code or cr.bin not found; submit from RSCHAC++ or v2.0"; exit 2
+fi
+if [[ "$DATA_DIR" != /* ]]; then DATA_DIR="$SUBMIT_DIR/$DATA_DIR"; fi
+[[ -d "$DATA_DIR" ]] || { echo "Input directory does not exist: $DATA_DIR; update DATA_DIR above"; exit 2; }
+DATA_DIR="$(cd -- "$DATA_DIR" && pwd)"
+cd "$CODE_DIR"
+# Initialize the cluster Intel compiler environment as in the desktop run.pbs; support oneAPI as an alternative.
+if [[ -f /opt/intel/bin/compilervars.sh ]]; then
+    echo 'Loading /opt/intel/bin/compilervars.sh intel64'
+    if source /opt/intel/bin/compilervars.sh intel64; then :;
+    else echo 'Intel compiler environment initialization failed'; exit 3; fi
+elif [[ -f /opt/intel/oneapi/setvars.sh ]]; then
+    if source /opt/intel/oneapi/setvars.sh; then :;
+    else echo 'oneAPI environment initialization failed'; exit 3; fi
+fi
+
+# Detect the C++ compiler after initialization; the Fortran wrapper mpiifort does not compile these C++ files.
+if [[ -z "${CXX:-}" ]]; then
+    for compiler in icpc icpx g++; do
+        if command -v "$compiler" >/dev/null 2>&1; then CXX="$compiler"; break; fi
+    done
+fi
+if [[ -z "${CXX:-}" ]] || ! command -v "$CXX" >/dev/null 2>&1; then
+    echo 'No C++ compiler found after initialization; expected icpc, icpx, or g++'
+    echo "PATH=$PATH"
+    exit 3
+fi
+if ! "$CXX" --version; then
+    echo "Compiler or MPI wrapper backend is unavailable: $CXX"; exit 3
+fi
+export CXX
+sha256sum -c cr.bin.sha256
+export RSCHA_CR_TABLE_DIR="$CODE_DIR"
+export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-45}"
+export MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+export OMP_PLACES=cores OMP_PROC_BIND=close
+ulimit -s unlimited
+echo "WORK=$WORK; program=$EXE; threads=$OMP_NUM_THREADS; data=$DATA_DIR"
+# Check every file required by the data groups enabled in the selected source.
+if [[ "$WORK" == 1 ]]; then
+  for group_spec in \
+    'IncludeTMI|Data_TMI.dat Parameters_DataWeightTMI.dat Parameters_SigmaTMI.dat' \
+    'IncludeVector|Data_Vector.dat Parameters_DataWeightVector.dat Parameters_SigmaVector.dat' \
+    'IncludeDiffTMI|Data_ALongTrackDiffTMI.dat Parameters_DataWeightALongTrackDiffTMI.dat Parameters_SigmaALongTrackDiffTMI.dat' \
+    'IncludeDiffVector|Data_ALongTrackDiffVector.dat Parameters_DataWeightALongTrackDiffVector.dat Parameters_SigmaALongTrackDiffVector.dat'; do
+    IFS='|' read -r group_flag group_files <<< "$group_spec"
+    group_enabled=$(sed -nE "s/^[[:space:]]*const[[:space:]]+bool[[:space:]]+${group_flag}[[:space:]]*=[[:space:]]*(true|false)[[:space:]]*;.*/\1/p" "$CODE_DIR/Work1_RSCHAInversion.cpp")
+    case "$group_enabled" in
+      true) read -r -a group_inputs <<< "$group_files"; INPUTS+=("${group_inputs[@]}");;
+      false) ;;
+      *) echo "Cannot determine enabled data group $group_flag from Work1_RSCHAInversion.cpp"; exit 2;;
+    esac
+    echo "$group_flag=$group_enabled"
+  done
+fi
+for input in "${INPUTS[@]}"; do
+  if [[ ! -s "$DATA_DIR/$input" ]]; then
+    echo "Missing required input file: $DATA_DIR/$input"
+    echo 'Check DATA_DIR and the enabled data groups before resubmitting.'
+    exit 2
+  fi
+done
+echo "Required input files checked: ${#INPUTS[@]}"
+if [[ "${CHECK_ONLY:-0}" == 1 ]]; then echo 'Input, path, table, and selection checks passed; no compilation or numerical calculation'; exit 0; fi
+if [[ -n "${CXX:-}" ]]; then make "CXX=$CXX" "$EXE"; else make "$EXE"; fi
+cd "$DATA_DIR"
+if [[ "$WORK" == 1 ]]; then
+  echo 'Validating all input contents before inversion.'
+  srun --nodes=1 --ntasks=1 --cpu-bind=cores "$CODE_DIR/$EXE" --validate-only
+fi
+
+echo "Starting $EXE: $(date --iso-8601=seconds)"
+srun --nodes=1 --ntasks=1 --cpu-bind=cores "$CODE_DIR/$EXE"
+[[ -s "$RESULT" ]] || { echo "Output file was not created: $RESULT"; exit 2; }
+echo "Finished $EXE: $(date --iso-8601=seconds); output directory: $DATA_DIR"
