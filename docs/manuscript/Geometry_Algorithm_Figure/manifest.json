@@ -1,0 +1,18 @@
+{
+  "revision": "geometry-algorithm-20261024-final",
+  "rotation_clockwise_degrees": 12,
+  "outer_grid_linewidth_pt": 1.2,
+  "outer_grid_opacity": 0.8,
+  "source": "user-approved v4",
+  "files": {
+    "caption.tex": "51d4681cfc592de6ffe47af66b714c4fbba5bb4cf355a6e6aae49b2a8be29fe1",
+    "draw_geometry_algorithm.py": "4bdc66a44dcb1131ef9a04d809cd235212faf8886d057e001e4b3476a5d4a6b3",
+    "images/RSCHA_Geometry_Algorithm.pdf": "339e39dc2d03c29b4d7863378447e6167d318f47d64d49bd497825f81c72abd9",
+    "images/RSCHA_Geometry_Algorithm.png": "b7c65aa23faa65cd2d950a80f38a55c4fc2a7f68accdff49ff4ae6ead378023b",
+    "images/RSCHA_Geometry_Algorithm.svg": "ae404cde48bd8463d54dc91760f9ea2a84f12a385b7584cc4a6153ae439f1180",
+    "images/RSCHA_Geometry_Algorithm_geometry.png": "4e156ee7b77be9d86930effc14c6b7710a0e9893e4fcb3ab9f3c21fd83cd1d04",
+    "README_CN.md": "83336891d99856471007fc264eaf6429eb64517bc5f8561fbc055f5a081a64f1",
+    "requirements.txt": "11580fbdd48cc51af202a622a3bd8eda389c8574fe638ef0f85beec08f2dde81"
+  },
+  "manuscript_copy_sha256": "339e39dc2d03c29b4d7863378447e6167d318f47d64d49bd497825f81c72abd9"
+}

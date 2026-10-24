@@ -108,6 +108,15 @@ Let $(r,\theta,\varphi)$ denote spherical coordinates with polar axis through th
  \Omega=\left\{(r,\theta,\varphi): r_1\le r\le r_2,\;0\le\theta\le\theta_0,\;0\le\varphi<2\pi\right\}.
  \label{eq:rscha_domain}
 \end{equation}
+Figure~\ref{fig:geometry_algorithm}a shows this geometry. The inner and outer spherical boundaries are $S_1$ ($r=r_1$) and $S_2$ ($r=r_2$), and the conical side is $\theta=\theta_0$. The origin $O$ is the geocenter. In the schematic, the local cap axis is tilted relative to the geographic polar axis $z_g$; its orientation is fixed by the geographic location of the cap center. A field point $P(r,\theta,\varphi)$ uses colatitude $\theta$ measured from the cap axis and azimuth $\varphi$ around that axis.
+
+\begin{figure}[p]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.10\textwidth]{figures/Fig1_Geometry_Algorithm.pdf}}
+\caption{Geometry and numerical architecture of the \RSCHA basis. (a) The shell $\Omega$ is bounded by $S_1$ ($r=r_1$), $S_2$ ($r=r_2$), and $\theta=\theta_0$; $O$ is the geocenter, $z_g$ is the geographic polar axis, and $P(r,\theta,\varphi)$ uses local cap coordinates. The geometry is schematic and not to scale. (b) Family-specific kernels preserve amplitude conventions and component-wise signed-log states. (c) Offline carrier-removed residuals or logarithmic norms are compressed into Chebyshev tables; online queries use admissible lookups or specified non-table paths. (d) The Legendre degree sensitivity $S=\partial_\nu L$ links root refinement to the full boundary identity for the squared cap norm $I$. Legendre point values use the Schmidt scale; Mehler and zero-eigenvalue point values include cap normalization. The Mehler Riccati identity requires no online Riccati integration.}
+\label{fig:geometry_algorithm}
+\end{figure}
+
 A scalar potential $V$ in $\Omega$ satisfies
 \begin{equation}
  \nabla^2 V=0.
@@ -151,6 +160,8 @@ The resulting \RSCHA potential can therefore be written schematically as
  \label{eq:rscha_four_parts}
 \end{equation}
 The first two terms use the real-degree Legendre family, the third the Mehler family, and the fourth the zero-eigenvalue family. Coefficient and radial conventions depend on the model boundary conditions. All require angular values, derivatives and cap norms; the Legendre terms also require real-degree boundary roots. We develop this angular basis independently of the model drivers.
+
+Panels (b--d) of Figure~\ref{fig:geometry_algorithm} outline the numerical architecture developed in Sections~\ref{sec:angular_basis} and \ref{sec:algorithms}. Family-specific representations retain compatible amplitudes and component-wise range information. Offline residual compression supports admissible online lookups, while analytic degree sensitivities connect Legendre values, boundary roots and cap norms. This separation distinguishes the mathematical normalization identities from their numerical evaluation and the field kernels that use their outputs.
 
 \section{Angular basis and normalization identities}
 \label{sec:angular_basis}
@@ -292,10 +303,9 @@ For $\lambda=0$, the regular angular shape is $\tan^m(\theta/2)$. This is distin
 This is the function customarily called the Th\'ebault constant function in the \RSCHA literature \citep{ThebaultEtAl2004,ThebaultEtAl2006}. Its multiplicative gamma factor cancels after cap normalization. For $m=0$, $\widehat C_0=(1-\cos\theta_0)^{-1/2}$; for $m\geq1$, Section~\ref{sec:constant_algorithm} supplies a cancellation-free norm. The tested order range is $m\leq10^4$.
 
 \section{Stable numerical realization of the angular basis}
-
-Each evaluator preserves the regular polar branch and its prescribed amplitude convention, and recovers derivatives from their own scaled states. Legendre point and sensitivity calls may use different numerical routes but return quantities on the same Schmidt scale. Mehler and zero-eigenvalue point calls include cap normalization. We first describe the family algorithms, then the shared table construction and lookup layer.
-
 \label{sec:algorithms}
+
+Each evaluator preserves the regular polar branch and its prescribed amplitude convention, and recovers derivatives from their own scaled states. Legendre point and sensitivity calls may use different numerical routes but return quantities on the same Schmidt scale. Mehler and zero-eigenvalue point calls include cap normalization. Figure~\ref{fig:geometry_algorithm}b summarizes these family-specific paths. We first describe the family algorithms, then the shared table construction and lookup layer.
 
 \subsection{Interfaces, units, and extended-range records}
 \label{sec:interfaces}
@@ -504,7 +514,7 @@ Differentiated downward-order recurrence is used when it avoids a long or poorly
 
 \subsubsection{Point evaluation, normalization, and roots}
 
-Point and sensitivity calculations share a mathematical scale but can use different numerical routes. Algorithms~1 and~2 summarize their flow.
+Point and sensitivity calculations share a mathematical scale but can use different numerical routes. The point and sensitivity paths are summarized in \ref{alg:legendre_point} and \ref{alg:legendre_sensitivity}; Figure~\ref{fig:geometry_algorithm}d highlights the coupling to boundary roots and cap normalization.
 
 \begin{enumerate}[label=\textbf{Algorithm 1.},leftmargin=2.5cm,ref=Algorithm 1]
 \item\label{alg:legendre_point}\textbf{Schmidt-scaled point evaluation.}
@@ -695,7 +705,7 @@ The value is assembled from $m(\log u-\log u_0)-\tfrac12\log[2\chi J_m(\chi)]$, 
 \subsection{Residual compression: offline construction and online recovery}
 \label{sec:canonical_residual_atlas}
 
-The table layer compresses residuals and logarithmic norms after removing rapid phase and amplitude variation. It does not interpolate the raw oscillatory function. Offline construction generates numerical source fields; online evaluation restores their carriers and normalization.
+The table layer compresses residuals and logarithmic norms after removing rapid phase and amplitude variation. It does not interpolate the raw oscillatory function. Offline construction generates numerical source fields; online evaluation restores their carriers and normalization, as summarized in Figure~\ref{fig:geometry_algorithm}c.
 
 \subsubsection{Carrier coordinates and stored fields}
 
@@ -1061,13 +1071,13 @@ For basis-intensive calculations, these results favor retaining initialized tabl
 
 Two regional applications connect the numerical basis to magnetic-field modeling in contrasting geological settings: the Cascadia plate margin and the North American Midcontinent. Both use a $7.5^\circ$ modeling cap, with field comparisons restricted to an inner $6.5^\circ$ cap. The spherical shell extends from 6356.2 to 6921.2~km, or 15~km below to 550~km above the reference radius $a=6371.2$~km. The internal and external Legendre truncation indices are 378 and 7; the two side-family limits are 3. This parameterization stores 144,124 coefficient entries and includes internal equivalent degrees of approximately $9.1\times10^3$. These are cap-basis indices and degrees, rather than the degree of a global spherical-harmonic expansion.
 
-The near-surface constraints are total-intensity anomalies from the NAMAG-CM compilation at 1-km node spacing \citep{NAMAGCMData}. Missing nodes are supplemented by degrees 16--185 of LCS-1 \citep{OlsenEtAl2017LCS1}; their numbers are reported separately in Table~\ref{tab:regional_application}. The near-surface data are distributed at a nominal height of 1~km above ground. The background direction for the near-surface total-intensity operator is obtained from degrees 1--15 of CHAOS-8.4 at the nominal epoch 1 January 2003 \citep{KlossEtAl2026CHAOS8,CHAOS84Data}. Previously processed CHAMP \citep{Maus2007CHAMP,CHAMPData}, Swarm A/B/C \citep{FriisChristensenEtAl2006Swarm,SwarmData} and MSS-1 \citep{Zhang2023MSS1,MSS1Data} endpoint pairs supply along-track vector and total-intensity differences. Swarm C contributes vector differences only. Details of the satellite data processing are given by \citet{ZhangEtAl2025EPP}.
+The near-surface constraints are total-intensity anomalies from the NAMAG-CM compilation at 1-km node spacing \citep{NAMAGCMData}. Missing nodes are supplemented by degrees 16--185 of LCS-1 \citep{OlsenEtAl2017LCS1}; their numbers are reported separately in Table~\ref{tab:regional_application}. The near-surface data are distributed at a nominal height of 1~km above ground. The background direction for the near-surface total-intensity operator is obtained from degrees 1--15 of CHAOS-8.4 at the nominal epoch 1 January 2003 \citep{KlossEtAl2026CHAOS8,CHAOS84Data}. The scalar anomaly operator is the linear projection of the modeled anomaly field onto this prescribed background direction. Previously processed CHAMP \citep{Maus2007CHAMP,CHAMPData}, Swarm A/B/C \citep{FriisChristensenEtAl2006Swarm,SwarmData} and MSS-1 \citep{Zhang2023MSS1,MSS1Data} endpoint pairs supply along-track vector and total-intensity differences. Swarm C contributes vector differences only. Details of the satellite data processing are given by \citet{ZhangEtAl2025EPP}.
 
 The three constraint types enter a weighted, damped least-squares problem,
 \begin{equation}
  J(\boldsymbol c)=\norm{W_d(G\boldsymbol c-\boldsymbol d)}_2^2
-                 +\lambda\norm{\boldsymbol c}_2^2,
- \qquad (W_d)_{ii}=\sigma_i^{-1},\qquad\lambda=0.01.
+                 +\lambda_d\norm{\boldsymbol c}_2^2,
+ \qquad (W_d)_{ii}=\sigma_i^{-1},\qquad\lambda_d=0.01.
  \label{eq:application_objective}
 \end{equation}
 Here $G$ contains the near-surface total-intensity and satellite endpoint-difference operators, and $\boldsymbol c$ contains the stored model coefficients. Vector endpoints are rotated into the cap frame before differencing; differences are endpoint 1 minus endpoint 2, without division by separation. The nominal near-surface uncertainty is 40~nT; satellite weights use task- and magnetic-latitude-dependent empirical difference scatter. The damping acts directly on the squared coefficient norm, with zero prior and initial coefficients; it is not a spatial-smoothness penalty. A symmetrically diagonally preconditioned BiCGSTAB iteration \citep{vanDerVorst1992} solves the normal equations with a limit of 100 iterations and no robust reweighting. Appendix~\ref{app:inversion_details} defines the preconditioner and stopping criterion. The recovered models use the same basis for subsequent field and derivative evaluation. Shared long-wavelength information among the compilation, its gap values and the satellite products is represented only by diagonal weights, rather than a full covariance model.
@@ -1102,7 +1112,7 @@ Total-intensity-difference residual RMS (nT) & 0.72 & 1.28\\
 
 Figure~\ref{fig:regional_bz_spectra} compares the downward vertical component $B_z$ with EMM2017 \citep{NOAAEMM2017}, WDMAMv2 \citep{LesurEtAl2016}, and SH1050 \citep{ThebaultEtAl2021,ThebaultEtAl2021Data}. All fields are synthesized at the same spherical radius, 6371.2~km, on the same $0.02^\circ$ geocentric grid. The reference models use a common lower SH-degree cutoff of 16, with native upper cutoffs of 790, 800 and 1050, respectively. This geometry removes differences in display height and sampling from the comparison. The $0.02^\circ$ grid is an evaluation spacing, rather than a measured resolving scale.
 
-The regional solutions retain the principal anomaly organization while expressing finer spatial variations. In Cascadia, elongated offshore anomalies remain coherent across the regional map, and the coastal and onshore field contains substantially more local structure than the global references. In the Midcontinent, the strong arcuate anomaly around Lake Superior persists while smaller anomalies and sharper transitions become visible around its flanks. The enhanced local structure is reflected in the spectra below: the regional solution retains coherent power beyond the global cutoffs, and the anomalies remain continuous on the original $0.02^\circ$ evaluation grid rather than being clipped at a global-model degree limit. Together, the maps and spectra show that the stable high-degree basis resolves shorter-wavelength regional structure while preserving the same three-dimensional potential representation for near-surface and satellite-altitude constraints.
+The regional solutions retain the principal anomaly organization while expressing finer spatial variations. In Cascadia, elongated offshore anomalies remain coherent across the regional map, and the coastal and onshore field contains substantially more local structure than the global references. In the Midcontinent, the strong arcuate anomaly around Lake Superior persists while smaller anomalies and sharper transitions become visible around its flanks. The enhanced local structure is reflected in the spectra below: the regional solution retains spectral power beyond the global cutoffs, and the anomalies remain continuous on the original $0.02^\circ$ evaluation grid rather than being clipped at a global-model degree limit. Together, the maps and spectra show that the stable high-degree basis can represent shorter-wavelength regional structure while preserving the same three-dimensional potential representation for near-surface and satellite-altitude constraints. Independent observations are needed to establish which of these additional wavelengths are spatially resolved.
 
 For the spectral diagnostic, all four models are represented on the same $7.5^\circ$ cap and evaluated at the comparison radius. Following the cap-spectrum framework of \citet{VervelidouThebault2015}, which relates R-SCHA spectral spacing to the cap half-angle and permits comparison with global spherical-harmonic spectra, the plotted power density sums the internal and external Legendre-family contributions in equivalent-degree bins of width $\Delta\nu=24$, divided by that width, in nT$^2$ per degree. Mehler, zero-eigenvalue and cross-family terms are excluded. Consequently, this diagnostic does not equal the total energy of the complete model or the variance of the displayed $B_z$ map. Across approximately $\nu=12$--300, the regional and global curves share the same rise and broad peak. From about $\nu=400$--800 in Cascadia and $\nu=400$--900 in the Midcontinent, the regional solution carries systematically more power than the localized global references. The global curves then roll off near their native upper degrees of 790, 800 and 1050, whereas the regional spectrum remains non-negligible through approximately $\nu=5000$. Beyond the reference bandwidths, regional power decreases smoothly over several orders of magnitude, with a steepening terminal tail. This combination of enhanced intermediate-degree power and a tapered high-degree spectrum distinguishes the regional solutions from the truncated global references. The decay rate varies with the fitted interval, so a single exponential scale is not assigned to the whole tail.
 
@@ -1210,7 +1220,7 @@ This work is supported by the National Natural Science Foundation of China (Gran
 We thank the teams responsible for NAMAG-CM, the CHAMP, Swarm and MSS-1 missions, the global magnetic reference models, and the geological and coastline datasets used in this study for making their products available. The individual sources are identified in Section~\ref{sec:application} and the reference list.
 
 \section*{Data and code availability}
-The R-SCHA v2.0.1 release contains the OpenMP and MPI source trees, the canonical-residual lookup table, build scripts, validation summaries and the mathematical foundations handbook. Download it from the \href{https://github.com/ZhangPan-666/RSCHA-v2.0/releases/tag/v2.0.1}{GitHub v2.0.1 release} or the \href{https://github.com/ZhangPan-666/RSCHA-v2.0}{project repository} \citep{RSCHASoftware2026}. The manuscript source package contains the reproducibility records and supporting spectra described in the text; external magnetic, geological and coastline datasets remain available from their original sources listed in Section~\ref{sec:application}.
+The R-SCHA v2.0.1 release contains the OpenMP and MPI source trees, the canonical-residual lookup table, build scripts, validation summaries and the mathematical foundations handbook. Download it from the \href{https://github.com/ZhangPan-666/RSCHA-v2.0/releases/tag/v2.0.1}{GitHub v2.0.1 release} or the \href{https://github.com/ZhangPan-666/RSCHA-v2.0}{project repository} \citep{RSCHASoftware2026}. The manuscript revision \texttt{manuscript-20261024-r2}, its source package, and the reproducible plotting code for Figure~\ref{fig:geometry_algorithm} are provided under \href{https://github.com/ZhangPan-666/RSCHA-v2.0/tree/main/docs/manuscript}{\path{docs/manuscript}} in that repository. The source package contains the reproducibility records and supporting spectra described in the text; external magnetic, geological and coastline datasets remain available from their original sources listed in Section~\ref{sec:application}.
 
 \section*{Declaration of competing interest}
 The authors declare no competing financial interests or personal relationships that could have influenced the work reported in this paper.
@@ -1272,11 +1282,11 @@ The inversion driver reads the cap geometry, truncation parameters and observati
 For Eq.~\eqref{eq:application_objective}, the normal equations are
 \begin{equation}
  H\boldsymbol c=\boldsymbol b,\qquad
- H=G^{\mathsf T}W_d^2G+\lambda I,\qquad
+ H=G^{\mathsf T}W_d^2G+\lambda_d I,\qquad
  \boldsymbol b=G^{\mathsf T}W_d^2\boldsymbol d.
  \label{eq:application_normal}
 \end{equation}
-All active model weights are unity, so the penalty is on the coefficients as stored. The scalar $\lambda$ multiplies the penalty directly; it is not squared or rescaled by the number of observations. Products with $H$ use products with $G$ and $G^{\mathsf T}$ rather than an explicitly assembled normal matrix. With
+All active model weights are unity, so the penalty is on the coefficients as stored. The damping parameter $\lambda_d$ multiplies the penalty directly; it is not squared or rescaled by the number of observations. Products with $H$ use products with $G$ and $G^{\mathsf T}$ rather than an explicitly assembled normal matrix. With
 \begin{equation}
  F_{jj}=H_{jj}^{-1/2},\qquad
  \widetilde H=FHF,\qquad \widetilde{\boldsymbol b}=F\boldsymbol b,
@@ -1285,15 +1295,15 @@ All active model weights are unity, so the penalty is on the coefficients as sto
 \end{equation}
 BiCGSTAB operates on $\widetilde H\boldsymbol z=\widetilde{\boldsymbol b}$.
 
-The implementation uses $\tau=64\epsilon_{\rm mach}$ for its scaled algebraic residual test. At initialization or restart, with iterate $\boldsymbol z_0$, it sets
+The implementation uses $\tau_{\rm stop}=64\epsilon_{\rm mach}$ for its scaled algebraic residual test. At initialization or restart, with iterate $\boldsymbol z_0$, it sets
 \begin{equation}
  s_0=\max\!\left(\norm{\widetilde{\boldsymbol b}}_\infty,
                  \norm{\widetilde H\boldsymbol z_0}_\infty\right).
 \end{equation}
-The initial residual is accepted if its infinity norm is at most $\tau s_0$. Subsequently, a sufficiently small recursive residual triggers explicit recomputation of $\boldsymbol r=\widetilde{\boldsymbol b}-\widetilde H\boldsymbol z$, which must satisfy
+The initial residual is accepted if its infinity norm is at most $\tau_{\rm stop}s_0$. Subsequently, a sufficiently small recursive residual triggers explicit recomputation of $\boldsymbol r=\widetilde{\boldsymbol b}-\widetilde H\boldsymbol z$, which must satisfy
 \begin{equation}
  \norm{\boldsymbol r}_\infty\leq
- \tau\max\!\left(s_0,\norm{\widetilde H\boldsymbol z}_\infty\right).
+ \tau_{\rm stop}\max\!\left(s_0,\norm{\widetilde H\boldsymbol z}_\infty\right).
  \label{eq:application_stop}
 \end{equation}
 The configured unweighted data-RMS threshold is active only for zero damping and therefore does not govern these runs. Both regional parameter files set the iteration limit to 100 and disable robust reweighting. Application logs were unavailable in the inspected archive, so the actual iteration counts and termination histories cannot be recovered from the saved models. The residuals in Table~\ref{tab:regional_application} are recomputed from the saved reconstructions and do not imply that the algebraic stopping test was met.

@@ -1,15 +1,18 @@
-# Manuscript revision manuscript-20261024
+# Manuscript revision manuscript-20261024-r2
 
 **Stable Computation of Revised Spherical Cap Harmonics**  
 Pan Zhang, Jinsong Du and Jiaxuan Zhang
 
-This editorial revision remains 37 pages with 50 references and four figures.
+The current revision is 38 pages with 50 references, five figures and 12 tables.
 
-- The two relevant headings use "error evaluation" instead of "error measures".
-- Funding acknowledges the National Natural Science Foundation of China (Grant Nos. 42574077, 42250103, and 42674085) and the Natural Science Foundation of Hubei Province of China (Grant No. 2024AFE003).
-- First author Pan Zhang is affiliated with the existing institutions 1, 2 and 3: Lanzhou Resources & Environment Voc-Tech University; the School of Geophysics and Geomatics, China University of Geosciences; and Hubei Subsurface Multi-scale Imaging Key Laboratory, China University of Geosciences.
-- The manuscript title is unchanged. No unapproved laboratory open-fund grant is listed.
+Figure 1 adds the author-approved spherical-conical geometry and three algorithm panels to Section 2. The former four figures now appear as Figures 2-5; their filenames and underlying data are retained. [Geometry_Algorithm_Figure](Geometry_Algorithm_Figure/README_CN.md) contains the reproducible Python plotting code, PDF/PNG/SVG images, caption, requirements and hashes.
 
-The PDF is the compiled manuscript. The source ZIP contains the TeX source, bibliography, four referenced figures, reproducibility supplement and submission drafts. Extract it and run pdflatex, bibtex, pdflatex, pdflatex on the manuscript basename. The separate TeX and declarations files are also provided for inspection.
+The revision also clarifies the scalar-anomaly projection, separates inversion damping/stopping notation from spectral parameters, corrects one published page range, and distinguishes additional represented bandwidth from independently resolved wavelengths. Confirmed funding and first-author affiliations 1, 2 and 3 remain as supplied by the authors. The manuscript title is unchanged.
 
-This revision changes no numerical code, figures or historical numerical acceptance record. The software release remains v2.0.1. Source-package file hashes are stored inside the ZIP in MANUSCRIPT_SHA256.json; SHA256SUMS.txt checks the files in this manuscript directory. The software-level PACKAGE_SHA256SUMS.txt continues to describe the historical software distribution.
+The full editorial audit is included in the source ZIP under reproducibility/editorial_audit_20261024 and is also provided as REVIEW_CN.md. The AI-use declaration remains deferred at the author's explicit request and is recorded as pending, with a draft in the source ZIP. This upload is not a journal submission.
+
+The source ZIP contains the TeX, bibliography, all five referenced figures, plotting code, reproducibility records and submission drafts. Extract it and run pdflatex, bibtex, pdflatex, pdflatex on the manuscript basename. Its MANUSCRIPT_SHA256.json lists the exact source files. The independent figure ZIP contains the plotting folder alone.
+
+Structural checks, 18 printed-statistics/figure checks, figure regeneration, six Python reference requests and 24 controls passed. All 38 pages were rendered and visually checked. Complete C++ accuracy/performance tests and regional inversions were not rerun. The software release remains v2.0.1 and its historical validation records are unchanged.
+
+SHA256SUMS.txt checks the files in this manuscript directory. The software-level PACKAGE_SHA256SUMS.txt continues to describe the historical software distribution. Earlier manuscript source ZIPs are retained as previous editorial revisions.
