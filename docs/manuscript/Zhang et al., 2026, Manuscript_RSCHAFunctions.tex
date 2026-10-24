@@ -1,0 +1,1328 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,bm,mathtools,amsthm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[authoryear,round]{natbib}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage{placeins}
+\usepackage{xspace}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{2.0ex plus .5ex minus .2ex}{1.0ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{1.6ex plus .4ex minus .2ex}{.8ex plus .2ex}
+\titlespacing*{\subsubsection}{0pt}{1.2ex plus .3ex minus .2ex}{.6ex plus .1ex}
+
+\setlength{\textfloatsep}{12pt plus 2pt minus 3pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+\captionsetup{font=small,labelfont=bf,skip=7pt}
+\captionsetup[table]{skip=6pt}
+\renewcommand{\arraystretch}{1.08}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\definecolor{pureblue}{RGB}{0,0,255}
+\hypersetup{colorlinks=true,linkcolor=pureblue,citecolor=pureblue,urlcolor=pureblue,pdftitle={Zhang et al., 2026, Manuscript\_RSCHAFunctions},pdfauthor={Pan Zhang; Jinsong Du; Jiaxuan Zhang}}
+\urlstyle{same}
+\providecommand{\doi}[1]{\url{https://doi.org/#1}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\RSCHA}{\textsc{R-SCHA}\xspace}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\setstretch{1.05}
+\setlength{\emergencystretch}{3em}
+
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{10pt plus 2fil}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.75}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Stable Computation of Revised Spherical Cap Harmonics\par}
+\vspace{1.0em}
+{\large Pan Zhang$^{1,2,3}$, Jinsong Du$^{2,3,4,*}$ and Jiaxuan Zhang$^{5}$\par}
+\vspace{0.7em}
+{\small
+$^{1}$School of Geology and Jewelry, Lanzhou Resources \& Environment Voc-Tech University, Lanzhou 730021, China\\
+$^{2}$School of Geophysics and Geomatics, China University of Geosciences, Wuhan 430074, China\\
+$^{3}$Hubei Subsurface Multi-scale Imaging Key Laboratory, China University of Geosciences, Wuhan 430074, China\\
+$^{4}$Key Laboratory of Geological Survey and Evaluation of Ministry of Education, China University of Geosciences (Wuhan), Wuhan 430074, China\\
+$^{5}$Macau Institute of Space Technology and Application, Macau University of Science and Technology, Macao 999078, China\\
+$^{*}$Corresponding author: \href{mailto:jinsongdu@cug.edu.cn}{jinsongdu@cug.edu.cn}
+\par}
+\end{center}
+\vspace{0.8em}
+
+
+\begin{abstract}
+
+High-resolution regional magnetic-field modeling requires special functions that remain stable from the cap axis to oscillatory high-degree regimes. Revised spherical cap harmonic analysis (\RSCHA) couples these functions to derivatives, boundary roots and cap norms, making consistency across numerical representations essential. We develop an open C++ basis layer for its real-degree Legendre, Mehler and zero-eigenvalue families. Scaled Legendre representations carry analytic degree sensitivities; a Riccati-sensitivity identity removes the raw amplitude from Mehler normalization; and a positive integral avoids cancellation in the zero-eigenvalue norm. Family-specific normalization, residual tables and sign--logarithm records connect these algorithms across floating-point ranges. Across 40,995 precision-refined reference evaluations, the maximum scaled value or angular-derivative error is $1.11\times10^{-8}$ and the maximum direct degree-sensitivity error is $1.06\times10^{-10}$. Independent tests cover Legendre degrees below $10^5$ and Mehler parameters and zero-eigenvalue orders through $10^4$; algebraic consistency checks extend to degree $10^8$. The maximum sampled relative Newton correction for boundary roots is $2.83\times10^{-14}$. Peak throughput ranges from $2.80\times10^{4}$ to $5.40\times10^{6}$ evaluations s$^{-1}$ across the three families on a 10-core workstation. Cascadia and North American Midcontinent inversions combine dense near-surface constraints with satellite differences at internal equivalent degrees near $9.1\times10^3$. Their common-radius $B_z$ maps and cap spectra retain shorter-wavelength structure beyond EMM2017, WDMAMv2 and SH1050, with smoothly decaying high-degree power. The resulting basis makes high-degree three-dimensional regional modeling numerically tractable and connects its additional bandwidth to geological interpretation.
+
+\end{abstract}
+
+\noindent\textbf{Keywords:} revised spherical cap harmonic analysis; associated Legendre function; conical function; nonoscillatory phase; Riccati sensitivity; canonical-residual interpolation
+\vspace{0.8em}
+
+
+\section{Introduction}
+
+Lithospheric magnetic fields are spatially multiscale: satellite missions constrain long wavelengths, whereas crustal anomalies and tectonic boundaries require shorter regional structure. Global spherical-harmonic models provide a consistent reference but impose a domain-wide bandwidth through their truncation and sampling. Spherical-cap harmonic analysis (SCHA) concentrates a basis on a finite region \citep{Haines1985}; revised SCHA (\RSCHA) extends it to a three-dimensional spherical-conical shell and has become a practical framework for regional geomagnetic and lithospheric-field modeling \citep{ThebaultEtAl2004,ThebaultEtAl2006,VervelidouEtAl2018,ZhangEtAl2025EPP}. The broader cap-harmonic literature is reviewed by \citet{Torta2020}. At high resolution, however, the value of a cap expansion depends on whether its basis remains numerically consistent as the truncation increases.
+
+High-degree \RSCHA exposes a coupled numerical problem. Regular non-integer-degree solutions can be exponentially small near the cap axis, pass through turning regions and become rapidly oscillatory. Values, angular derivatives, degree sensitivities, boundary roots and cap norms then span different scales and may be evaluated by different branches. A plausible point value can therefore carry an incompatible phase, normalization or derivative into the field kernel and inverse problem. Extended-range arithmetic, asymptotics, recurrences and phase methods provide important Legendre components \citep{OlverSmith1983,SmithEtAl1981,Fukushima2012,BremerRokhlin2017,Bremer2018}; normalized cap functions and eigenvalues have also been studied \citep{HwangChen1997}, and general conical-function algorithms cover broader classes \citep{GilEtAl2009,GilEtAl2012,DunsterEtAl2015}. The remaining challenge is to connect all three angular families, their derivatives, roots and norms through compatible family-specific normalizations and a common validation framework.
+
+We develop that layer for the real-degree Legendre, Mehler and zero-eigenvalue families. The Legendre evaluator combines series, recurrence, propagation and phase representations on the adopted Schmidt scale and carries analytic degree sensitivities. A Riccati-sensitivity identity removes the raw exponentially varying amplitude from Mehler normalization, while a positive integral avoids cancellation in the zero-eigenvalue norm. Residual and logarithmic-norm tables provide reusable corrections for repeated evaluations; direct fallbacks and sign--logarithm records preserve robustness outside ordinary binary64 ranges. This architecture makes the coupled quantities required by \RSCHA interoperable rather than treating each special-function call in isolation.
+
+We validate the implementation with precision-refined references, dense identities, boundary-root residuals and cap-norm integrations. The tests cover Legendre degrees below $10^5$, Mehler parameters and zero-eigenvalue orders through $10^4$, and caps up to a hemisphere; wider identity checks reach degree $10^8$. We then apply the same basis to Cascadia and North American Midcontinent inversions. At a common radius and grid, the regional fields retain coherent $B_z$ structure and cap-spectrum power beyond EMM2017, WDMAMv2 and SH1050, with a smoothly decaying high-degree tail. Geological and modified horizontal-gradient comparisons organize plausible magnetic transitions without assigning unique source depths.
+
+\section{R-SCHA boundary-value formulation}
+\label{sec:rscha_framework}
+
+\subsection{Spherical-conical domain and separation of Laplace's equation}
+
+Let $(r,\theta,\varphi)$ denote spherical coordinates with polar axis through the cap center, and consider the source-free spherical-conical domain
+\begin{equation}
+ \Omega=\left\{(r,\theta,\varphi): r_1\le r\le r_2,\;0\le\theta\le\theta_0,\;0\le\varphi<2\pi\right\}.
+ \label{eq:rscha_domain}
+\end{equation}
+A scalar potential $V$ in $\Omega$ satisfies
+\begin{equation}
+ \nabla^2 V=0.
+ \label{eq:laplace_rscha}
+\end{equation}
+For a separated mode $V=R(r)f(\theta)\Phi_m(\varphi)$, with $\Phi_m=\cos m\varphi$ or $\sin m\varphi$, the radial and angular equations may be written as
+\begin{equation}
+ r^2R''+2rR'-\lambda R=0,
+ \label{eq:rscha_radial}
+\end{equation}
+and
+\begin{equation}
+ \mathcal A_m f=-\frac{1}{\sin\theta}\frac{\dd}{\dd\theta}
+ \left(\sin\theta\frac{\dd f}{\dd\theta}\right)
+ +m^2\csc^2\theta\,f=\lambda f.
+ \label{eq:angular_operator}
+\end{equation}
+Regularity at the axis requires $f(\theta)=O(\theta^m)$ for $m>0$ and a bounded even solution for $m=0$. Boundary conditions on the conical side and the two spherical surfaces determine the spectral parameters and radial combinations \citep{ThebaultEtAl2004,ThebaultEtAl2006}.
+
+\subsection{The three angular families}
+
+The separation constant falls into three classes,
+\begin{equation}
+ \lambda=\nu(\nu+1),\qquad
+ \lambda=-\left(\tau^2+\tfrac14\right),\qquad
+ \lambda=0.
+ \label{eq:three_spectra}
+\end{equation}
+For $\lambda>0$, the regular angular solution is an associated Legendre function of real degree $\nu$; the radial solutions are $r^\nu$ and $r^{-\nu-1}$. For $\lambda=-(\tau^2+1/4)$, the angular solution is the real regular branch proportional to $\mathsf P_{-1/2+\ii\tau}^{m}(\cos\theta)$. For $\tau>0$, independent real radial solutions are
+\begin{equation}
+ r^{-1/2}\cos\!\left[\tau\log(r/r_*)\right],\qquad
+ r^{-1/2}\sin\!\left[\tau\log(r/r_*)\right],
+ \label{eq:mehler_radial_pair}
+\end{equation}
+where $r_*$ is a reference radius. At $\tau=0$, the independent pair is $r^{-1/2}$ and $r^{-1/2}\log(r/r_*)$, obtained by taking the limit of the sine solution divided by $\tau$. For $\lambda=0$, the regular angular shape is $\tan^m(\theta/2)$ for $m\geq1$ and constant for $m=0$; the radial solution is $A+B/r$.
+
+The resulting \RSCHA potential can therefore be written schematically as
+\begin{equation}
+ V=V_{\mathrm{Leg}}^{\mathrm{in}}+V_{\mathrm{Leg}}^{\mathrm{out}}
+  +V_{\mathrm{Meh}}+V_{0}.
+ \label{eq:rscha_four_parts}
+\end{equation}
+The first two terms use the real-degree Legendre family, the third the Mehler family, and the fourth the zero-eigenvalue family. Coefficient and radial conventions depend on the model boundary conditions. All require angular values, derivatives and cap norms; the Legendre terms also require real-degree boundary roots. We develop this angular basis independently of the model drivers.
+
+\section{Angular basis and normalization identities}
+\label{sec:angular_basis}
+
+Let $0<\theta_0<\pi$, $0\leq\theta\leq\theta_0$, and $m=0,1,2,\ldots$. The angular operator and its three spectral branches are given by Eqs.~\eqref{eq:angular_operator} and \eqref{eq:three_spectra}. For a real angular function $f$, define
+\begin{equation}
+ I_f(\theta_0)=\norm{f}_{\mathrm{cap}}^2
+ =\int_0^{\theta_0}f^2(\theta)\sin\theta\,\dd\theta,
+ \qquad
+ \widehat f(\theta)=\frac{f(\theta)}{\sqrt{I_f(\theta_0)}}.
+ \label{eq:cap_norm}
+\end{equation}
+Thus $I_f$ is a squared norm and $\widehat f$ has unit cap norm. Longitude factors are excluded: their squared integrals over $[0,2\pi)$ are $2\pi$ for $\cos0\varphi$ and $\pi$ for the nonzero-order sine and cosine branches. Analytical angles are in radians; degree-valued compatibility interfaces are identified in Section~\ref{sec:interfaces}.
+
+For a differentiable regular family $f_{\lambda m}$, put $\mathcal S_{\lambda m}=\partial_\lambda f_{\lambda m}$ at fixed $(m,\theta)$. The Lagrange identity for the angular operator gives
+\begin{equation}
+ \frac{\dd}{\dd\theta}\left\{\sin\theta
+ \left[\mathcal S_{\lambda m}f_{\lambda m}'
+ -f_{\lambda m}\mathcal S_{\lambda m}'\right]\right\}
+ =f_{\lambda m}^2\sin\theta.
+ \label{eq:common_spectral_norm_identity}
+\end{equation}
+The regular axis condition makes the lower boundary term vanish. The cap integral can therefore be recovered from the solution and its spectral sensitivity at $\theta_0$, provided both use a consistent amplitude convention. This identity underlies the Legendre boundary norm and Mehler Riccati norm below. The zero-eigenvalue norm instead admits a positive-integral reduction. The identities are exact; their evaluation introduces truncation, integration, interpolation and rounding errors.
+
+\subsection{Non-integer-degree Legendre family: normalization and scale}
+
+We distinguish the standard Ferrers function, the Schmidt-scaled point function used by the \RSCHA interfaces, and the cap-unit basis. Let $\mathsf P_\nu^m(x)$ be the Ferrers function on $-1<x<1$ with the Condon--Shortley convention. The point evaluator returns
+\begin{equation}
+ L_{\nu m}(\theta)
+ =N_{\nu m}^{\mathrm{Sch}}\mathsf P_\nu^m(\cos\theta),
+ \qquad
+ N_{\nu m}^{\mathrm{Sch}}
+ =(-1)^m\sqrt{\epsilon_m
+ \frac{\Gamma(\nu-m+1)}{\Gamma(\nu+m+1)}},
+ \label{eq:legendre_schmidt}
+\end{equation}
+where $\epsilon_0=1$ and $\epsilon_m=2$ for $m\geq1$. The factor $(-1)^m$ cancels the Condon--Shortley sign, giving a positive regular polar amplitude. Cap normalization gives
+\begin{equation}
+ \widehat L_{\nu m}(\theta)
+ =\frac{L_{\nu m}(\theta)}{\sqrt{I_{\nu m}(\theta_0)}},
+ \qquad
+ I_{\nu m}(\theta_0)=\int_0^{\theta_0}L_{\nu m}^2(\theta)
+ \sin\theta\,\dd\theta.
+ \label{eq:legendre_cap_unit}
+\end{equation}
+The public function \texttt{CapNormLegacySchmidt} returns $I_{\nu m}$, not $\sqrt{I_{\nu m}}$. Hereafter $L_{\nu m}$ denotes the Schmidt-scaled function; a hat denotes unit cap norm.
+
+Substitution of the positive eigenvalue in Eq.~\eqref{eq:three_spectra} gives
+\begin{equation}
+ L_{\nu m}''+\cot\theta L_{\nu m}'
+ +\left[\nu(\nu+1)-m^2\csc^2\theta\right]L_{\nu m}=0.
+ \label{eq:legendre_ode}
+\end{equation}
+With $\kappa=\nu+1/2$ and $U=\sqrt{\sin\theta}\,L_{\nu m}$, its Liouville form is
+\begin{equation}
+ U''+Q(\theta;\kappa,m)U=0,
+ \qquad Q=\kappa^2-(m^2-1/4)\csc^2\theta.
+ \label{eq:legendre_liouville}
+\end{equation}
+For $m>0$, $Q=0$ defines the turning angle
+$\theta_{\mathrm{tp}}=\arcsin[\sqrt{m^2-1/4}/\kappa]$ when $\sqrt{m^2-1/4}\leq\kappa$. Within $0<\theta\leq\pi/2$, the interval below the turning point is nonoscillatory and the interval above it is oscillatory. Dirichlet cap degrees are the simple roots of $L_{\nu m}(\theta_0)=0$; multiplication by the nonzero Schmidt factor changes neither their location nor their multiplicity. The primary domain considered here is integer $m<\nu<10^5$ with $0\leq\theta\leq\theta_0\leq90^\circ$; the equator is handled analytically.
+
+The degree sensitivity required by the root and normalization calculations is
+$S_{\nu m}=\partial_\nu L_{\nu m}$, including the derivative of the Schmidt factor. Differentiating Eq.~\eqref{eq:legendre_ode} at fixed $(m,\theta)$ gives the inhomogeneous problem
+\begin{equation}
+ S_{\nu m}''+\cot\theta S_{\nu m}'
+ +\left[\nu(\nu+1)-m^2\csc^2\theta\right]S_{\nu m}
+ =-(2\nu+1)L_{\nu m}.
+ \label{eq:legendre_sensitivity}
+\end{equation}
+For this family, $\partial_\lambda L_{\nu m}=S_{\nu m}/(2\nu+1)$. The common spectral identity, Eq.~\eqref{eq:common_spectral_norm_identity}, therefore specializes to
+\begin{equation}
+ \frac{\dd}{\dd\theta}\!\left\{\sin\theta
+ \left[S_{\nu m}L'_{\nu m}-L_{\nu m}S'_{\nu m}\right]\right\}
+ =(2\nu+1)L_{\nu m}^2\sin\theta,
+ \label{eq:legendre_lagrange_identity}
+\end{equation}
+and integration from the axis to the cap boundary gives
+\begin{equation}
+ I_{\nu m}(\theta_0)
+ =\frac{\sin\theta_0}{2\nu+1}
+ \left[L_{\nu m}'(\theta_0)S_{\nu m}(\theta_0)
+ -L_{\nu m}(\theta_0)S_{\nu m}'(\theta_0)\right].
+ \label{eq:legendre_norm_identity}
+\end{equation}
+The regular polar behavior makes the lower boundary term vanish. At a Dirichlet root, $L_{\nu m}(\theta_0)=0$ and only $L_{\nu m}^{\prime}S_{\nu m}$ remains; its sign must be positive because $I_{\nu m}>0$. The same sensitivity gives the Newton correction $-L_{\nu m}/S_{\nu m}$, used in the selected root-solver regime described below. It is not the sensitivity of the cap-unit function, which at fixed $\theta_0$ is
+\begin{equation}
+ \partial_\nu\widehat L_{\nu m}
+ =\frac{S_{\nu m}}{\sqrt{I_{\nu m}}}
+ -\frac{L_{\nu m}\,\partial_\nu I_{\nu m}}{2I_{\nu m}^{3/2}}.
+ \label{eq:legendre_cap_sensitivity}
+\end{equation}
+The code computes $S_{\nu m}$ for the boundary norm, exposes its boundary value and uses it in selected Newton steps. The cap-unit sensitivity in Eq.~\eqref{eq:legendre_cap_sensitivity} is not a public pointwise output.
+
+\subsection{Mehler family}
+
+For the negative spectrum, write $\lambda=-\Lambda$ with $\Lambda=\tau^2+1/4>0$. Cross-order relations require a fixed raw amplitude convention. We use
+\begin{align}
+ K_{\tau}^{m,\mathrm{raw}}(\theta)
+ &=\sin^m\theta\,
+ {}_2F_1\!\left(m+\tfrac12-\ii\tau,m+\tfrac12+\ii\tau;
+ m+1;z\right),\notag\\
+ z&=\sin^2(\theta/2),
+ \qquad K_{\tau}^{m,\mathrm{raw}}(\theta)\sim\theta^m
+ \quad(\theta\to0).
+ \label{eq:mehler_raw_convention}
+\end{align}
+For $m=0$, the last condition means $K_{\tau}^{0,\mathrm{raw}}(0)=1$. This real solution is proportional to the Ferrers function $\mathsf P_{-1/2+\ii\tau}^{m}(\cos\theta)$. Euler's transformation gives the equivalent positive-series representation
+\begin{equation}
+ K_{\tau}^{m,\mathrm{raw}}(\theta)
+ =\left[2\tan(\theta/2)\right]^m
+ {}_2F_1\!\left(\tfrac12-\ii\tau,\tfrac12+\ii\tau;m+1;z\right).
+ \label{eq:mehler_raw_positive}
+\end{equation}
+Both series have positive coefficients for $0\leq z<1$. Their fixed raw convention is required for cross-order identities, whereas a positive angle-independent multiplier cancels from cap normalization.
+
+Writing $K=K_{\tau}^{m,\mathrm{raw}}$, the angular equation is
+\begin{equation}
+ K_{\theta\theta}+\cot\theta K_\theta
+ -\left[\Lambda+m^2\csc^2\theta\right]K=0.
+ \label{eq:mehler_ode}
+\end{equation}
+The half-angle coordinate $t=\log\tan(\theta/2)$, for which $\sin\theta=\sech t$, removes the first derivative:
+\begin{equation}
+ K_{tt}=\left[m^2+\Lambda\sech^2t\right]K.
+ \label{eq:poschl_teller}
+\end{equation}
+The regular polar solution has $K>0$ and $K_t>0$ at finite $t$. Since the coefficient in Eq.~\eqref{eq:poschl_teller} is positive, neither can acquire a first zero. Unlike the Legendre solution, this branch has no turning point or oscillatory interval, so its logarithmic derivative stays regular on a finite cap. Tests cover $m,\tau\leq10^4$ and $0\leq\theta\leq\theta_0\leq90^\circ$.
+
+\subsection{Zero-eigenvalue constant family}
+
+For $\lambda=0$, the regular angular shape is $\tan^m(\theta/2)$. This is distinct from the integer-degree Ferrers function $\mathsf P_0^m$, which vanishes for integer $m\geq1$. We denote the regularized \RSCHA branch by
+\begin{equation}
+ C_0^{\mathrm{raw}}(\theta)=1,
+ \qquad C_m^{\mathrm{raw}}(\theta)=\Gamma(m)\tan^m\frac{\theta}{2},
+ \quad m\geq1.
+ \label{eq:constant_raw}
+\end{equation}
+This is the function customarily called the Th\'ebault constant function in the \RSCHA literature \citep{ThebaultEtAl2004,ThebaultEtAl2006}. Its multiplicative gamma factor cancels after cap normalization. For $m=0$, $\widehat C_0=(1-\cos\theta_0)^{-1/2}$; for $m\geq1$, Section~\ref{sec:constant_algorithm} supplies a cancellation-free norm. The tested order range is $m\leq10^4$.
+
+\section{Stable numerical realization of the angular basis}
+
+Each evaluator preserves the regular polar branch and its prescribed amplitude convention, and recovers derivatives from their own scaled states. Legendre point and sensitivity calls may use different numerical routes but return quantities on the same Schmidt scale. Mehler and zero-eigenvalue point calls include cap normalization. We first describe the family algorithms, then the shared table construction and lookup layer.
+
+\label{sec:algorithms}
+
+\subsection{Interfaces, units, and extended-range records}
+\label{sec:interfaces}
+
+Table~\ref{tab:interfaces} lists the public conventions. Legendre point calls return Schmidt-scaled quantities; Mehler and constant-family calls return cap-unit quantities. The basis layer can be used independently of the full inverse or forward model.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Implemented public conventions. A prime denotes differentiation with respect to the radian argument, even when the wrapper receives an angle in degrees.}
+\label{tab:interfaces}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.12\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}@{}}
+\toprule
+Family/interface & Point output & Input angle & Additional public quantity\\
+\midrule
+Legendre \path{Legendre_2rank}
+& $L_{\nu m},L'_{\nu m},L''_{\nu m}$ on the legacy Schmidt scale
+& degrees
+& squared norm $I_{\nu m}$ and boundary sensitivity $S_{\nu m}(\theta_0)$ (radian cap angle)\\
+Mehler \path{Mehler_1rank}, \path{Mehler_2rank}
+& $\widehat K,(\widehat K)',(\widehat K)''$
+& degrees for $\theta$ and $\theta_0$
+& cap normalization is included\\
+Constant \path{Constant_1rank}, \path{Constant_2rank}
+& $\widehat C,(\widehat C)',(\widehat C)''$
+& degrees for $\theta$ and $\theta_0$
+& cap normalization is included\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Internal records retain ordinary values, component signs and logarithmic magnitudes, derivative-to-value ratios, range flags and status codes. Compatibility wrappers return ordinary \texttt{double} values; validation accesses the full records. Each derivative is formed from its own logarithm, so an underflowed value can coexist with a normal-range derivative. Flushed or rounded subnormals do not replace the mathematical logarithmic state. A range flag thus distinguishes a valid out-of-range quantity from evaluation failure. The namespace \texttt{DegreeTrig} handles degree-valued trigonometry; coordinate rotation is separate.
+The two additional Legendre quantities listed in the first row are exposed by
+\texttt{CapNormLegacy\allowbreak Schmidt} and
+\texttt{BoundaryDegreeDerivative\allowbreak LegacySchmidt}, respectively.
+
+\subsection{Legendre evaluation}
+
+Every Legendre representation computes the Schmidt-scaled $L_{\nu m}$ of Eq.~\eqref{eq:legendre_schmidt}, with angular derivatives in radians. Series, recurrences, propagation and phase methods cover overlapping regimes. Their domain and consistency checks determine which representation is usable (Table~\ref{tab:legendre_representations}). Atlas lookups provide residual corrections within these representations; they do not define another basis.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Legendre representations and their numerical roles. The regions overlap; these rows describe method families rather than a universal dispatch order.}
+\label{tab:legendre_representations}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.23\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.29\textwidth}@{}}
+\toprule
+Local structure & Representation & Quantity checked\\
+\midrule
+Regular polar solution & Differentiated hypergeometric series; convergent high-order polar form & Term decay, convergence, and cancellation\\
+Recessive near-order solution & Endpoint/Laplace anchors, scaled recurrence, or carrier-removed implicit propagation & Anchor domain, recurrence consistency, or mesh refinement\\
+Turning and oscillatory solution & Matched direct propagation; Airy, Liouville--Green, or corrected WKB carrier & Propagation success; carrier defect or atlas cell acceptance\\
+Near-equatorial solution & Exact gamma data with short propagation; coalescent WKB phase difference & Finite analytic data, propagation domain, and phase defect\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Regular and recessive representations}
+
+Near the pole, remove the known vanishing factor and write
+\begin{equation}
+ \mathcal L_{\kappa m}(\theta)=\sin^m\theta\sum_{j=0}^{\infty}c_jz^j,
+ \qquad z=\sin^2\frac{\theta}{2},
+ \label{eq:legendre_polar_series}
+\end{equation}
+with $c_0=1$ and
+\begin{equation}
+ c_j=c_{j-1}
+ \frac{(m+j-1/2)^2-\kappa^2}{j(m+j)}.
+ \label{eq:legendre_coefficients}
+\end{equation}
+The physical scale is restored by $L_{\nu m}=A_{\nu m}\mathcal L_{\kappa m}$, where
+\begin{equation}
+ A_{\nu m}=\frac{1}{2^m\Gamma(m+1)}
+ \sqrt{\epsilon_m\frac{\Gamma(\nu+m+1)}{\Gamma(\nu-m+1)}}.
+ \label{eq:legendre_polar_amplitude}
+\end{equation}
+The Ferrers definition and Schmidt factor determine $A_{\nu m}$, evaluated logarithmically. An equivalent form is useful at high order:
+\begin{equation}
+ L_{\nu m}=2^mA_{\nu m}\tan^m\frac{\theta}{2}\,H(z),\qquad
+ H(z)={}_2F_1(-\nu,\nu+1;m+1;z).
+ \label{eq:legendre_convergent_polar_form}
+\end{equation}
+Its term ratio is $z(j-1-\nu)(j+\nu)/[j(m+j)]$. In the convergence-screened high-order polar region, the implementation differentiates this series for both angular derivatives. A large degree need not force an asymptotic route if the local series is well conditioned.
+
+When $d=\nu-m$ is small relative to $m$, endpoint and Laplace-moment representations remove the dominant recessive factor. The moment expansion is used only in its small-moment domain while terms decrease. Scaled order recurrence can otherwise continue from admissible anchors. A near-equatorial evanescent route writes $L=\mathrm{const.}\,\sin^m\theta\,G$ and propagates $v=\partial_t\log G$:
+\begin{equation}
+ v_t=2m\tanh t\,v-v^2-d(\nu+m+1)\sech^2t.
+ \label{eq:legendre_near_order_residual_riccati}
+\end{equation}
+A two-stage singly diagonally implicit Runge--Kutta scheme uses mesh refinement and Richardson extrapolation of second-order solutions. This route is restricted to the nonoscillatory branch and does not cross zeros.
+
+Removing a carrier is useful only if the remaining scale can be computed accurately. In the endpoint recurrence, put $b=m+1$ and evaluate the balanced logarithm
+\begin{equation}
+ \log(\sin\theta)+\log\left(2+\frac{d-1}{b}\right)-\log2,
+ \label{eq:legendre_near_order_balanced_log}
+\end{equation}
+from positive factors. This avoids amplifying an endpoint subtraction error by a large order. Double-double arithmetic carries the scale through anchor normalization, recurrence rescaling, the final Schmidt value and the adjacent-order ratio. It preserves cancellation in the numerical scale without changing the normalization.
+
+\subsubsection{Turning, oscillatory, and equatorial representations}
+
+In the half-angle coordinate, the Legendre equation becomes
+\begin{equation}
+ L_{tt}+\left[(\kappa^2-1/4)\sech^2t-m^2\right]L=0
+\end{equation}
+Within the zero-free interval before the first zero, it is propagated through its logarithmic derivative $r=L_t/L$. With $h=\partial_\kappa r$,
+\begin{align}
+ r_t&=m^2-(\kappa^2-1/4)\sech^2t-r^2,\\
+ h_t&=-2\kappa\sech^2t-2rh.
+ \label{eq:legendre_riccati}
+\end{align}
+The polar series fixes the regular branch. Before reaching a Riccati pole, the calculation matches to a state or phase representation.
+
+In the oscillatory sector, a nonoscillatory phase $\alpha$ for $U=\sqrt{\sin\theta}\,L$ satisfies Kummer's equation,
+\begin{equation}
+ Q-(\alpha')^2-\frac12\frac{\alpha'''}{\alpha'}
+ +\frac34\left(\frac{\alpha''}{\alpha'}\right)^2=0,
+\end{equation}
+and gives
+\begin{equation}
+ U(\theta)=C\frac{\sin[\alpha(\theta)+\delta]}{\sqrt{\alpha'(\theta)}}.
+ \label{eq:phase_representation}
+\end{equation}
+The phase approach follows \citet{BremerRokhlin2017} and \citet{Bremer2018}. The implementation constructs Liouville--Green, Airy and corrected WKB carriers. An available atlas cell interpolates the residual correction; domain, defect or sampled-cell checks must pass. Direct phase integration, endpoint propagation and order recurrence remain available when a carrier is unsuitable.
+
+Near the equator, exact endpoint data avoid choosing the wrong oscillatory branch or subtracting two large phases. Define
+\begin{equation}
+ a_m=\frac{\nu+m+2}{2},\qquad b_m=\frac{1-\nu+m}{2}.
+\end{equation}
+The Schmidt-scaled equatorial value is
+\begin{align}
+ \log\abs{L_{\nu m}(\pi/2)}
+ &=\frac12\log\epsilon_m
+ +\frac12\!\left[\log\Gamma(\nu+m+1)-\log\Gamma(\nu-m+1)\right]
+ \notag\\
+ &\quad-m\log2+\frac12\log\pi-\log\Gamma(a_m)
+ -\log\abs{\Gamma(b_m)},\\
+ \sgn L_{\nu m}(\pi/2)&=\sgn\Gamma(b_m).
+ \label{eq:legendre_equator_value}
+\end{align}
+At a pole of $\Gamma(b_m)$, the reciprocal-gamma limit gives zero. Reflection formulas reduce the endpoint data to sine factors and positive gamma ratios. Their derivatives remain finite at value zeros. Away from those zeros, with $\psi=\Gamma^{\prime}/\Gamma$,
+\begin{equation}
+ q_m^{(0)}=\partial_\nu\log\abs{L_{\nu m}(\pi/2)}
+ =\frac12\left[\psi(\nu+m+1)-\psi(\nu-m+1)
+ -\psi(a_m)+\psi(b_m)\right],
+ \label{eq:legendre_equator_degree_sensitivity}
+\end{equation}
+so that $S_{\nu m}(\pi/2)=q_m^{(0)}L_{\nu m}(\pi/2)$. The product is evaluated by the differentiated reflection formula at a zero, not by multiplying a zero by a divergent logarithmic derivative.
+
+For $m\geq1$ and $\nu\geq m+1$, put $\rho_{\nu m}=\sqrt{(\nu-m)(\nu+m+1)}$. The adjacent-order identity gives
+\begin{align}
+ L_{\nu m}'(\pi/2)&=-\rho_{\nu m}L_{\nu,m+1}(\pi/2),\\
+ S_{\nu m}'(\pi/2)&=-\frac{2\nu+1}{2\rho_{\nu m}}L_{\nu,m+1}(\pi/2)
+ -\rho_{\nu m}S_{\nu,m+1}(\pi/2).
+ \label{eq:legendre_equator_mixed_sensitivity}
+\end{align}
+The $m=0$ case uses separate exact endpoint formulas. Short propagation from the equator resolves nearby intervals. If the turning point approaches the equator, a corrected WKB route integrates the local phase density from the exact equatorial anchor; using a phase difference avoids subtracting large actions. These point-evaluation routes retain their domain and defect checks. The four-state equatorial sensitivity seed requires $\nu-m\geq1$; smaller gaps use regular polar data. This restriction applies to the sensitivity route, not to the equatorial value formula.
+
+\subsubsection{Scale matching and degree sensitivity}
+
+Proportional solutions have different norms and degree derivatives unless their scale is fixed. The polar coefficient $c_0=1$ and amplitude $A_{\nu m}$ fix that scale. Matching $L$ and $L_\theta$ at a common angle fixes the continuation by uniqueness. For a phase match, define
+\begin{equation}
+ y_*=\alpha'(\theta_*)L(\theta_*),\qquad
+ x_*=L_\theta(\theta_*)+
+ \frac12\left[\cot\theta_*+\frac{\alpha''(\theta_*)}{\alpha'(\theta_*)}\right]L(\theta_*).
+\end{equation}
+Then
+\begin{equation}
+ \alpha(\theta_*)+\delta=\operatorname{atan2}(y_*,x_*)\pmod{2\pi}.
+ \label{eq:phase_match}
+\end{equation}
+The $\cot\theta_*$ term accounts for $U=\sqrt{\sin\theta}\,L$. The signed pair fixes the phase quadrant, and Eq.~\eqref{eq:phase_representation} then fixes $C$. The exact equatorial data provide an alternative anchor on the same Schmidt scale.
+
+Degree sensitivity is propagated analytically, rather than obtained by subtracting neighboring-degree values. Differentiating the polar recurrence gives
+\begin{align}
+ \dot c_0&=0,\\
+ \dot c_j&=\dot c_{j-1}
+ \frac{(m+j-1/2)^2-\kappa^2}{j(m+j)}
+ -c_{j-1}\frac{2\kappa}{j(m+j)},
+ \label{eq:legendre_coefficient_sensitivity}
+\end{align}
+where a dot denotes $\partial_\nu=\partial_\kappa$. The scale derivative is included:
+\begin{equation}
+ \partial_\nu\log A_{\nu m}
+ =\frac12\left[\psi(\nu+m+1)-\psi(\nu-m+1)\right].
+ \label{eq:legendre_scale_sensitivity}
+\end{equation}
+Thus $S$ differentiates the Schmidt-scaled function, including its amplitude. In a zero-free interval, $q_\nu=\partial_\nu\log|L|$ satisfies $(q_\nu)_t=h$, giving
+\begin{equation}
+ S=q_\nu L,\qquad
+ S_\theta=\frac{L}{\sin\theta}(h+r q_\nu).
+ \label{eq:legendre_sensitivity_riccati_recovery}
+\end{equation}
+Across turning and oscillatory intervals, the coupled physical state satisfies
+\begin{equation}
+ \frac{\dd}{\dd\theta}
+ \begin{bmatrix}L\\L'\\S\\S'\end{bmatrix}
+ =
+ \begin{bmatrix}
+ L'\\-\cot\theta\,L'-D_{\nu m}L\\S'\\-\cot\theta\,S'-D_{\nu m}S-(2\nu+1)L
+ \end{bmatrix},\qquad
+ D_{\nu m}=\nu(\nu+1)-m^2\csc^2\theta.
+ \label{eq:legendre_four_state}
+\end{equation}
+Differentiated downward-order recurrence is used when it avoids a long or poorly conditioned propagation. It inherits the scale of the differentiated regular anchors. Temporary rescaling divides all four components by a common factor recorded separately: the Newton ratio $L/S$ is unchanged, and restoring the squared factor recovers the boundary norm. Arbitrary-angle degree sensitivity is internal; public point calls expose angular derivatives.
+
+\subsubsection{Point evaluation, normalization, and roots}
+
+Point and sensitivity calculations share a mathematical scale but can use different numerical routes. Algorithms~1 and~2 summarize their flow.
+
+\begin{enumerate}[label=\textbf{Algorithm 1.},leftmargin=2.5cm,ref=Algorithm 1]
+\item\label{alg:legendre_point}\textbf{Schmidt-scaled point evaluation.}
+Validate the order, degree, and angle; evaluate exact axis limits when applicable. Select a locally admissible representation from Table~\ref{tab:legendre_representations}, with convergent regular forms preferred where they are well conditioned. In the bounded-degree small-angle regime $\nu+1/2<10^4$, $\theta\leq\pi/6$, try the scaled downward order recurrence before polar propagation. If the later asymptotic paths are inadmissible, also try that recurrence for $\nu<10^4$ before constructing a phase initial-value solution. For a tabulated or asymptotic candidate, apply its domain and cell, defect, or recurrence check. If the candidate fails, try another admissible representation or direct propagation. Retain the differentiated series second derivative in the regular polar neighborhood; elsewhere reconstruct $L_{\theta\theta}$ from Eq.~\eqref{eq:legendre_ode}. Return component-wise signed logarithms and range metadata together with ordinary values. Failure of all admissible paths is reported as a numerical failure.
+
+The downward recurrence starts from regular polar states at orders $\lfloor\nu\rfloor$ and $\lfloor\nu\rfloor-1$, preserving a common logarithmic scale. For $\nu<10^4$, compensated log-gamma evaluation supplies the seed normalization with work independent of order, instead of summing one term per order. The recurrence itself still requires work proportional to its order span, and the seed series must satisfy its convergence criterion. This change removes redundant normalization work without making the full point evaluator a constant-cost procedure. The differentiated WKB construction likewise retains only the Taylor coefficients needed by the remaining derivative steps; its acceptance criteria are unchanged.
+\end{enumerate}
+
+\begin{enumerate}[label=\textbf{Algorithm 2.},leftmargin=2.5cm,ref=Algorithm 2]
+\item\label{alg:legendre_sensitivity}\textbf{Degree sensitivity, cap normalization, and root refinement.}
+Construct $(L,L_\theta,S,S_\theta)$ from a differentiated regular anchor, exact equatorial sensitivity data in its allowed domain, or differentiated downward-order recurrence. Propagate with short-segment rescaling when needed. Recover $I_{\nu m}$ from the full boundary bilinear identity. For $\kappa\theta_0\leq1.5$, integrate the square of the polar series with the $\sin\theta$ measure; additional integral or logarithmically scaled routes are available if the boundary calculation is unusable. Predict a boundary zero from the action described below, establish a computed sign bracket, and refine it with a safeguarded solver. Root-array interpolation supplies starting values only; each returned entry is subsequently checked with the public point evaluator.
+\end{enumerate}
+
+The root predictor uses the exact Liouville turning point, distinct from the leading atlas carrier. For $m\geq1$, define
+\begin{equation}
+ A_{\rm root}(\kappa,m,\theta_0)=
+ \int_{\arcsin(\beta_m/\kappa)}^{\theta_0}
+ \sqrt{\kappa^2-\beta_m^2\csc^2s}\,\dd s,
+ \qquad \beta_m=\sqrt{m^2-\tfrac14}.
+ \label{eq:legendre_root_action}
+\end{equation}
+Set the action to zero when $\kappa\leq\beta_m$ or the boundary precedes the turning point. The leading predictor solves $A_{\rm root}(\kappa_{\rm pred},m,\theta_0)=\pi(j-1/4)$; for $m=0$, it uses $\kappa_{\rm pred}\theta_0=\pi(j-1/4)$. The action already includes the degree factor. These conditions predict roots; numerical bracketing and refinement determine acceptance.
+
+The standalone root interface normally refines a computed sign bracket with an Illinois-weighted signed-log secant and periodic bisection. A safeguarded Newton step using $S$ is used only for $m\leq1$, $j\geq100$, and $\theta_0\leq2^\circ$. When a near-zero value cannot be materialized, the signed-log solver requires a bracket width no greater than $64\epsilon_{\rm mach}\max(1,|\nu_-|,|\nu_+|)$ before accepting the result. For triangular root arrays, the first 32 roots and every subsequent 16th root provide explicitly refined anchors; a local interpolation in $1/j$, using at most eight anchors, predicts the remaining corrections. Every entry is then re-evaluated with the public evaluator and refined in a computed sign bracket, or accepted at a computed zero; increasing root order is checked before storage. These checks are floating-point consistency checks, not interval-arithmetic certification.
+
+A computed zero from the scaled recurrence is retained when the adjacent-order state gives a finite, nonzero angular derivative. The raising identity then gives $L_\theta$, and the ODE gives $L_{\theta\theta}=-\cot\theta\,L_\theta$. Their separate signed logarithms avoid division by the zero value. The root solver can accept this floating-point zero, subject to the residual tests below; it is not an exact-zero certificate.
+
+Normalization uses the full boundary bilinear form, including near a root. The term involving $L(\theta_0)$ vanishes only at an exact Dirichlet zero. Scaled products and logged amplitudes retain both terms outside the ordinary range; an accumulated integral provides an alternative where implemented. An exhausted refinement budget returns failure rather than a converged root.
+
+\subsubsection{Conditioning and error control}
+
+These checks address different error sources and do not provide a global forward-error bound. For a polar sum $F$ with tail estimate $R_J$, the truncation contribution scales as $R_J/|F|$: term decay alone cannot resolve cancellation. Differentiated recurrences avoid finite-difference subtraction, while log-gamma ratios and double-double arithmetic reduce amplitude cancellation.
+
+For logarithmic propagation, a perturbation obeys
+\begin{equation}
+ (\delta r)_t=-2r\,\delta r+\delta V+O(\delta r^2),
+ \label{eq:legendre_riccati_error}
+\end{equation}
+Here $\delta V$ includes coefficient and integration errors. Where $r>0$, forward propagation damps perturbations of the regular branch. This applies only before a zero. A computed phase with Kummer residual $R_K$ is exact for the perturbed coefficient $Q-R_K$; the defect measures a coefficient perturbation, not relative value error near a zero. There, signed phase, scaled residuals and Newton corrections are better diagnostics.
+
+The $\csc^2\theta$ coefficient also makes unconditional ODE reconstruction of the second derivative unsuitable near the axis. Exact axis limits and differentiated series resolve that removable singularity. For a term $T_j=a_jzT_{j-1}$, the stable recurrences
+\begin{equation}
+ T_{j,z}=a_j(zT_{j-1,z}+T_{j-1}),\qquad
+ T_{j,zz}=a_j(zT_{j-1,zz}+2T_{j-1,z})
+\end{equation}
+avoid division of underflowed terms by $z$ or $z^2$. Scale preservation is also needed for matching and normalization, although cancellation can remain in their bilinear expressions. Representation checks and the tests in Section~\ref{sec:validation_results} assess these remaining errors.
+
+\subsection{Mehler normalization from a positive Riccati flow}
+\label{sec:mehler_algorithm}
+
+The zero-free Mehler branch permits its shape and scale to be separated without crossing a pole. Define
+\begin{equation}
+ q=\frac{K_t}{K},\qquad s=\partial_\Lambda q,
+ \qquad \ell=\log K.
+\end{equation}
+Equation~\eqref{eq:poschl_teller} then gives
+\begin{align}
+ q_t&=m^2+\Lambda\sech^2t-q^2,\\
+ s_t&=\sech^2t-2qs,
+ \qquad \ell_t=q,
+ \label{eq:mehler_riccati}
+\end{align}
+with $q\to m$ and $s\to0$ as $t\to-\infty$. The scale-invariant variables $q$ and $s$ determine the shape and norm relative to the boundary amplitude; $\ell$ carries the amplitude.
+
+\begin{proposition}[Riccati-sensitivity normalization]
+\label{prop:mehler_norm}
+Let $K$ be a positive regular solution of Eq.~\eqref{eq:poschl_teller}, and let $s=\partial_\Lambda(K_t/K)$ satisfy the polar condition above. At every finite $t$, $s(t)>0$. For $t_0=\log\tan(\theta_0/2)$,
+\begin{equation}
+ \norm{K}_{\mathrm{cap}}^2=K^2(t_0)s(t_0),
+ \qquad
+ \widehat K_\tau^m(\theta)=
+ \frac{\exp\!\left[\int_{t_0}^{t(\theta)}q(\xi)\,\dd\xi\right]}
+ {\sqrt{s(t_0)}}.
+ \label{eq:mehler_norm}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Regularity gives $K(t)=c\ee^{mt}[1+O(\ee^{2t})]$ for $m>0$ and $K(t)=c[1+O(\ee^{2t})]$ for $m=0$, with $c>0$. The positive coefficient in Eq.~\eqref{eq:poschl_teller} preserves $K>0$ and $K_t>0$, so $q$ is well defined. Multiplying the sensitivity equation by $K^2$ yields
+\begin{equation}
+ \frac{\dd}{\dd t}(K^2s)=K^2\sech^2t.
+ \label{eq:mehler_integrating_factor}
+\end{equation}
+The regular polar expansion gives $K^2s\to0$ as $t\to-\infty$. Consequently,
+\begin{equation}
+ K^2(t)s(t)=\int_{-\infty}^{t}K^2(\xi)\sech^2\xi\,\dd\xi>0.
+\end{equation}
+Since $\sin\theta\,\dd\theta=\sech^2t\,\dd t$, the integral at $t_0$ is exactly the squared cap norm. The ratio $K(t)/K(t_0)=\exp[\int_{t_0}^{t}q\,\dd\xi]$ proves the normalized expression and removes $c$.
+\end{proof}
+Equation~\eqref{eq:mehler_norm} is the negative-spectrum form of the Lagrange identity. It removes the raw amplitude and the need for a separate norm quadrature.
+
+\paragraph{Conditioning of the propagated state.}
+Two exact solutions of the Riccati equation have difference $e=q_1-q_2$ satisfying
+\begin{equation}
+ e(t)=e(t_a)\exp\!\left[-\int_{t_a}^{t}(q_1+q_2)\,\dd\xi\right].
+ \label{eq:mehler_contraction}
+\end{equation}
+Forward flow damps initialization error while both solutions remain positive. Discretization and interpolation errors still enter: if $\widetilde q$ has differential defect $d$, then $e_t=-(\widetilde q+q)e+d$. The defect accumulates through the variation-of-constants integral. To first order,
+\begin{equation}
+ \delta\log\widehat K(t)
+ =\delta\ell(t)-\delta\ell(t_0)
+ -\frac{\delta s(t_0)}{2s(t_0)}.
+ \label{eq:mehler_normalized_error}
+\end{equation}
+The log-amplitude difference and boundary sensitivity therefore require their own error controls; contraction of $q$ does not certify the normalized value.
+
+\paragraph{Offline construction.}
+The polar state can be initialized reproducibly by setting $u=\ee^{2t}$ and expanding
+\begin{equation}
+ \sech^2t=\sum_{j=1}^{\infty}d_j u^j,
+ \qquad d_j=4(-1)^{j-1}j.
+\end{equation}
+With $q=m+\sum_{j\geq1}a_ju^j$ and $s=\sum_{j\geq1}b_ju^j$, substitution gives
+\begin{align}
+ a_j&=\frac{\Lambda d_j-\sum_{k=1}^{j-1}a_ka_{j-k}}{2(j+m)},\\
+ b_j&=\frac{d_j-2\sum_{k=1}^{j-1}a_kb_{j-k}}{2(j+m)}.
+ \label{eq:mehler_polar_recurrence}
+\end{align}
+The raw series in Eq.~\eqref{eq:mehler_raw_convention} supplies the log-amplitude anchor at the same small polar angle.
+
+To reduce the scale of the propagated quantities, let $p(t)=[m^2+\Lambda\sech^2t]^{1/2}$ and choose an analytic carrier $C$ with $C_t=p$. The builder advances $r=q-p$, $s$, and $\ell-C$:
+\begin{align}
+ r_t&=-2pr-r^2-p_t,\\
+ s_t&=\sech^2t-2(p+r)s,
+ \qquad (\ell-C)_t=r.
+ \label{eq:mehler_residual_system}
+\end{align}
+Implicit midpoint steps are compared with two half steps and corrected by Richardson extrapolation. The scaled local-error estimator uses relative tolerance $3\times10^{-14}$, absolute tolerance $3\times10^{-17}$ for $r$ and $s$, and $3\times10^{-16}$ for the log-amplitude residual. These are construction controls, not bounds on the final interpolated error. Only the two slowly varying fields $\ell-C$ and $\log s$ are stored in the fixed tensor atlas described in Section~\ref{sec:canonical_residual_atlas}.
+
+\paragraph{Online reconstruction.}
+At the requested point and cap boundary, the stored fields recover $\ell(t)$, $\ell(t_0)$, and $s(t_0)$. The normalized value is formed directly in logarithmic form,
+\begin{equation}
+ \log\widehat K(t)=\ell(t)-\ell(t_0)-\tfrac12\log s(t_0).
+ \label{eq:mehler_online_log}
+\end{equation}
+Differentiating the first Chebyshev field restores $q=p+\partial_t(\ell-C)$; the angular derivatives follow from the same state and the differential equation:
+\begin{align}
+ \widehat K_\theta&=\frac{q}{\sin\theta}\widehat K,\\
+ \widehat K_{\theta\theta}&=-\cot\theta\widehat K_\theta
+ +(\Lambda+m^2\csc^2\theta)\widehat K.
+\end{align}
+Online evaluation solves neither a Riccati initial-value problem nor a norm quadrature. Section~\ref{sec:canonical_residual_atlas} specifies the local-series routes, endpoints and table domains.
+
+\subsection{Cancellation-free zero-eigenvalue normalization}
+\label{sec:constant_algorithm}
+
+For the zero-eigenvalue family with $m\geq1$, the angular shape is analytic; only its cap norm needs numerical treatment. Let $u=\tan(\theta/2)$, $u_0=\tan(\theta_0/2)$, and $\chi=u_0^2$. Removing the angle-independent raw amplitude, the squared cap norm of the boundary-scaled shape $(u/u_0)^m$ is
+\begin{equation}
+ I_m^{\mathrm{shape}}
+ =\frac{4}{u_0^{2m}}\int_0^{u_0}\frac{u^{2m+1}}{(1+u^2)^2}\,\dd u
+ =2\chi J_m(\chi),
+ \label{eq:constant_norm_direct}
+\end{equation}
+where
+\begin{equation}
+ J_m(\chi)=\int_0^1\frac{x^m}{(1+\chi x)^2}\,\dd x>0,
+ \qquad
+ m\Phi(-\chi,1,m)-\frac{1}{1+\chi}=\chi J_m(\chi).
+ \label{eq:constant_positive_integral}
+\end{equation}
+Integration by parts in the defining Lerch integral gives the second identity. Its left side subtracts nearly equal terms at large $m$; the right side evaluates the required positive quantity directly.
+
+Set $a=\chi/(1+\chi)$. Expanding about the positive denominator at $x=1$ and integrating each term gives
+\begin{equation}
+ J_m(\chi)=\frac{1}{(1+\chi)^2}
+ \sum_{k=0}^{\infty}
+ \frac{(k+1)!a^k}{(m+1)(m+2)\cdots(m+k+1)}.
+ \label{eq:constant_series}
+\end{equation}
+The terms are generated without subtraction:
+\begin{equation}
+ T_0=\frac{1}{(1+\chi)^2(m+1)},
+ \qquad T_{k+1}=T_k\frac{(k+2)a}{m+k+2}.
+\end{equation}
+For $m\geq1$, $T_{k+1}/T_k\leq a$, so the tail after $T_K$ is at most $T_{K+1}/(1-a)$. On the reported hemispheric domain, $\chi\leq1$ and hence $a\leq1/2$: convergence is rapid and the tail estimate remains well conditioned. Although the series converges for every finite $\chi$, this observation does not imply uniformly bounded cost as $\theta_0\to\pi$.
+
+The builder sums the positive series in its \texttt{long double} arithmetic until the tail estimate is below $2\times10^{-19}$ of the partial sum. This is a truncation criterion, not a rounding-error bound. It stores $\tfrac12\log[2\chi J_m(\chi)]$. Online calls interpolate this field or, for caps below $0.01^\circ$, use its first four positive terms. Table domains and degrees appear in Section~\ref{sec:canonical_residual_atlas}; an unsupported lookup returns failure.
+
+Once the norm is known, the value and angular derivatives retain their analytic form:
+\begin{align}
+ \widehat C_m(\theta)&=\left(\frac{u}{u_0}\right)^m
+ [2\chi J_m(\chi)]^{-1/2},\\
+ \widehat C_m'&=\frac{m}{\sin\theta}\widehat C_m,\\
+ \widehat C_m''&=\frac{m(m-\cos\theta)}{\sin^2\theta}\widehat C_m.
+ \label{eq:constant_derivatives}
+\end{align}
+The value is assembled from $m(\log u-\log u_0)-\tfrac12\log[2\chi J_m(\chi)]$, and each derivative is materialized from its own logarithmic magnitude. For $m=1$, the second-derivative factor is evaluated as $1/(1+\cos\theta)$ to avoid polar cancellation. The removable axis limits are supplied explicitly: the first derivative can be nonzero only for $m=1$, and the second derivative only for $m=2$. The $m=0$ mode uses the exact cap measure $1-\cos\theta_0$ and has zero angular derivatives. Thus numerical approximation enters only through the scalar norm, while the angular dependence and endpoint limits remain analytic.
+
+\subsection{Residual compression: offline construction and online recovery}
+\label{sec:canonical_residual_atlas}
+
+The table layer compresses residuals and logarithmic norms after removing rapid phase and amplitude variation. It does not interpolate the raw oscillatory function. Offline construction generates numerical source fields; online evaluation restores their carriers and normalization.
+
+\subsubsection{Carrier coordinates and stored fields}
+
+For the Legendre charts, set $u=\nu+1/2$ and $\eta=m/u$. The Liouville coefficient can be written as
+\[
+ Q(\theta)=u^2F_\eta(\theta)+\tfrac14\csc^2\theta,
+ \qquad F_\eta(\theta)=1-\eta^2\csc^2\theta.
+\]
+Thus $\theta_c=\arcsin\eta$, for $0<\eta<1$, is the leading-carrier turning point; the residual includes the $\tfrac14\csc^2\theta$ correction to $Q$. Define
+\begin{equation}
+ A=uJ,\qquad
+ J=\begin{cases}
+ \displaystyle\int_\theta^{\theta_c}\sqrt{-F_\eta(s)}\,\dd s,
+        &0<\theta\leq\theta_c,\\[2pt]
+ \displaystyle\int_{\theta_c}^{\theta}\sqrt{F_\eta(s)}\,\dd s,
+        &\theta_c\leq\theta\leq\pi/2,
+ \end{cases}
+ \qquad
+ \zeta=\operatorname{sgn}(F_\eta)(3J/2)^{2/3}.
+ \label{eq:atlas_action}
+\end{equation}
+At $\theta_c$, $\zeta=0$. The Airy argument $-u^{2/3}\zeta$ is negative in the oscillatory interval and positive in the recessive interval. This carrier action differs from the root predictor based on the exact $Q$.
+
+On the oscillatory side, the Airy-core charts use $(u^{-1},\eta,(3A/2)^{2/3})$ for $0\leq A\leq7.5$; the outer charts use $(u^{-1},\eta,\log A)$ for $7.5<A\leq400$. For a consistently scaled numerical fundamental pair $W=W_1+iW_2$ and its Airy carrier $B=B_1+iB_2$, the stored fields are $u^2[\operatorname{Re}(W/B)-1]$ and $u^2\operatorname{Im}(W/B)$. Removing both the leading unit multiplier and its $u^{-2}$ decay makes these fields suitable for interpolation. Separate degree slabs cover $512\leq\nu\leq10^6$ and $10^6<\nu\leq10^8$, with additional refinement in intermediate action wedges and with cells truncated to the available angular interval. Farther into the oscillatory sector, the analytic WKB route remains available.
+
+The near-order chart instead uses $(u^{-1},\nu-m,\log(1+A))$ on the recessive side. Its field is the difference between the numerical logarithm and that of the recessive Airy carrier, evaluated at the same internal scale. The double-double endpoint formula and scaled recurrence generate the numerical source; they are not the carrier subtracted from it. Candidate cells are constructed within $10^4\leq\nu\leq10^6$, $0\leq\nu-m\leq1024$, and $0\leq A\leq150$. A small direct chart in $(m,\nu-m,\theta)$ covers $m,\nu-m\leq8$; outside its domain, the low-degree evaluator retains the non-tabulated kernels.
+
+For Mehler functions, the stored fields are $\rho=\log K_{\rm raw}-C$ and $\log s$, where $C$ is the analytic carrier introduced in the Riccati construction. For the constant family, only $\ell_N=\tfrac12\log(2\chi J_m(\chi))$ is tabulated; the angular shape and its derivatives remain analytic. The fixed grids used for these two positive families are summarized in Table~\ref{tab:positive_atlas_parameters}.
+
+\begin{table}[!htbp]
+\centering
+\caption{Fixed table domains for the positive families. Angular limits are given in degrees; transformed coordinates use radians.}
+\label{tab:positive_atlas_parameters}
+\footnotesize
+\begin{tabular}{@{}p{0.13\textwidth}p{0.27\textwidth}p{0.30\textwidth}p{0.21\textwidth}@{}}
+\toprule
+Family & Domain & Coordinates and fields & Cells; degrees\\
+\midrule
+Mehler & $0\leq m,\tau\leq10^4$; $0.01^\circ\leq\theta\leq90^\circ$ & $(\log(1+m),\log(1+\tau),t)$; $\rho$, $\log s$ & 2025; $(10,14,14)$\\
+Constant & $1\leq m\leq10^4$; $0.01^\circ\leq\theta_0\leq90^\circ$ & $(\log(1+m),\log\tan(\theta_0/2))$; $\ell_N$ & 24; $(12,12)$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Offline approximation and its acceptance scope}
+
+Within a cell, each field has the tensor-product expansion
+\begin{equation}
+ R(\bm x)=\sum_{i=0}^{d_1}\sum_{j=0}^{d_2}\sum_{k=0}^{d_3}
+ c_{ijk}T_i(\widehat x_1)T_j(\widehat x_2)T_k(\widehat x_3),
+ \label{eq:atlas_tensor_chebyshev}
+\end{equation}
+with affine local coordinates $\widehat x_l\in[-1,1]$; the constant norm uses the corresponding two-dimensional form. Coefficients are computed at tensor Chebyshev--Lobatto nodes. Legendre source values are supplied by direct, phase, or asymptotic kernels in their respective domains; the positive-family sources are generated by the Riccati and positive-series constructions above. These are numerical approximations produced by the same framework, rather than independent exact references. Nested Clenshaw recurrences evaluate the stored fields and, where required, their derivatives.
+
+The near-order section has an additional sampling screen. If $E_{\rm samp}$ is the maximum discrepancy between the interpolant and its generating kernel on a fixed check grid, including points on every face, edge, and corner, the stored indicator is $8E_{\rm samp}+2\times10^{-11}$. A lookup is eligible only if this indicator does not exceed $4\times10^{-11}$. All 2880 near-order candidate cells in the present atlas exceed this threshold. This section therefore provides no interpolation acceleration in the present implementation: near-order calls use the endpoint formula and scaled recurrence, including beyond the candidate table range. The screen measures sampled compression discrepancy against the generating kernel; it neither certifies the source error nor gives a uniform bound on the reconstructed function. The independent accuracy assessment is reported in Section~\ref{sec:validation_results}.
+
+\subsubsection{Online recovery and endpoint branches}
+
+A Mehler lookup restores $\log K_{\rm raw}=C+\rho$, $q=C_t+\rho_t$, and $s=\exp(\log s)$. Applying these fields at $t$ and $t_0$ gives the Riccati-sensitivity normalization without online integration. The zero-order raw amplitude uses the fixed amplitude convention of the Mehler definition and the exact identity
+\begin{equation}
+ K_{\rm raw}^{0}(\theta)=\cot\theta\,K_{\rm raw}^{1}(\theta)
+       +\frac{\Lambda+2}{8}K_{\rm raw}^{2}(\theta).
+ \label{eq:mehler-m0-reconstruction}
+\end{equation}
+The implementation first obtains the zero-order table state, then evaluates the two adjacent orders to reconstruct its raw amplitude. No long order-recurrence chain is used.
+
+Endpoint and convergent-series branches avoid unnecessary interpolation. For $\Lambda\leq16(m+1)$, both point and boundary data are obtained from the positive hypergeometric series in Eq.~\eqref{eq:mehler_raw_positive}. Denote its hypergeometric factor by $H_M(z)$.
+The coefficient ratio is $z[j(j-1)+\Lambda]/[j(m+j)]$. Differentiating the same recurrence gives $s=\tfrac12\sin^2\theta\,\partial_\Lambda(H_{M,z}/H_M)$. Value and differentiated tail tests must both pass within 256 terms; failure returns an invalid status. For the remaining modes, a fixed 64-term polar expression supplies point or boundary data through $0.1^\circ$, with analytic axis limits.
+
+For $m>1$ and $0<\theta<10^{-150}$ radians, the Mehler second derivative is recovered directly from its independent logarithm,
+\begin{equation}
+ \log K_{\theta\theta}
+ =\log K-2\log\theta+\log[m(m-1)]+\log\bigl(1+O(\theta^2)\bigr).
+ \label{eq:mehler_tiny_second}
+\end{equation}
+The implemented leading polar expression omits a relative correction below $10^{-292}$ within the admitted $m,|\tau|\leq10^4$ range. It avoids materializing $m(m-1)/\sin^2\theta$, which can overflow even when $\sin^2\theta$ is a nonzero subnormal number. The normalized mode's logarithm is used, so an underflowed ordinary amplitude does not force an underflowed derivative. Orders zero and one retain their separate polar expressions and axis limits.
+
+At a hemispheric boundary, set $a=(m+3/2+i\tau)/2$ and $b=(m+1/2+i\tau)/2$. The fixed raw convention gives
+\[
+ K_{\rm raw}(\pi/2)=\frac{\Gamma(m+1)\sqrt\pi}{|\Gamma(a)|^2},\qquad
+ R_\theta=\frac{K_\theta}{K}=2\frac{|\Gamma(a)|^2}{|\Gamma(b)|^2},\qquad
+ s=\frac{R_\theta}{2\tau}\operatorname{Im}[\psi(b)-\psi(a)].
+\]
+The first two expressions follow from the Ferrers special values at zero~\citep{DLMF14SpecialValues}; the last is their spectral derivative. They are used outside the positive-series branch, so $\tau>0$. Complex gamma and digamma values are evaluated by recurrence followed by eight-term Stirling expansions after shifting the argument to modulus at least 16; a first-order correction retains the actual binary64 radian endpoint. A polar point uses the analytic boundary amplitude. A table point retains the table-to-table logarithmic difference, which cancels a common atlas amplitude offset, while replacing the boundary sensitivity by its analytic value. Mehler evaluation uses no online Riccati propagation, WKB branch, or arbitrary-precision fallback.
+
+Lookups remain inside their cells and apply the near-order sampling screen where relevant. Legendre evaluation uses a non-tabulated representation if no lookup is admissible. Mehler and constant calls retain their specified series and endpoint routes, returning failure when none applies. No table is extrapolated.
+
+\subsection{Algorithmic cost and storage}
+\label{sec:algorithmic_cost}
+
+Within an accepted cell, lookup and nested Clenshaw evaluation use fixed polynomial degrees. Mehler and zero-eigenvalue calls use fixed tables or bounded series and endpoint branches in the tested domain. The hybrid Legendre evaluator has no such global cost bound: recurrence or adaptive propagation can grow with order distance, phase span and tolerance.
+
+The atlas occupies 158,806,776 bytes in nine sections, loaded on first use by family. Its size is fixed for the current parameterization; extending a range or tightening a screen requires rebuilding the affected sections. Section~\ref{sec:performance} measures throughput and the remaining Legendre cost tail.
+
+\section{Validation design and error evaluation}
+\label{sec:validation_design}
+
+\subsection{Complementary evidence and accuracy criteria}
+\label{sec:validation_layers}
+
+The numerical formulation must preserve the regular branch, its derivatives and its normalization across changes of representation. Validation therefore addresses three distinct questions: whether independently computed values agree, whether the implemented identities remain consistent across the parameter domain, and whether the resulting basis satisfies its cap boundary and norm conditions. Table~\ref{tab:validation_matrix} separates the evidence supplied by each experiment. Internal identities provide broad coverage, whereas independent references test errors that different numerical representations could share. An extended-degree grid probes algebraic consistency beyond the primary reference range.
+
+The numerical targets are $10^{-7}$ for the specified identity, modal-error and norm diagnostics, and $10^{-10}$ for the boundary-root backward residual. Status and finiteness checks accompany these thresholds. A requested reference that does not converge under precision refinement, a missing required component, or an unsuccessful evaluation is counted as a numerical failure. The grids and thresholds are fixed for the reported experiments. Results are presented in Section~\ref{sec:validation_results}; computational performance is assessed separately in Section~\ref{sec:performance}.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Validation layers and the scope of the conclusions they support. Coverage and independence are complementary properties; neither substitutes for the other.}
+\label{tab:validation_matrix}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}XX@{}}
+\toprule
+Experiment & Evidence supplied & Limit of inference\\
+\midrule
+Arbitrary-precision references & Point values and derivatives from separate arithmetic and reference representations & Accuracy at the requested tuples, not a uniform bound between them\\
+Internal identities & Dense recurrence and derivative consistency across numerical regimes & A common scale or branch error can satisfy the same identities\\
+Cap roots and norms & Boundary backward residuals and integration cross-checks of normalization & Integration reuses computed basis values or IVP states; it tests normalization consistency\\
+Extended-degree identities & Algebraic consistency on a grid extending to degree $10^8$ & Identity residuals do not establish independent pointwise accuracy\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Dense algebraic consistency}
+\label{sec:identity_protocol}
+
+The primary identity grid contains 279,446 points at 17 interior colatitudes between $0.01^\circ$ and $89.99^\circ$. The exact $90^\circ$ branch is tested separately. Legendre evaluation uses 180 logarithmically distributed degree samples from 1.371 to 99999, with up to 121 integer orders at each degree. These are predominantly non-integer degrees; the upper endpoint is exactly 99999. Mehler evaluation uses 44 values of $\tau$ from zero through the exactly represented endpoint 10000. Its order identities call modes through $m+2$, so center orders end at 9998 and all evaluated orders remain within $m\leq10^4$. The constant-family identity calls the adjacent order, with center orders through 9999 and the final called order at 10000.
+
+For an identity $\sum_i a_i=0$, the diagnostic is
+\begin{equation}
+ \rho=\frac{\abs{\sum_i a_i}}{\sum_i\abs{a_i}},
+ \label{eq:normalized_residual}
+\end{equation}
+when the denominator is nonzero; an identity whose terms are all exactly zero is assigned residual zero. The sum is evaluated after subtracting the largest logarithmic magnitude from all terms. This permits the same diagnostic in the ordinary and extended-range records of Section~\ref{sec:interfaces}, without forming an overflowing or underflowing amplitude. The point statistic is $\rho_{\max}=\max(\rho_0,\rho_1,\rho_2)$ for the recurrence, first-derivative and second-derivative identities. The normalization is invariant under a common scale, which is both its strength and its limitation: a small $\rho$ establishes algebraic consistency, not absolute pointwise accuracy.
+
+\subsection{Independent references and range-aware error evaluation}
+\label{sec:reference_protocol}
+
+The primary reference design comprises 2,350 modes at 17 angles: 1,400 Legendre, 850 Mehler and 100 constant modes, giving 39,950 requested comparisons. The stratification resolves near-diagonal, turning, interior and extreme cases. High-degree Legendre references concentrate near the diagonal, where independent evaluation is especially demanding; they are complemented by the broader identity and cap sweeps. Separate grids add 510 Legendre degree-sensitivity points, 439 endpoint and boundary points, and 96 zero-neighborhood and degree-sensitivity points. Thus the four reference grids contain 40,995 requests. The 68 analytic regressions and the reference runner's 24 representation and differentiation controls are separate checks, rather than additional primary-grid observations.
+
+References use mpmath 1.3.0 \citep{Mpmath130} with the gmpy2 2.2.2 backend. Precision is refined through 80, 120 and, when required, 180 decimal digits, with 40 guard digits. Successive scaled references must agree to $10^{-25}$; lack of convergence fails the comparison. Exact input bit patterns are exported by C++, including the radian argument used by the degree-sensitivity path, so the two implementations are evaluated at the same represented inputs. Values and derivatives are retained as sign--logarithm pairs. Reference validity therefore does not require the mathematical amplitude to fit in binary64.
+
+Let $x_k$ and $y_k$ denote the production and reference angular derivatives of order $k=0,1,2$. Define the modal frequency and joint reference envelope by
+\begin{equation}
+ \omega=\begin{cases}
+ \nu+1,&\text{Legendre},\\
+ \sqrt{m^2+\tau^2}+1,&\text{Mehler},\\
+ m+1,&\text{constant},
+ \end{cases}
+ \qquad
+ M=\max\!\left(\abs{y_0},\frac{\abs{y_1}}{\omega},
+ \frac{\abs{y_2}}{\omega^2}\right).
+ \label{eq:reference_scale}
+\end{equation}
+For $M>0$, the component error is
+\begin{equation}
+ e_k=\frac{\abs{x_k-y_k}}{M\omega^k},\qquad k=0,1,2.
+ \label{eq:reference_scaled_error}
+\end{equation}
+The shared envelope remains meaningful when one component crosses zero. An exactly zero reference state is accepted only when the corresponding production components are also zero. The statistic measures error relative to a modal state, rather than claiming a relative forward-error bound for each individual component. Differences and scales are formed in sign--logarithm arithmetic, using a two-part binary64 logarithm on the production side and arbitrary-precision logarithms on the reference side. No binary64 amplitude floor is imposed. The comparator additionally checks ordinary outputs whenever the reference component has magnitude at least $2^{-1022}$; these errors enter the same acceptance statistic. Ordinary subnormal components are not assigned the same accuracy requirement and may be flushed to zero, while their mathematical sign--logarithm records remain subject to comparison.
+
+Degree sensitivity is tested independently of the production differentiated recurrences and sensitivity equations. For each Legendre reference, mpmath forms the five-point derivative
+\begin{equation}
+ \partial_\nu f(\nu)\approx
+ \frac{-f(\nu+2h)+8f(\nu+h)-8f(\nu-h)+f(\nu-2h)}{12h},
+ \label{eq:degree_reference_difference}
+\end{equation}
+with $h=10^{-\lceil p/4\rceil}$, $p=d+40$ and $d=80,120,180$. Each function evaluation uses 30 additional digits. Precision refinement uses the same $10^{-25}$ criterion; independent controls also compare against numerical differentiation of a separate Ferrers representation. If $S^{\mathrm{ref}}=\partial_\nu L^{\mathrm{ref}}$ and $S_\theta^{\mathrm{ref}}=\partial_\theta\partial_\nu L^{\mathrm{ref}}$, the implemented joint sensitivity scale is
+\begin{equation}
+ D=\max\!\left(\abs{S^{\mathrm{ref}}},
+ \frac{\abs{S_\theta^{\mathrm{ref}}}}{\omega},
+ \frac{M}{\max(1,\nu)}\right),\qquad
+ e_S=\frac{\abs{S-S^{\mathrm{ref}}}}{D},\quad
+ e_{S_\theta}=\frac{\abs{S_\theta-S_\theta^{\mathrm{ref}}}}{\omega D}.
+ \label{eq:sensitivity_reference_scale}
+\end{equation}
+The last term supplies a degree-scaled reference-state floor when the sensitivities vanish; it is not a fixed amplitude floor.
+
+\subsection{Boundary roots and cap normalization}
+\label{sec:cap_protocol}
+
+The Legendre and constant sweeps use 18 non-hemispherical cap half-angles from $0.4^\circ$ to $89.99^\circ$. Mehler additionally uses $0.0001^\circ$, $0.01^\circ$, $0.1^\circ$ and $90^\circ$, covering small-cap and hemispheric limits. The Legendre sweep samples Dirichlet root indices 1, 2, 10, 50 and 200. Fixed orders through 10000 are supplemented by fractions of the cap-dependent admissible upper order, subject to $m,\nu\leq10^5$; the resulting grid reaches order 99600. This tests high-order roots whose admissibility changes with cap angle, rather than imposing the same order list on every cap.
+
+Legendre cap norms from Eq.~\eqref{eq:legendre_norm_identity} are compared with adaptive integration of Eq.~\eqref{eq:cap_norm} at 781 points. At 149 high-order near-diagonal points, specified by $m\geq4096$ and $m/(\nu+1/2)\geq0.90$, a continuous turning-point IVP accumulates the squared regular solution across the cap. This avoids quadrature aliasing of the oscillatory tail, but uses the production IVP and is explicitly an algorithm cross-check. Mehler and constant normalized functions are checked by direct norm quadrature. Both kinds of test compare normalization with a separate integration procedure while reusing production states; the independent reference grids address the corresponding point-evaluation errors.
+
+A computed boundary degree is assessed with
+\begin{equation}
+ e_{\mathrm{root}}=\frac{\abs{L_{\nu m}(\theta_0)}}
+ {\max\!\left(\abs{S_{\nu m}(\theta_0)},u_{\min}\right)
+  \max(1,\abs{\nu})},
+ \qquad u_{\min}=2^{-1022},
+ \label{eq:root_backward_error}
+\end{equation}
+where $L$ and $S$ use the same legacy Schmidt convention, and $u_{\min}$ is the smallest positive normal binary64 number. When the safeguard is inactive and the root is simple, this is the relative Newton correction to first order. It is a backward-residual proxy, not a certified interval enclosing the exact root. The angular-ODE residual is retained as an interface diagnostic: away from the polar series, the second derivative is reconstructed from that same ODE, while polar derivatives share their series. It therefore supplies regression evidence rather than an independent accuracy measurement.
+
+\subsection{Extended-degree identity tests}
+\label{sec:robustness_protocol}
+
+A separate 69,156-point Legendre identity grid extends the sampled degree range to $10^8$. The recurrence and derivative residuals defined above are evaluated on this grid to examine algebraic consistency beyond the primary reference range. These residuals complement the independent comparisons but do not establish pointwise accuracy throughout the extended domain.
+
+\subsection{Performance measurements}
+\label{sec:timing_protocol}
+
+Timing uses two observables: sustained throughput of a fixed heterogeneous workload, and amortized cost for individual warmed parameter tuples. The workstation runs Windows 11 on an Intel Core i9-10900K (10 physical cores, 20 logical threads, 3.70~GHz nominal frequency and 20~MiB shared L3 cache), with 32~GiB memory in two 16~GiB modules configured at 2133~MT/s. No accelerator is used. Intel oneAPI DPC++/C++ Compiler 2025.3.2 compiles C++17 with \texttt{/O2 /fp:precise}; OpenMP builds additionally use \texttt{/Qopenmp}. The Legendre header also scopes precise floating-point semantics around its compensated and sign--logarithm arithmetic. On this Windows build, \texttt{long double} has binary64 precision; the compensated normalization does not assume extended hardware precision. Timing is performed without concurrent numerical experiments, with processes at BelowNormal priority. The throughput experiment uses \texttt{granularity=fine,scatter} affinity, and the single-thread cost experiment uses compact affinity.
+
+A first pass records initialization separately from warmed throughput. Steady-state tests cover one to 20 OpenMP threads, with at least 27~s per family/thread combination; the heterogeneous pools contain 4,624 Legendre, 4,641 Mehler and 357 constant tuples. Each call returns the value and first two angular derivatives. The separate single-thread grid contains 400 Legendre, 245 Mehler and 75 constant parameter tuples. Each tuple is warmed three times, its repetition count is calibrated with a batch lasting at least 50~ms, and five timed batches use that repetition count; the reported tuple cost is their median. Quantiles describe variation between parameter tuples, rather than the distribution of individual-call jitter. The timed loops include checksum instrumentation, including inverse tangents of returned components; no overhead is subtracted. The measurements therefore characterize the instrumented evaluation workload, not isolated intrinsic function latency.
+
+\section{Validation results}
+\label{sec:validation_results}
+
+The independently referenced grids support the prescribed $10^{-7}$ modal accuracy target for the tested values and derivatives. All 40,995 point and sensitivity requests converged and were compared without exclusion. The largest point-component error is $1.11\times10^{-8}$ across the primary and supplementary boundary grids; their individual maxima are $2.15\times10^{-9}$ and $1.11\times10^{-8}$. The 930 sampled Legendre boundary degrees also meet the separate $10^{-10}$ root target, with a maximum relative Newton correction of $2.83\times10^{-14}$. These results are assessed below alongside dense identity checks and cap-norm integration tests, which have different failure modes. They provide empirical error envelopes on fixed grids, rather than a uniform error theorem for the continuous parameter domain.
+
+\subsection{Independent pointwise and degree-sensitivity accuracy}
+
+The 39,950 primary mpmath references all satisfy the predeclared $10^{-25}$ refinement criterion. Table~\ref{tab:mpmath_results} reports the worst component statistic among the value and first two angular derivatives under Eq.~\eqref{eq:reference_scaled_error}. The maximum errors are $6.39\times10^{-10}$ for Legendre, $2.15\times10^{-9}$ for Mehler, and $4.41\times10^{-11}$ for the constant family. The comparison uses mathematical sign--logarithm records outside ordinary binary64 range and separately checks normal-range ordinary outputs. Thus agreement does not result from assigning a zero error to underflowed values. Figure~\ref{fig:numerical_validation}f shows the component distributions, and panel (g) resolves their angular dependence.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Arbitrary-precision mpmath comparison using Eq.~\eqref{eq:reference_scaled_error}. The P99 column is the largest componentwise P99; the maximum is taken over all components and points.}
+\label{tab:mpmath_results}
+\begin{tabular}{lrrr}
+\toprule
+Family & Valid references & P99 scaled error & Maximum scaled error\\
+\midrule
+Legendre & 23,800 & $1.17\times10^{-10}$ & $6.39\times10^{-10}$\\
+Mehler & 14,450 & $8.13\times10^{-10}$ & $2.15\times10^{-9}$\\
+Constant & 1,700 & $4.35\times10^{-11}$ & $4.41\times10^{-11}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The analytic Legendre sensitivity of Sections~\ref{sec:angular_basis} and \ref{sec:algorithms} is tested separately against degree-differenced arbitrary-precision references. All 510 requested pairs $(\partial_\nu L,\partial_\theta\partial_\nu L)$ converge and have both C++ logarithmic components available. Their maxima are $1.06\times10^{-10}$ and $1.03\times10^{-10}$ under the joint scale of Eq.~\eqref{eq:sensitivity_reference_scale} (Table~\ref{tab:degree_sensitivity_results}). This set includes 117 points with a nonzero mathematical value but zero ordinary binary64 output; their logarithmic states remain comparable. These tests therefore address the degree-sensitive scale used by the boundary norm identity, not only the angular point evaluator. The sensitivity curves are also shown in Fig.~\ref{fig:numerical_validation}g.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Direct arbitrary-precision validation of the Legendre degree sensitivity and mixed angular--degree derivative. All 510 requested references converged and had both C++ sign--logarithm components available for paired comparison.}
+\label{tab:degree_sensitivity_results}
+\begin{tabular}{lrrrr}
+\toprule
+Quantity & Comparable points & Median error & P99 error & Maximum error\\
+\midrule
+$\partial_\nu L_{\nu m}$ & 510 & $1.21\times10^{-13}$ & $1.05\times10^{-10}$ & $1.06\times10^{-10}$\\
+$\partial_\theta\partial_\nu L_{\nu m}$ & 510 & $1.89\times10^{-13}$ & $8.48\times10^{-11}$ & $1.03\times10^{-10}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The supplementary grids add 439 endpoint/boundary comparisons and 96 zero-neighborhood sensitivity comparisons. All references converge and every required component remains below $10^{-7}$. The endpoint grid includes normal/subnormal derivative transitions and axis cases with an underflowed amplitude but a representable derivative; its largest component error is $1.11\times10^{-8}$. Its coverage therefore supplies evidence beyond the primary grid. Each reference grid also passes 24 independent controls before comparison. A separate 68-case analytic regression tests polar derivatives, angular-gradient combinations, non-root small-cap norms, invalid orders, and scalar inverse problems with known solutions; its maximum diagnostic error is $4.36\times10^{-14}$.
+
+\subsection{Dense identity consistency}
+
+The 279,446 primary identity points return valid diagnostics with no failures (Table~\ref{tab:identity_results}). The largest P99 residual is $4.25\times10^{-10}$ and the largest maximum is $7.02\times10^{-9}$. These dense recurrence and derivative checks exercise consistency across the overlapping numerical representations of Section~\ref{sec:algorithms}. They complement the independent references, but cannot exclude an error in scale or branch shared by both sides of an identity.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Internal identity validation over the target parameter domains. The point statistic is $\rho_{\max}=\max(\rho_0,\rho_1,\rho_2)$ over the value and first two derivative identities.}
+\label{tab:identity_results}
+\begin{tabular}{lrrrr}
+\toprule
+Family & Valid points & Failures & P99 residual & Maximum residual\\
+\midrule
+Legendre & 252,365 & 0 & $9.81\times10^{-11}$ & $7.02\times10^{-9}$\\
+Mehler & 24,684 & 0 & $4.25\times10^{-10}$ & $2.02\times10^{-9}$\\
+Constant & 2,397 & 0 & $3.64\times10^{-12}$ & $7.28\times10^{-12}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:numerical_validation}a displays intervals from median to maximum, with circles for P99 and diamonds for maximum. The constant-family first-derivative \emph{identity residual} is exactly zero on this grid and is indicated separately; the function derivative itself is generally nonzero. Panels (c, d) show maximum combined identity residuals in occupied parameter cells, with shared colors and $10^{-12}$ and $10^{-10}$ contours; gray cells are unsampled. Panel (e) resolves the constant-family residuals by order and colatitude. The $10^{-16}$ display floor has no role in acceptance.
+
+\begin{figure}[p]
+\centering
+\captionsetup{font=small}
+\includegraphics[width=\textwidth]{figures/Figure_CombinedNumericalValidation.png}
+\caption{Numerical validation of the three \RSCHA angular families. (a--e) Internal identity diagnostics and their parameter dependence. (f, g) Independent arbitrary-precision errors and angular dependence. (h, i) Cap-wide normalization, boundary-root and angular-ODE checks. Red lines mark the $10^{-7}$ accuracy target; the dotted line marks the $10^{-10}$ root target. Protocols and diagnostic limitations are described in the text.}
+\label{fig:numerical_validation}
+\end{figure}
+
+\subsection{Boundary roots and cap normalization}
+
+Table~\ref{tab:global_results} tests the quantities required to turn point functions into a cap basis. The maximum Legendre relative Newton correction, Eq.~\eqref{eq:root_backward_error}, is $2.83\times10^{-14}$ over 930 boundary degrees. This is a backward-error proxy using the computed sensitivity, rather than an independently known forward error in the root. It tests the boundary solution selected by the refinement workflow, including the scale-preserving sensitivity described in Section~\ref{sec:algorithms}.
+
+The 930 Legendre cap norms agree with their integration cross-checks to $1.28\times10^{-9}$: 781 use separate adaptive quadrature and 149 high-order near-diagonal cases use the production turning-point IVP integral. The latter are algorithm cross-checks, not independent accuracy references. Mehler and constant norm comparisons reach $2.74\times10^{-10}$ and $8.42\times10^{-11}$, respectively, supporting the numerical realization of Proposition~\ref{prop:mehler_norm} and the positive-integral norm in Section~\ref{sec:constant_algorithm}. Because these integrations reuse production point values, their agreement establishes normalization consistency; the arbitrary-precision grids address pointwise accuracy through a separate computation.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Cap-wide validation. Norm integration cross-checks normalization consistency; the boundary row is a root backward residual, and the angular-ODE row is an internal regression diagnostic.}
+\label{tab:global_results}
+\begin{tabular}{lrrr}
+\toprule
+Metric & Valid cases & P99 error & Maximum error\\
+\midrule
+Legendre cap norm & 930 & $8.37\times10^{-10}$ & $1.28\times10^{-9}$\\
+Legendre boundary zero & 930 & $1.28\times10^{-14}$ & $2.83\times10^{-14}$\\
+Mehler cap norm & 242 & $7.61\times10^{-11}$ & $2.74\times10^{-10}$\\
+Constant cap norm & 126 & $8.06\times10^{-11}$ & $8.42\times10^{-11}$\\
+Angular ODE & 3,349 & $7.86\times10^{-13}$ & $2.32\times10^{-12}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The angular-ODE row is an internal regression diagnostic. It shares the production state, and outside the stable polar series the second derivative is reconstructed from that same ODE. Its small residual therefore supplies no additional independent pointwise-accuracy evidence. Figure~\ref{fig:numerical_validation}h summarizes the norm and root distributions, while panel (i) resolves maxima by cap angle. The red and dotted lines mark the $10^{-7}$ modal and $10^{-10}$ root targets, respectively.
+
+\subsection{Extended-degree algebraic consistency}
+
+The separate 69,156-point Legendre identity grid extends calls to $\nu\leq10^8$. Among its 32,147 points above $10^5$, the P99 and maximum normalized residuals are $9.40\times10^{-9}$ and $7.73\times10^{-8}$ (Fig.~\ref{fig:numerical_validation}b). These are algebraic stress results. They demonstrate consistency on the additional grid but do not extend the independently referenced primary-domain claim to every degree or parameter tuple up to $10^8$.
+
+
+
+\section{Computational performance}
+\label{sec:performance}
+
+The two performance experiments measure complementary quantities: the sustained rate of completing a heterogeneous workload and the amortized cost of repeatedly evaluating one parameter tuple. Figure~\ref{fig:performance} separates these observables. Panels (a, b) show the OpenMP rate and its speedup relative to the same family's one-thread workload; panels (c--f) resolve variation across parameter tuples. The reciprocal of aggregate throughput includes parallel execution and scheduling and is therefore not an individual-call latency.
+
+\subsection{Sustained throughput and parallel scaling}
+
+Table~\ref{tab:performance} reports warmed rates, after the initialization pass. The best observed Legendre and Mehler rates are $2.80\times10^{4}$ and $8.99\times10^{5}$ evaluations s$^{-1}$, at 20 and 16 OpenMP threads, respectively. Their speedups over one thread are 7.64 and 9.77. Thread counts refer to logical threads on the 10-core workstation.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/Figure_CombinedComputationalPerformance.png}
+\caption{Computational performance over the target parameter domains. (a, b) Sustained throughput and parallel speedup over 1--20 threads. (c) Distribution of single-thread parameter costs. (d, e) Legendre and Mehler cost envelopes with a shared color scale. (f) Constant-function cost versus order at five colatitudes. Costs are five-trial medians and include checksum instrumentation.}
+\label{fig:performance}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Warmed sustained throughput. Each family uses its fixed heterogeneous parameter workload and the same timing protocol.}
+\label{tab:performance}
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Family & One thread & Best throughput & Threads & Speedup\\
+\midrule
+Legendre & $3.67\times10^{3}\,\mathrm{s}^{-1}$ & $2.80\times10^{4}\,\mathrm{s}^{-1}$ & 20 & 7.64\\
+Mehler & $9.20\times10^{4}\,\mathrm{s}^{-1}$ & $8.99\times10^{5}\,\mathrm{s}^{-1}$ & 16 & 9.77\\
+Constant & $3.84\times10^{6}\,\mathrm{s}^{-1}$ & $5.40\times10^{6}\,\mathrm{s}^{-1}$ & 2 & 1.41\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For a thread count $p$, define the throughput efficiency as $E(p)=S(p)/p$, where $S(p)$ is the rate relative to the one-thread run. At 10 threads, $E$ is 65.3\% for Legendre and 84.5\% for Mehler. At their observed peaks, these efficiencies are 38.2\% and 61.1\%, with the denominator counting logical threads. Relative to 10 threads, the best observed rates are 16.9\% and 15.6\% higher. The sweep identifies the best configuration in this run rather than a hardware-independent optimum or a separately replicated uncertainty estimate.
+
+The constant family behaves differently: its highest measured rate, $5.40\times10^{6}$ evaluations s$^{-1}$, occurs on 2 threads. The best measured configuration has a speedup of 1.41 over its one-thread run. The timing includes scheduling, reductions, and checksum instrumentation; it does not separate their contributions from implementation or hardware costs. A particular bottleneck cannot be assigned from this scaling curve alone.
+
+\subsection{Parameter-dependent evaluation cost}
+
+The single-thread measurements reveal the heterogeneity hidden by an aggregate rate. Across the 400 Legendre tuples, the median cost is $7.65\,\mu\mathrm{s}$, whereas P99 is $10.8\,\mathrm{ms}$ and the maximum is $15.2\,\mathrm{ms}$. P99 is approximately $1.41\times10^3$ times the median. The 245 Mehler tuples have a median of $10.3\,\mu\mathrm{s}$, P99 of $52.6\,\mu\mathrm{s}$, and maximum of $52.8\,\mu\mathrm{s}$. For the 75 constant tuples, the corresponding costs are $244\,\mathrm{ns}$, $259\,\mathrm{ns}$, and $264\,\mathrm{ns}$ to three significant figures. Figure~\ref{fig:performance}c also reports P90. These distributions summarize parameter-to-parameter variation in the five-trial median of repeated-call costs; they are not distributions of individually timed calls or measures of temporal jitter. All costs include the unsubtracted loop and inverse-tangent checksum operations.
+
+Panels (d, e) locate this variation in parameter space. Each occupied cell contains the largest five-trial median over its sampled colatitudes, so the plotted envelope is an empirical cost summary rather than a bound on all calls within that cell. Panel (f) shows the considerably narrower constant-family profile by order and colatitude. The large Legendre cost spread is consistent with the range of series, recurrence, phase, and initial-value representations in Section~\ref{sec:algorithms}. The Mehler and constant implementations emphasize fixed-degree residual interpolation and analytic reconstruction, with a convergent positive-series option for Mehler. These paths provide qualitative context: the benchmark does not record route frequencies or profile individual stages, so it cannot apportion the observed cost to a particular fallback or identify a cache, memory, or arithmetic bottleneck.
+
+For basis-intensive calculations, these results favor retaining initialized table sections and grouping independent evaluations into sufficiently large mode or observation blocks. They also show why thread counts should be selected for the actual family and workload. The measured scaling curves provide the family-specific evidence for that choice. These are implications for use of the basis layer; they do not establish a speedup over another library or predict an end-to-end model speedup.
+
+
+
+\section{High-resolution regional magnetic-field modeling}
+\label{sec:application}
+
+\subsection{Data and regional model setup}
+
+Two regional applications connect the numerical basis to magnetic-field modeling in contrasting geological settings: the Cascadia plate margin and the North American Midcontinent. Both use a $7.5^\circ$ modeling cap, with field comparisons restricted to an inner $6.5^\circ$ cap. The spherical shell extends from 6356.2 to 6921.2~km, or 15~km below to 550~km above the reference radius $a=6371.2$~km. The internal and external Legendre truncation indices are 378 and 7; the two side-family limits are 3. This parameterization stores 144,124 coefficient entries and includes internal equivalent degrees of approximately $9.1\times10^3$. These are cap-basis indices and degrees, rather than the degree of a global spherical-harmonic expansion.
+
+The near-surface constraints are total-intensity anomalies from the NAMAG-CM compilation at 1-km node spacing \citep{NAMAGCMData}. Missing nodes are supplemented by degrees 16--185 of LCS-1 \citep{OlsenEtAl2017LCS1}; their numbers are reported separately in Table~\ref{tab:regional_application}. The near-surface data are distributed at a nominal height of 1~km above ground. The background direction for the near-surface total-intensity operator is obtained from degrees 1--15 of CHAOS-8.4 at the nominal epoch 1 January 2003 \citep{KlossEtAl2026CHAOS8,CHAOS84Data}. Previously processed CHAMP \citep{Maus2007CHAMP,CHAMPData}, Swarm A/B/C \citep{FriisChristensenEtAl2006Swarm,SwarmData} and MSS-1 \citep{Zhang2023MSS1,MSS1Data} endpoint pairs supply along-track vector and total-intensity differences. Swarm C contributes vector differences only. Details of the satellite data processing are given by \citet{ZhangEtAl2025EPP}.
+
+The three constraint types enter a weighted, damped least-squares problem,
+\begin{equation}
+ J(\boldsymbol c)=\norm{W_d(G\boldsymbol c-\boldsymbol d)}_2^2
+                 +\lambda\norm{\boldsymbol c}_2^2,
+ \qquad (W_d)_{ii}=\sigma_i^{-1},\qquad\lambda=0.01.
+ \label{eq:application_objective}
+\end{equation}
+Here $G$ contains the near-surface total-intensity and satellite endpoint-difference operators, and $\boldsymbol c$ contains the stored model coefficients. Vector endpoints are rotated into the cap frame before differencing; differences are endpoint 1 minus endpoint 2, without division by separation. The nominal near-surface uncertainty is 40~nT; satellite weights use task- and magnetic-latitude-dependent empirical difference scatter. The damping acts directly on the squared coefficient norm, with zero prior and initial coefficients; it is not a spatial-smoothness penalty. A symmetrically diagonally preconditioned BiCGSTAB iteration \citep{vanDerVorst1992} solves the normal equations with a limit of 100 iterations and no robust reweighting. Appendix~\ref{app:inversion_details} defines the preconditioner and stopping criterion. The recovered models use the same basis for subsequent field and derivative evaluation. Shared long-wavelength information among the compilation, its gap values and the satellite products is represented only by diagonal weights, rather than a full covariance model.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Regional inputs and agreement with fitted observations. Centers are geocentric. Near-surface counts and residual statistics include the separately identified LCS-1 gap values. Satellite counts refer to endpoint pairs. Vector-difference residuals are expressed in the cap frame used by the inversion; $z$ is positive downward. All residuals use the saved observations and reconstructions over the full modeling caps and describe fitted-data agreement.}
+\label{tab:regional_application}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Quantity & Cascadia & Midcontinent\\
+\midrule
+Cap center $(\lambda_c,\phi_c)$ & $(-127^\circ,45.5^\circ)$ & $(-89^\circ,45.8^\circ)$\\
+Near-surface total-intensity nodes & 2,083,788 & 1,905,983\\
+\quad LCS-1 gap values & 73,008 & 40\\
+Satellite vector-difference pairs & 7,911 & 7,802\\
+Satellite total-intensity-difference pairs & 6,595 & 6,556\\
+Forward grid nodes & 474,496 & 477,038\\
+Near-surface residual RMS (nT) & 60.8 & 97.5\\
+Near-surface median absolute residual (nT) & 10.1 & 15.3\\
+Near-surface P95 absolute residual (nT) & 107.6 & 124.9\\
+Cap-frame $\Delta B_{x_c}$ residual RMS (nT) & 1.47 & 2.23\\
+Cap-frame $\Delta B_{y_c}$ residual RMS (nT) & 1.74 & 1.63\\
+$\Delta B_z$ residual RMS (nT) & 0.70 & 1.16\\
+Total-intensity-difference residual RMS (nT) & 0.72 & 1.28\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Field structure and spectral bandwidth}
+
+Figure~\ref{fig:regional_bz_spectra} compares the downward vertical component $B_z$ with EMM2017 \citep{NOAAEMM2017}, WDMAMv2 \citep{LesurEtAl2016}, and SH1050 \citep{ThebaultEtAl2021,ThebaultEtAl2021Data}. All fields are synthesized at the same spherical radius, 6371.2~km, on the same $0.02^\circ$ geocentric grid. The reference models use a common lower SH-degree cutoff of 16, with native upper cutoffs of 790, 800 and 1050, respectively. This geometry removes differences in display height and sampling from the comparison. The $0.02^\circ$ grid is an evaluation spacing, rather than a measured resolving scale.
+
+The regional solutions retain the principal anomaly organization while expressing finer spatial variations. In Cascadia, elongated offshore anomalies remain coherent across the regional map, and the coastal and onshore field contains substantially more local structure than the global references. In the Midcontinent, the strong arcuate anomaly around Lake Superior persists while smaller anomalies and sharper transitions become visible around its flanks. The enhanced local structure is reflected in the spectra below: the regional solution retains coherent power beyond the global cutoffs, and the anomalies remain continuous on the original $0.02^\circ$ evaluation grid rather than being clipped at a global-model degree limit. Together, the maps and spectra show that the stable high-degree basis resolves shorter-wavelength regional structure while preserving the same three-dimensional potential representation for near-surface and satellite-altitude constraints.
+
+For the spectral diagnostic, all four models are represented on the same $7.5^\circ$ cap and evaluated at the comparison radius. Following the cap-spectrum framework of \citet{VervelidouThebault2015}, which relates R-SCHA spectral spacing to the cap half-angle and permits comparison with global spherical-harmonic spectra, the plotted power density sums the internal and external Legendre-family contributions in equivalent-degree bins of width $\Delta\nu=24$, divided by that width, in nT$^2$ per degree. Mehler, zero-eigenvalue and cross-family terms are excluded. Consequently, this diagnostic does not equal the total energy of the complete model or the variance of the displayed $B_z$ map. Across approximately $\nu=12$--300, the regional and global curves share the same rise and broad peak. From about $\nu=400$--800 in Cascadia and $\nu=400$--900 in the Midcontinent, the regional solution carries systematically more power than the localized global references. The global curves then roll off near their native upper degrees of 790, 800 and 1050, whereas the regional spectrum remains non-negligible through approximately $\nu=5000$. Beyond the reference bandwidths, regional power decreases smoothly over several orders of magnitude, with a steepening terminal tail. This combination of enhanced intermediate-degree power and a tapered high-degree spectrum distinguishes the regional solutions from the truncated global references. The decay rate varies with the fitted interval, so a single exponential scale is not assigned to the whole tail.
+
+The residual distribution provides a complementary measure of fitted-data agreement (Table~\ref{tab:regional_application}). Near-surface median absolute residuals are 10.1 and 15.3~nT, compared with RMS values of 60.8 and 97.5~nT and P95 absolute residuals of 107.6 and 124.9~nT. Thus a relatively small fraction of large residuals contributes strongly to the RMS; all nodes, including gap values, enter these statistics. Satellite vector-difference RMS values range from 0.70 to 2.23~nT in the fitted cap frame, and total-intensity-difference RMS values are 0.72 and 1.28~nT. These statistics quantify agreement with the constraints. Establishing a spatial resolving scale or an accuracy advantage over the global models requires independent observations and treatment of data correlation and regularization.
+
+\begin{figure}[!htbp]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.10\textwidth]{figures/Fig3_BzSpectra_CM_v3.pdf}}
+\caption{Regional vertical magnetic fields and common-cap Legendre-family spectra. Panels (a--d) and (e--h) show Cascadia and the Midcontinent, with EMM2017, WDMAMv2, SH1050 and the regional \RSCHA solution in successive columns. $B_z$ is positive downward at spherical radius 6371.2~km. Reference SH bands are 16--790, 16--800 and 16--1050. Circles mark the $6.5^\circ$ useful caps. All maps share a $-400$ to $400$~nT color scale; saturation affects display only. Panels (i, j) show internal-plus-external Legendre-family power density on $7.5^\circ$ caps, with $\Delta\nu=24$. Colored vertical lines mark the reference models' native upper SH degrees; their finite-cap projections can retain spectral tails beyond these cutoffs.}
+\label{fig:regional_bz_spectra}
+\end{figure}
+
+\subsection{Geological expression and magnetic transitions}
+
+Figure~\ref{fig:regional_geology_mhga} places the regional fields beside geological and tectonic layers compiled from the Cascadia database, regional US geological maps and Canadian geological mapping \citep{StaischWalton2022,NicholsonEtAl2004,WheelerEtAl1996}; the Minnesota outcrop polygons provide an additional local reference \citep{MGSBedrockOutcropDatabase}. Offshore tectonic context follows the oceanic-crust framework of \citet{SetonEtAl2020}, and coastlines follow GSHHG \citep{WesselSmith1996}. The geological panels provide surface context; they do not define a unique map of magnetic sources at depth.
+
+We apply the modified horizontal gradient amplitude (MHGA) of \citet{AiEtAl2024} to the modeled $B_z$ field. With $H=\norm{\nabla_h B_z}$, the plotted dimensionless response is
+\begin{equation}
+ \mathrm{MHGA}=\operatorname{clip}_{[-1,1]}
+ \left(\frac{H_z}{\sqrt{H_x^2+H_y^2}}-\frac{\pi}{3}\right),
+ \qquad H_z=\mathcal F^{-1}\!\left(|\boldsymbol{k}|\,\mathcal F H\right),
+ \label{eq:application_mhga}
+\end{equation}
+where subscripts $x,y$ denote horizontal derivatives, $H_z$ is a Fourier pseudo-vertical derivative, and nearly zero denominators are masked. Calculations use a 2-km local projected grid, reflection extension and a 160-km computational buffer. The outer 80~km of the useful cap is excluded, and the $B_z$ and MHGA panels share an identical display mask. This grid-based diagnostic is applied to the modeled vertical component; reduction to the pole and the additional preprocessing of the original MHGA study are not applied.
+
+\begin{figure}[!tbp]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.10\textwidth]{figures/Fig4_Geology_Bz_MHGA_Emerald_v6.pdf}}
+\caption{Geological context and magnetic transitions in Cascadia (a--c) and the Midcontinent (d--f). Columns show mapped geology and tectonic features, regional $B_z$, and MHGA applied to $B_z$ following \citet{AiEtAl2024}. $B_z$ has the same radius and color scale as Fig.~\ref{fig:regional_bz_spectra}. The field and MHGA panels use identical masks, including an 80-km edge exclusion; geology retains the full contextual extent. A1/A2 mark a spreading-ridge segment and subduction-boundary position; B1/B2 mark a Minnesota igneous-unit reference and mapped fault. Targets have identical coordinates in all three columns. Enhanced MHGA responses indicate candidate magnetic transitions; spatial association with a mapped feature alone does not verify a subsurface contact. Geological sources are specified in the text.}
+\label{fig:regional_geology_mhga}
+\end{figure}
+
+In Cascadia, A1 identifies a mapped spreading-ridge segment within the offshore banded field. The repeated, ridge-parallel magnetic texture and its corresponding MHGA structure are consistent with contrasts in oceanic-crust magnetization associated with seafloor spreading and remanence carried by oceanic crust \citep{VineWilson1965,SetonEtAl2020}. This interpretation makes a testable prediction: lineations should remain organized along the ridge direction in $B_z$ and should be concentrated by MHGA where their gradients are strongest, while their continuity should weaken toward the continental margin. A2 marks the mapped subduction boundary and supplies a reference for comparing anomaly texture across the forearc. A change in wavelength or gradient concentration near A2 would be compatible with juxtaposed oceanic, forearc and continental sources, but it would not by itself locate the slab interface or determine source depth. Magnetic responses in the forearc can also reflect crustal and mantle lithology, and the Coast Range includes the Siletzia igneous province \citep{BlakelyEtAl2005,WellsEtAl2014}. The figure therefore supports a structured comparison of ridge fabric, subduction-margin transition and continental lithology; it does not establish a unique tectonic boundary from magnetic texture alone.
+
+In the Midcontinent, the broad Lake Superior anomaly is consistent with the strong magnetic expression of volcanic and intrusive rocks of the Midcontinent Rift \citep{HinzeEtAl1992,SteinEtAl2015}. B1 marks an igneous unit in Minnesota and B2 a mapped fault; identical geographic targets are used across the geological, field and MHGA panels. Sharp or elongated $B_z$ transitions and their MHGA maxima can be compared with the mapped igneous-unit and fault fabric. Coincidence is compatible with contrasts in mafic and intrusive lithology or fault-controlled offsets in magnetized crust. A mismatch may instead reflect a buried source, remanent magnetization, overlapping bodies or a contact displaced from the surface trace. Integrated interpretations of Lake Superior illustrate this non-uniqueness \citep{GrauchEtAl2020}. B1 and B2 therefore define candidate source associations. Their depths and geometry require independent geological contacts, susceptibility or remanence constraints, or altitude-dependent field tests.
+
+
+
+
+
+\FloatBarrier
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{What the numerical formulation adds}
+
+The three families require different algorithms, but each benefits from removing the poorly scaled quantity before forming ordinary values. Legendre evaluation carries a scaled series, logarithmic derivative or phase while preserving the regular polar branch. Mehler normalization uses a boundary sensitivity instead of a large raw amplitude and a separate quadrature. The zero-eigenvalue norm is summed with positive terms. These transformations address conditioning; sign--logarithm records then address floating-point range. Extended range alone would not remove cancellation or select the correct branch.
+
+Most ingredients are established. The Legendre solver uses Ferrers series, order recurrences, Liouville--Green asymptotics and the nonoscillatory-phase methods of \citet{BremerRokhlin2017} and \citet{Bremer2018}. Parameter derivatives also have a substantial analytical literature \citep{Cohl2011,Szmytkowski2011,Szmytkowski2012}. Here the representation used in the root or norm calculation is differentiated on the same Schmidt scale. Table~\ref{tab:novelty} identifies the resulting integration and the family-specific normalization formulas. The common Lagrange identity is a standard consequence of the angular Sturm--Liouville equation; the numerical contribution is its stable use with the selected regular branch.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Established ingredients and their implementation for the \RSCHA angular basis.}
+\label{tab:novelty}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Family & Established ingredient & Implementation in this work\\
+\midrule
+Legendre & Ferrers series, order recurrence, Liouville--Green asymptotics and nonoscillatory phase & Common Schmidt scale across regimes; residual charts; analytic degree sensitivity for boundary roots and cap norms\\
+Mehler & Conical functions, Riccati transformation and adjacent-order identities & Positive regular cap branch; Riccati-sensitivity norm; fixed residual tables through $m,\tau=10^4$\\
+Zero eigenvalue & Elementary angular shape and Lerch representation & Positive norm integral and series with a tail bound; two-dimensional logarithmic-norm table through $m=10^4$\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The Mehler solver is specialized to $x=\cos\theta\in[0,1]$. It incorporates cap normalization and does not replace conical-function libraries that support broader arguments and solution classes \citep{GilEtAl2009,GilEtAl2012,DunsterEtAl2015}. Likewise, the positive-integral transformation addresses the particular zero-eigenvalue norm used by \RSCHA. For Legendre functions, the present near-order table fails its sampled acceptance threshold in every candidate cell; those calls retain the endpoint and recurrence algorithms. Residual compression is therefore an acceleration where accepted, rather than a uniform replacement for direct evaluation.
+
+\subsection{Accuracy and limits of the evidence}
+
+The 40,995 precision-refined reference requests test values, angular derivatives and Legendre degree sensitivities at specified tuples. Their largest value or angular-derivative error, $1.11\times10^{-8}$, is below the $10^{-7}$ modal target. Dense identities add coverage but cannot detect a shared scale or branch error. Norm integration reuses production values, and the root statistic is a relative Newton correction rather than an independently known root error. These distinctions matter especially for second derivatives reconstructed from the angular ODE: a small residual of that same ODE is a regression check, not an independent validation.
+
+Range-aware comparison is essential. At 5,616 of the 14,450 primary Mehler points, the joint reference amplitude is below $10^{-280}$. An imposed amplitude floor would conceal discrepancies there. The sign--logarithm comparison retains them and gives a primary-grid maximum of $2.15\times10^{-9}$; the supplementary Mehler boundary grid reaches $7.73\times10^{-9}$. Near a component zero, the modal envelope avoids an ill-conditioned component-wise relative error. None of these sampled maxima is a uniform bound between test points. In particular, the identity grid to degree $10^8$ does not establish independent accuracy over that extended domain.
+
+\subsection{Cost and parallel use}
+
+The Legendre cost varies by more than three orders of magnitude between the median and P99 parameter tuples. Recurrence distance, integration span and representation selection can all vary, although the benchmark does not record their individual contributions. Mehler and zero-eigenvalue calls use fixed tables or analytic branches and have narrower measured cost distributions. Retaining initialized tables, reusing mode-dependent quantities and grouping independent evaluations can reduce repeated work in basis-intensive applications.
+
+OpenMP throughput peaks at different thread counts for the three families. This favors workload-specific tuning of the outer evaluation loops, consistent with the observation- or mode-block decomposition used by the MPI application drivers. The measurements include loop and checksum costs and do not establish superiority over another library or an end-to-end inversion speedup. A matched-domain accuracy and timing comparison would be needed for either claim.
+
+\subsection{Implications for regional modeling}
+
+The applications demonstrate an operational high-degree basis: each inversion combines approximately two million near-surface nodes with satellite differences and reaches internal equivalent degrees near $9.1\times10^3$. The common-radius comparison shows how this capacity preserves regional anomaly organization while extending shorter-wavelength field structure beyond the three global references. Geological and MHGA comparisons then relate the additional structure to ridge fabric, igneous provinces and candidate magnetic transitions. These associations guide source hypotheses; depths, dips and buried contacts require additional geological or altitude-dependent constraints.
+
+The accompanying reproducibility supplement provides exact numerical-validation requests, reference-generation scripts and summary records, together with the plotted spectra and scripts that audit saved application residuals. These records make the numerical evidence and reported application statistics traceable. Full regional replication additionally requires the processed observational inputs and their preparation history. The next tests with the greatest scientific value are independent references in difficult Legendre regimes and regional observations withheld from the inversion.
+
+\section{Conclusions}
+
+The angular basis developed here connects the three families needed for three-dimensional \RSCHA through stable, compatible numerical representations. Legendre values and analytic degree sensitivities share the adopted Schmidt scale; Riccati sensitivity removes the raw amplitude from Mehler normalization; and a positive integral removes cancellation from the zero-eigenvalue norm. Accepted residual tables reduce repeated work, while direct algorithms cover regimes where interpolation is unsuitable.
+
+All 40,995 precision-refined point and sensitivity requests converged. The maximum scaled value or angular-derivative error was $1.11\times10^{-8}$, below the $10^{-7}$ modal target, and the maximum direct degree-sensitivity error was $1.06\times10^{-10}$. The maximum sampled relative Newton correction for boundary roots was $2.83\times10^{-14}$. These independent references and boundary diagnostics establish the tested basis accuracy, while identity checks extend consistency evidence to degree $10^8$. Measured throughput and its parameter dependence provide practical guidance for parallel use.
+
+The Cascadia and Midcontinent inversions show the consequence for regional magnetic-field modeling: dense near-surface and satellite constraints can be represented within one three-dimensional potential expansion at internal equivalent degrees near $9.1\times10^3$. Common-radius maps and cap spectra express shorter-wavelength structure beyond the global references, and geological comparisons connect that structure to candidate crustal sources and boundaries. Stable high-degree evaluation therefore expands the bandwidth available to regional models and the geological questions they can address.
+
+\section*{CRediT authorship contribution statement}
+\textbf{Pan~Zhang:} Conceptualization, Methodology, Formal analysis, Validation, Visualization, Writing -- original draft.
+\textbf{Jinsong~Du:} Conceptualization, Supervision, Project administration.
+\textbf{Jiaxuan~Zhang:} Software, Investigation, Validation.
+
+\section*{Funding}
+This work is supported by the National Natural Science Foundation of China (Grant Nos. 42574077, 42250103, and 42674085), and the Natural Science Foundation of Hubei Province of China (Grant No. 2024AFE003).
+
+\section*{Acknowledgements}
+We thank the teams responsible for NAMAG-CM, the CHAMP, Swarm and MSS-1 missions, the global magnetic reference models, and the geological and coastline datasets used in this study for making their products available. The individual sources are identified in Section~\ref{sec:application} and the reference list.
+
+\section*{Data and code availability}
+The R-SCHA v2.0.1 release contains the OpenMP and MPI source trees, the canonical-residual lookup table, build scripts, validation summaries and the mathematical foundations handbook. Download it from the \href{https://github.com/ZhangPan-666/RSCHA-v2.0/releases/tag/v2.0.1}{GitHub v2.0.1 release} or the \href{https://github.com/ZhangPan-666/RSCHA-v2.0}{project repository} \citep{RSCHASoftware2026}. The manuscript source package contains the reproducibility records and supporting spectra described in the text; external magnetic, geological and coastline datasets remain available from their original sources listed in Section~\ref{sec:application}.
+
+\section*{Declaration of competing interest}
+The authors declare no competing financial interests or personal relationships that could have influenced the work reported in this paper.
+
+\appendix
+\setstretch{1.04}
+\section{Overview of the R-SCHA software package}
+\label{app:software}
+
+The basis algorithms described in this paper form the numerical core of a broader C++ \RSCHA package. The package separates special-function evaluation, spectral-root calculation, coordinate transformations, model kernels, inversion, and parallel communication. The function-level numerical experiments in Sections~\ref{sec:validation_design}--\ref{sec:validation_results} are separate from the application drivers described below.
+
+\subsection{Numerical modules}
+
+Table~\ref{tab:software_modules} lists the principal numerical modules. The package separates the public basis interface from the underlying Legendre and canonical-residual algorithms, the spectral-root solver, model-level vector and tensor kernels, coordinate transformations, inversion routines, and MPI communication. Exact source-file names and their roles are given in the table.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Main components of the current C++ \RSCHA program. File names are given to make the numerical layers and the model-level workflows unambiguous.}
+\label{tab:software_modules}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.34\textwidth}X@{}}
+\toprule
+Source component & Main role\\
+\midrule
+\path{Legendre.h}, \texttt{CanonicalResidual\allowbreak Legendre.h}, \path{CRTable.h}
+& Real-degree Legendre evaluation, extended-range state, analytic degree sensitivity, asymptotic/direct fallbacks, and canonical-residual lookup.\\
+\texttt{Basis\ Function.h}
+& Public Legendre, Mehler, and zero-eigenvalue values and angular derivatives, together with the family-specific normalization wrappers.\\
+\path{RSCHARoots.h}
+& Prediction and refinement of the real-degree Dirichlet roots required by the Legendre series.\\
+\path{R_SCHA.h}
+& \RSCHA coefficient bookkeeping, first- and second-rank field kernels, model input/output, and spectral summaries.\\
+\path{CoordinateTransformation.h}
+& Transformation between geographic and spherical-cap coordinates and rotation of vector and second-rank tensor components.\\
+\path{Inversion.h}
+& Dense kernel storage and the preconditioned biconjugate gradient stabilized (BiCGSTAB) solver used by the reference inversion workflow.\\
+\path{MPIParallel.h}
+& MPI initialization, rank/size access, and collective reductions used by the model-level routines.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Application drivers}
+
+Two executable drivers illustrate how the numerical core is used in the inversion and forward-evaluation workflows considered here.
+
+\begin{enumerate}[leftmargin=2.2em]
+\item \textbf{Model construction (\path{Work1_RSCHAInversion.cpp}).} The program reads the cap geometry and truncation parameters and can combine total-field intensity, vector observations, and along-track differences of either data type. Coordinates and vector components are transformed to the spherical-cap system before the corresponding \RSCHA kernels are assembled. The reference workflow solves the weighted inverse problem with a preconditioned BiCGSTAB iteration and writes the recovered coefficients, model spectrum, and reconstructed data.
+
+\item \textbf{Forward evaluation (\path{Work2_RSCHAForward.cpp}).} A stored \RSCHA model is evaluated at an arbitrary list of radii and geographic coordinates. The current driver computes the scalar potential, the three first-rank field components, and the six independent second-rank tensor components. The results are rotated from the spherical-cap system to the local Cartesian frame before output.
+
+\end{enumerate}
+
+The inversion driver reads the cap geometry, truncation parameters and observations, and writes the recovered coefficient model. The forward driver reads this model together with evaluation coordinates.
+
+\subsection{Regional inversion equations and termination}
+\label{app:inversion_details}
+
+For Eq.~\eqref{eq:application_objective}, the normal equations are
+\begin{equation}
+ H\boldsymbol c=\boldsymbol b,\qquad
+ H=G^{\mathsf T}W_d^2G+\lambda I,\qquad
+ \boldsymbol b=G^{\mathsf T}W_d^2\boldsymbol d.
+ \label{eq:application_normal}
+\end{equation}
+All active model weights are unity, so the penalty is on the coefficients as stored. The scalar $\lambda$ multiplies the penalty directly; it is not squared or rescaled by the number of observations. Products with $H$ use products with $G$ and $G^{\mathsf T}$ rather than an explicitly assembled normal matrix. With
+\begin{equation}
+ F_{jj}=H_{jj}^{-1/2},\qquad
+ \widetilde H=FHF,\qquad \widetilde{\boldsymbol b}=F\boldsymbol b,
+ \qquad \boldsymbol c=F\boldsymbol z,
+ \label{eq:application_preconditioner}
+\end{equation}
+BiCGSTAB operates on $\widetilde H\boldsymbol z=\widetilde{\boldsymbol b}$.
+
+The implementation uses $\tau=64\epsilon_{\rm mach}$ for its scaled algebraic residual test. At initialization or restart, with iterate $\boldsymbol z_0$, it sets
+\begin{equation}
+ s_0=\max\!\left(\norm{\widetilde{\boldsymbol b}}_\infty,
+                 \norm{\widetilde H\boldsymbol z_0}_\infty\right).
+\end{equation}
+The initial residual is accepted if its infinity norm is at most $\tau s_0$. Subsequently, a sufficiently small recursive residual triggers explicit recomputation of $\boldsymbol r=\widetilde{\boldsymbol b}-\widetilde H\boldsymbol z$, which must satisfy
+\begin{equation}
+ \norm{\boldsymbol r}_\infty\leq
+ \tau\max\!\left(s_0,\norm{\widetilde H\boldsymbol z}_\infty\right).
+ \label{eq:application_stop}
+\end{equation}
+The configured unweighted data-RMS threshold is active only for zero damping and therefore does not govern these runs. Both regional parameter files set the iteration limit to 100 and disable robust reweighting. Application logs were unavailable in the inspected archive, so the actual iteration counts and termination histories cannot be recovered from the saved models. The residuals in Table~\ref{tab:regional_application} are recomputed from the saved reconstructions and do not imply that the algebraic stopping test was met.
+
+\subsection{Parallel execution}
+
+The application programs share a common MPI layer. Independent observations or spectral-order blocks are distributed across MPI ranks and combined by collective reductions; root-array construction also uses OpenMP across independent order blocks. This decomposition avoids synchronization within a single basis evaluation.
+
+\subsection{Supplementary reproducibility checks}
+
+A separate six-hour Bremer comparison with seed 20260827 records 24,821,889 post-warmup samples, with no production status failures. It retains 264 exact-input dispute entries (249 distinct parameter tuples) for independent 100/150-digit integral or 270/430-bit recurrence adjudication. All retained entries meet $10^{-7}$, with maximum new-method error $4.71\times10^{-9}$. The raw Bremer comparison has 8,491,571 unavailable comparisons and a largest available discrepancy $7.55\times10^{-1}$. Raw discrepancies are not automatically attributed to the new method, and unavailable references are not counted as agreement. Only the retained queue is independently adjudicated; this experiment does not certify every unavailable comparison or the continuous parameter domain. The source and exact-input provenance are retained with the results.
+
+For the inversion and forward-evaluation outputs retained from the serial and three-rank MPI regression, all seven output comparisons pass. These outputs cover 70,264 forward coordinates, 7,136 model coefficients, and 20 inversion iterations per implementation. The largest relative $L_2$ difference is $1.81\times10^{-12}$, and the largest difference scaled by $\max(1,|a|,|b|)$ is $3.56\times10^{-10}$. Model metadata, coordinates and observed data match exactly, and the forward tensor-trace diagnostic passes in both implementations. These are integration-consistency checks rather than independent geophysical validation.
+
+\begingroup
+\small
+\setstretch{1.02}
+\setlength{\bibsep}{1.2pt}
+\setlength{\bibhang}{1.5em}
+\bibliographystyle{plainnat}
+\bibliography{references}
+\endgroup
+
+\end{document}
+
+
+
+
+
+
+
+

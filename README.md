@@ -44,9 +44,9 @@ This distribution also includes later application, progress-reporting, and compi
 
 ## Accompanying manuscript
 
-The research manuscript *Stable Computation of Revised Spherical Cap Harmonics* is maintained separately from this software distribution. Its local delivery record dated 19 October 2026 describes a 37-page revision with 50 references and four figures: two combined numerical-validation/performance figures and two regional magnetic-field, spectrum and geology figures. The numerical figures are a subset of the complete manuscript's figures.
+The research manuscript *Stable Computation of Revised Spherical Cap Harmonics* is available under [docs/manuscript](docs/manuscript/README.md), with the compiled PDF, a complete source ZIP and revision notes. The editorial revision dated 24 October 2026 (`manuscript-20261024`) is 37 pages with 50 references and four figures: two combined numerical-validation/performance figures and two regional magnetic-field, spectrum and geology figures. The numerical figures are a subset of the complete manuscript's figures.
 
-These manuscript details describe that editorial revision. They do not replace the historical numerical acceptance record or certify subsequent source changes; see the validation scope above.
+This revision updates the error-evaluation headings, confirmed funding and first-author affiliations while retaining the manuscript title. It changes no numerical code, figures or historical numerical acceptance record. The software release remains v2.0.1; see the validation scope above.
 
 ## Licensing and external data
 

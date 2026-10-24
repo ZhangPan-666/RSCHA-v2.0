@@ -1,0 +1,13 @@
+Stable Computation of Revised Spherical Cap Harmonics
+Pan Zhang; Jinsong Du; Jiaxuan Zhang
+
+Funding
+This work is supported by the National Natural Science Foundation of China (Grant Nos. 42574077, 42250103, and 42674085), and the Natural Science Foundation of Hubei Province of China (Grant No. 2024AFE003).
+
+CRediT authorship contribution statement
+Pan Zhang: Conceptualization, Methodology, Formal analysis, Validation, Visualization, Writing - original draft.
+Jinsong Du: Conceptualization, Supervision, Project administration.
+Jiaxuan Zhang: Software, Investigation, Validation.
+
+Declaration of competing interest
+The authors declare no competing financial interests or personal relationships that could have influenced the work reported in this paper.
