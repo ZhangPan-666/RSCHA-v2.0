@@ -42,6 +42,12 @@ Run applications from their source directory or set `RSCHA_CR_TABLE_DIR` to an a
 
 This distribution also includes later application, progress-reporting, and compiler-compatibility changes. The historical acceptance record is not a new certification of every file in this distribution. The documented Work2 synthetic regression covers local OpenMP/MPI output consistency; full cluster-scale validation remains environment dependent. See `validation/VALIDATION_SUMMARY.md` and the source READMEs for scope.
 
+## Accompanying manuscript
+
+The research manuscript *Stable Computation of Revised Spherical Cap Harmonics* is maintained separately from this software distribution. Its local delivery record dated 19 October 2026 describes a 37-page revision with 50 references and four figures: two combined numerical-validation/performance figures and two regional magnetic-field, spectrum and geology figures. The numerical figures are a subset of the complete manuscript's figures.
+
+These manuscript details describe that editorial revision. They do not replace the historical numerical acceptance record or certify subsequent source changes; see the validation scope above.
+
 ## Licensing and external data
 
 Project-authored software and supporting material are licensed under [MIT](LICENSE). The mathematical handbook and its accompanying project-authored notes are licensed under [CC BY 4.0](LICENSES/CC-BY-4.0.txt). See [LICENSING.md](LICENSING.md) for scope and attribution. Third-party model, geology, and coastline datasets retain their own terms and are not relicensed here.
