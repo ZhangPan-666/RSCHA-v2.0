@@ -1,0 +1,414 @@
+\begin{thebibliography}{50}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ai et~al.(2024)Ai, {Deniz Toktay}, Alvandi, Pa{\v s}teka, Su, and
+  Liu]{AiEtAl2024}
+Hanbing Ai, Hazel {Deniz Toktay}, Ahmad Alvandi, Roman Pa{\v s}teka, Kejia Su,
+  and Qiang Liu.
+\newblock Advancing potential field data analysis: the modified horizontal
+  gradient amplitude method ({MHGA}).
+\newblock \emph{Contributions to Geophysics and Geodesy}, 54\penalty0
+  (2):\penalty0 119--143, 2024.
+\newblock \doi{10.31577/congeo.2024.54.2.1}.
+
+\bibitem[Bankey et~al.(2002)Bankey, Cuevas, Daniels, Finn, Hernandez, Hill,
+  Kucks, Miles, Pilkington, Roberts, Roest, Rystrom, Shearer, Snyder, Sweeney,
+  Velez, Phillips, and Ravat]{NAMAGCMData}
+Viki Bankey, Alejandro Cuevas, David Daniels, Carol~A. Finn, Israel Hernandez,
+  Patricia Hill, Robert Kucks, Warner Miles, Mark Pilkington, Carter Roberts,
+  Walter Roest, Victoria Rystrom, Sarah Shearer, Stephen Snyder, Ronald~E.
+  Sweeney, Julio Velez, J.~D. Phillips, and D.~K.~A. Ravat.
+\newblock Digital data grids for the magnetic anomaly map of {North America}.
+\newblock Open-File Report 2002-414, U.S. Geological Survey, 2002.
+\newblock URL
+  \url{https://www.usgs.gov/publications/digital-data-grids-magnetic-anomaly-map-north-america}.
+
+\bibitem[Blakely et~al.(2005)Blakely, Brocher, and Wells]{BlakelyEtAl2005}
+Richard~J. Blakely, Thomas~M. Brocher, and Ray~E. Wells.
+\newblock Subduction-zone magnetic anomalies and implications for hydrated
+  forearc mantle.
+\newblock \emph{Geology}, 33\penalty0 (6):\penalty0 445--448, 2005.
+\newblock \doi{10.1130/G21447.1}.
+
+\bibitem[Bremer(2018)]{Bremer2018}
+James Bremer.
+\newblock An algorithm for the numerical evaluation of the associated
+  {Legendre} functions that runs in time independent of degree and order.
+\newblock \emph{Journal of Computational Physics}, 360:\penalty0 15--38, 2018.
+\newblock \doi{10.1016/j.jcp.2018.01.014}.
+
+\bibitem[Bremer and Rokhlin(2017)]{BremerRokhlin2017}
+James Bremer and Vladimir Rokhlin.
+\newblock On the nonoscillatory phase function for {Legendre}'s differential
+  equation.
+\newblock \emph{Journal of Computational Physics}, 350:\penalty0 326--342,
+  2017.
+\newblock \doi{10.1016/j.jcp.2017.08.041}.
+
+\bibitem[Cohl(2011)]{Cohl2011}
+Howard~S. Cohl.
+\newblock On parameter differentiation for integral representations of
+  associated {Legendre} functions.
+\newblock \emph{Symmetry, Integrability and Geometry: Methods and
+  Applications}, 7:\penalty0 050, 2011.
+\newblock \doi{10.3842/SIGMA.2011.050}.
+
+\bibitem[Dunster et~al.(2015)Dunster, Gil, Segura, and Temme]{DunsterEtAl2015}
+T.~M. Dunster, A.~Gil, J.~Segura, and N.~M. Temme.
+\newblock Computation of a numerically satisfactory pair of solutions of the
+  differential equation for conical functions of non-negative integer orders.
+\newblock \emph{Numerical Algorithms}, 68:\penalty0 497--509, 2015.
+\newblock \doi{10.1007/s11075-014-9857-5}.
+
+\bibitem[{European Space Agency}(n.d.)]{SwarmData}
+{European Space Agency}.
+\newblock {Swarm} data access.
+\newblock ESA Earth Online, n.d.
+\newblock URL \url{https://earth.esa.int/eogateway/missions/swarm/data}.
+\newblock Official Swarm data archive; accessed 17 October 2026.
+
+\bibitem[Friis-Christensen et~al.(2006)Friis-Christensen, L{\"u}hr, and
+  Hulot]{FriisChristensenEtAl2006Swarm}
+Eigil Friis-Christensen, Hermann L{\"u}hr, and Gauthier Hulot.
+\newblock {Swarm}: A constellation to study the {Earth}'s magnetic field.
+\newblock \emph{Earth, Planets and Space}, 58\penalty0 (4):\penalty0 351--358,
+  2006.
+\newblock \doi{10.1186/BF03351933}.
+
+\bibitem[Fukushima(2012)]{Fukushima2012}
+Toshio Fukushima.
+\newblock Numerical computation of spherical harmonics of arbitrary degree and
+  order by extending exponent of floating point numbers.
+\newblock \emph{Journal of Geodesy}, 86:\penalty0 271--285, 2012.
+
+\bibitem[{GFZ Helmholtz Centre for Geosciences}(n.d.)]{CHAMPData}
+{GFZ Helmholtz Centre for Geosciences}.
+\newblock Access to the {CHAMP} data base.
+\newblock Information System and Data Center, n.d.
+\newblock URL \url{https://isdc.gfz.de/champ-isdc/access-to-the-champ-data}.
+\newblock Official CHAMP data archive; accessed 17 October 2026.
+
+\bibitem[Gil et~al.(2009)Gil, Segura, and Temme]{GilEtAl2009}
+Amparo Gil, Javier Segura, and Nico~M. Temme.
+\newblock Computing the conical function $p_{-1/2+i\tau}^{\mu}(x)$.
+\newblock \emph{SIAM Journal on Scientific Computing}, 31\penalty0
+  (3):\penalty0 1716--1741, 2009.
+\newblock \doi{10.1137/070712006}.
+
+\bibitem[Gil et~al.(2012)Gil, Segura, and Temme]{GilEtAl2012}
+Amparo Gil, Javier Segura, and Nico~M. Temme.
+\newblock An improved algorithm and a {Fortran 90} module for computing the
+  conical function $p_{-1/2+i\tau}^{m}(x)$.
+\newblock \emph{Computer Physics Communications}, 183:\penalty0 794--799, 2012.
+\newblock \doi{10.1016/j.cpc.2011.11.025}.
+
+\bibitem[Grauch et~al.(2020)Grauch, Anderson, Heller, Stewart, and
+  Woodruff]{GrauchEtAl2020}
+V.~J. Grauch, Eric~D. Anderson, Samuel~J. Heller, Esther~K. Stewart, and
+  Laurel~G. Woodruff.
+\newblock Integrated geophysical analysis provides an alternate interpretation
+  of the northern margin of the {North American Midcontinent Rift System},
+  central {Lake Superior}.
+\newblock \emph{Interpretation}, 8\penalty0 (4):\penalty0 SS63--SS85, 2020.
+\newblock \doi{10.1190/INT-2019-0262.1}.
+
+\bibitem[Haines(1985)]{Haines1985}
+G.~V. Haines.
+\newblock Spherical cap harmonic analysis.
+\newblock \emph{Journal of Geophysical Research: Solid Earth}, 90\penalty0
+  (B3):\penalty0 2583--2591, 1985.
+\newblock \doi{10.1029/JB090iB03p02583}.
+
+\bibitem[Hinze et~al.(1992)Hinze, Allen, Fox, Sunwood, Woelk, and
+  Green]{HinzeEtAl1992}
+William~J. Hinze, David~J. Allen, Adam~J. Fox, Don Sunwood, Timothy Woelk, and
+  Alan~G. Green.
+\newblock Geophysical investigations and crustal structure of the {North
+  American Midcontinent Rift} system.
+\newblock \emph{Tectonophysics}, 213\penalty0 (1--2):\penalty0 17--32, 1992.
+\newblock \doi{10.1016/0040-1951(92)90248-5}.
+
+\bibitem[Hwang and Chen(1997)]{HwangChen1997}
+Cheinway Hwang and Shin-Kuen Chen.
+\newblock Fully normalized spherical cap harmonics: Application to the analysis
+  of sea-level data from {TOPEX/POSEIDON} and {ERS-1}.
+\newblock \emph{Geophysical Journal International}, 129\penalty0 (2):\penalty0
+  450--460, 1997.
+\newblock \doi{10.1111/j.1365-246X.1997.tb01595.x}.
+
+\bibitem[Johansson et~al.(2023)]{Mpmath130}
+Fredrik Johansson et~al.
+\newblock mpmath: a python library for arbitrary-precision floating-point
+  arithmetic, version 1.3.0, 2023.
+\newblock URL \url{https://github.com/mpmath/mpmath/tree/1.3.0}.
+
+\bibitem[Kloss et~al.(2025)Kloss, Finlay, Olsen, T{\o}ffner-Clausen, Gillet,
+  and Grayver]{CHAOS84Data}
+Clemens Kloss, Christopher~C. Finlay, Nils Olsen, Lars T{\o}ffner-Clausen,
+  Nicolas Gillet, and Alexander Grayver.
+\newblock {CHAOS-8} geomagnetic field model, September 2025.
+\newblock URL \url{https://zenodo.org/records/17225475}.
+\newblock Version 8.4, published 29 September 2025.
+
+\bibitem[Kloss et~al.(2026)Kloss, Finlay, Olsen, T{\o}ffner-Clausen, Gillet,
+  and Grayver]{KlossEtAl2026CHAOS8}
+Clemens Kloss, Christopher~C. Finlay, Nils Olsen, Lars T{\o}ffner-Clausen,
+  Nicolas Gillet, and Alexander Grayver.
+\newblock The {CHAOS-8} geomagnetic field model.
+\newblock \emph{Earth, Planets and Space}, 78\penalty0 (1):\penalty0 21, 2026.
+\newblock \doi{10.1186/s40623-025-02352-0}.
+
+\bibitem[Lesur et~al.(2016)Lesur, Hamoudi, Choi, Dyment, and
+  Th{\'e}bault]{LesurEtAl2016}
+Vincent Lesur, Mohamed Hamoudi, Yujin Choi, J{\'e}r{\^o}me Dyment, and Erwan
+  Th{\'e}bault.
+\newblock Building the second version of the world digital magnetic anomaly map
+  ({WDMAM}).
+\newblock \emph{Earth, Planets and Space}, 68:\penalty0 27, 2016.
+\newblock \doi{10.1186/s40623-016-0404-6}.
+
+\bibitem[{Macau University of Science and Technology}(n.d.)]{MSS1Data}
+{Macau University of Science and Technology}.
+\newblock {Macau Science Satellite-1} data.
+\newblock MSS-1 mission data portal, n.d.
+\newblock URL \url{https://mss.must.edu.mo/data.html}.
+\newblock Official MSS-1 data portal; accessed 17 October 2026.
+
+\bibitem[Maus(2007)]{Maus2007CHAMP}
+Stefan Maus.
+\newblock {CHAMP}.
+\newblock In David Gubbins and Emilio Herrero-Bervera, editors,
+  \emph{Encyclopedia of Geomagnetism and Paleomagnetism}, pages 59--60.
+  Springer, Dordrecht, 2007.
+\newblock \doi{10.1007/978-1-4020-4423-6_25}.
+
+\bibitem[{Minnesota Geological Survey}(n.d.)]{MGSBedrockOutcropDatabase}
+{Minnesota Geological Survey}.
+\newblock {D-02}, {Minnesota} bedrock outcrop database.
+\newblock Official ArcGIS feature service, n.d.
+\newblock URL
+  \url{https://mngs-umn.opendata.arcgis.com/datasets/UMN::d-02-minnesota-bedrock-outcrop-database/about}.
+\newblock Accessed 17 October 2026. Source polygons indicate bedrock exposed at
+  or near the land surface.
+
+\bibitem[{National Institute of Standards and
+  Technology}(n.d.)]{DLMF14SpecialValues}
+{National Institute of Standards and Technology}.
+\newblock {NIST Digital Library of Mathematical Functions}: Section 14.5,
+  special values.
+\newblock \url{https://dlmf.nist.gov/14.5}, n.d.
+\newblock Equations 14.5.1 and 14.5.2; accessed 7 October 2026.
+
+\bibitem[Nicholson et~al.(2004)Nicholson, Dicken, Foose, and
+  Mueller]{NicholsonEtAl2004}
+Suzanne~W. Nicholson, Connie~L. Dicken, Michael~P. Foose, and Julia A.~L.
+  Mueller.
+\newblock Preliminary integrated geologic map databases for the united states:
+  Minnesota, wisconsin, michigan, illinois, and indiana.
+\newblock Open-File Report 2004-1355, U.S. Geological Survey, 2004.
+\newblock URL \url{https://pubs.usgs.gov/of/2004/1355/}.
+\newblock Version 1.1, updated December 2007.
+
+\bibitem[{NOAA National Centers for Environmental
+  Information}(2017)]{NOAAEMM2017}
+{NOAA National Centers for Environmental Information}.
+\newblock Enhanced magnetic model ({EMM2017}).
+\newblock Model coefficients and software, released 5 July 2017, 2017.
+\newblock URL \url{https://www.ncei.noaa.gov/products/enhanced-magnetic-model}.
+\newblock Accessed 17 October 2026. Lithospheric part used here:
+  spherical-harmonic degrees 16--790.
+
+\bibitem[Olsen et~al.(2017)Olsen, Ravat, Finlay, and Kother]{OlsenEtAl2017LCS1}
+Nils Olsen, Dhananjay Ravat, Christopher~C. Finlay, and Livia~K. Kother.
+\newblock {LCS-1}: a high-resolution global model of the lithospheric magnetic
+  field derived from {CHAMP} and {Swarm} satellite observations.
+\newblock \emph{Geophysical Journal International}, 211\penalty0 (3):\penalty0
+  1461--1477, 2017.
+\newblock \doi{10.1093/gji/ggx381}.
+
+\bibitem[Olver and Smith(1983)]{OlverSmith1983}
+F.~W.~J. Olver and J.~M. Smith.
+\newblock Associated {Legendre} functions on the cut.
+\newblock \emph{Journal of Computational Physics}, 51:\penalty0 502--518, 1983.
+
+\bibitem[{R-SCHA contributors}(2026)]{RSCHASoftware2026}
+{R-SCHA contributors}.
+\newblock {R-SCHA} v1.0 {OpenMP} and {MPI} software.
+\newblock GitHub, versioned software release, 2026.
+\newblock URL
+  \url{https://github.com/ZhangPan-666/RSCHA-v2.0/releases/tag/v1.0}.
+\newblock Source repository: https://github.com/ZhangPan-666/RSCHA-v2.0.
+  Software under MIT; mathematical handbook under CC BY 4.0.
+
+\bibitem[Seton et~al.(2020)Seton, M{\"u}ller, Zahirovic, Williams, Wright,
+  Cannon, Whittaker, Matthews, and McGirr]{SetonEtAl2020}
+Maria Seton, R.~Dietmar M{\"u}ller, Sabin Zahirovic, Simon Williams, Nicky~M.
+  Wright, John Cannon, Joanne~M. Whittaker, Kara~J. Matthews, and Rebecca
+  McGirr.
+\newblock A global data set of present-day oceanic crustal age and seafloor
+  spreading parameters.
+\newblock \emph{Geochemistry, Geophysics, Geosystems}, 21\penalty0
+  (10):\penalty0 e2020GC009214, 2020.
+\newblock \doi{10.1029/2020GC009214}.
+
+\bibitem[Smith et~al.(1981)Smith, Olver, and Lozier]{SmithEtAl1981}
+J.~M. Smith, F.~W.~J. Olver, and D.~W. Lozier.
+\newblock Extended-range arithmetic and normalized {Legendre} polynomials.
+\newblock \emph{ACM Transactions on Mathematical Software}, 7\penalty0
+  (1):\penalty0 93--105, 1981.
+
+\bibitem[Staisch and Walton(2022)]{StaischWalton2022}
+L.~M. Staisch and M.~A. Walton.
+\newblock {Cascadia} subduction zone database: compilation of published
+  datasets relevant to {Cascadia} subduction zone earthquake hazards and
+  tectonics.
+\newblock U.S. Geological Survey data release, 2022.
+\newblock URL
+  \url{https://www.usgs.gov/special-topics/subduction-zone-science/science/cascadia-subduction-zone-database}.
+
+\bibitem[Stein et~al.(2015)Stein, Kley, Stein, Hindle, and
+  Keller]{SteinEtAl2015}
+Carol~A. Stein, Jonas Kley, Seth Stein, David Hindle, and G.~Randy Keller.
+\newblock {North America}'s {Midcontinent Rift}: When rift met {LIP}.
+\newblock \emph{Geosphere}, 11\penalty0 (5):\penalty0 1607--1616, 2015.
+\newblock \doi{10.1130/GES01183.1}.
+
+\bibitem[Szmytkowski(2011)]{Szmytkowski2011}
+Rados{\l}aw Szmytkowski.
+\newblock On the derivative of the associated {Legendre} function of the first
+  kind of integer order with respect to its degree.
+\newblock \emph{Journal of Mathematical Chemistry}, 49\penalty0 (7):\penalty0
+  1436--1477, 2011.
+\newblock \doi{10.1007/s10910-011-9826-3}.
+
+\bibitem[Szmytkowski(2012)]{Szmytkowski2012}
+Rados{\l}aw Szmytkowski.
+\newblock On parameter derivatives of the associated {Legendre} function of the
+  first kind.
+\newblock \emph{Journal of Mathematical Analysis and Applications},
+  386\penalty0 (1):\penalty0 332--342, 2012.
+\newblock \doi{10.1016/j.jmaa.2011.08.003}.
+
+\bibitem[Th{\'e}bault et~al.(2004)Th{\'e}bault, Schott, Mandea, and
+  Hoffbeck]{ThebaultEtAl2004}
+E.~Th{\'e}bault, J.~J. Schott, M.~Mandea, and J.~P. Hoffbeck.
+\newblock A new proposal for spherical cap harmonic modelling.
+\newblock \emph{Geophysical Journal International}, 159\penalty0 (1):\penalty0
+  83--103, 2004.
+\newblock \doi{10.1111/j.1365-246X.2004.02361.x}.
+
+\bibitem[Th{\'e}bault et~al.(2006)Th{\'e}bault, Schott, and
+  Mandea]{ThebaultEtAl2006}
+E.~Th{\'e}bault, J.~J. Schott, and M.~Mandea.
+\newblock Revised spherical cap harmonic analysis ({R-SCHA}): Validation and
+  properties.
+\newblock \emph{Journal of Geophysical Research: Solid Earth}, 111\penalty0
+  (B1):\penalty0 B01102, 2006.
+\newblock \doi{10.1029/2005JB003836}.
+
+\bibitem[Th{\'e}bault et~al.(2021{\natexlab{a}})Th{\'e}bault, Hulot, Langlais,
+  and Vigneron]{ThebaultEtAl2021}
+Erwan Th{\'e}bault, Gauthier Hulot, Benoit Langlais, and Pierre Vigneron.
+\newblock A spherical harmonic model of {Earth}'s lithospheric magnetic field
+  up to degree 1050.
+\newblock \emph{Geophysical Research Letters}, 48\penalty0 (21):\penalty0
+  e2021GL095147, 2021{\natexlab{a}}.
+\newblock \doi{10.1029/2021GL095147}.
+
+\bibitem[Th{\'e}bault et~al.(2021{\natexlab{b}})Th{\'e}bault, Hulot, Langlais,
+  and Vigneron]{ThebaultEtAl2021Data}
+Erwan Th{\'e}bault, Gauthier Hulot, Benoit Langlais, and Pierre Vigneron.
+\newblock A spherical harmonic model of {Earth}'s lithospheric magnetic field
+  up to degree 1050.
+\newblock Zenodo, coefficient dataset, version 1, 2021{\natexlab{b}}.
+\newblock URL \url{https://zenodo.org/records/5546528}.
+
+\bibitem[Torta(2020)]{Torta2020}
+J.~Miquel Torta.
+\newblock Modelling by spherical cap harmonic analysis: A literature review.
+\newblock \emph{Surveys in Geophysics}, 41\penalty0 (2):\penalty0 201--247,
+  2020.
+\newblock \doi{10.1007/s10712-019-09576-2}.
+
+\bibitem[van~der Vorst(1992)]{vanDerVorst1992}
+H.~A. van~der Vorst.
+\newblock {Bi-CGSTAB}: A fast and smoothly converging variant of {Bi-CG} for
+  the solution of nonsymmetric linear systems.
+\newblock \emph{SIAM Journal on Scientific and Statistical Computing},
+  13\penalty0 (2):\penalty0 631--644, 1992.
+\newblock \doi{10.1137/0913035}.
+
+\bibitem[Vervelidou et~al.(2018)Vervelidou, Th{\'e}bault, and
+  Korte]{VervelidouEtAl2018}
+F.~Vervelidou, E.~Th{\'e}bault, and M.~Korte.
+\newblock A high-resolution lithospheric magnetic field model over {Southern
+  Africa} based on a joint inversion of {CHAMP}, {Swarm}, {WDMAM}, and ground
+  magnetic field data.
+\newblock \emph{Solid Earth}, 9\penalty0 (4):\penalty0 897--910, 2018.
+\newblock \doi{10.5194/se-9-897-2018}.
+
+\bibitem[Vervelidou and Th{\'e}bault(2015)]{VervelidouThebault2015}
+Foteini Vervelidou and Erwan Th{\'e}bault.
+\newblock Global maps of the magnetic thickness and magnetization of the
+  {Earth}'s lithosphere.
+\newblock \emph{Earth, Planets and Space}, 67:\penalty0 173, 2015.
+\newblock \doi{10.1186/s40623-015-0329-5}.
+
+\bibitem[Vine and Wilson(1965)]{VineWilson1965}
+F.~J. Vine and J.~T. Wilson.
+\newblock Magnetic anomalies over a young oceanic ridge off {Vancouver Island}.
+\newblock \emph{Science}, 150\penalty0 (3695):\penalty0 485--489, 1965.
+\newblock \doi{10.1126/science.150.3695.485}.
+
+\bibitem[Wells et~al.(2014)Wells, Bukry, Friedman, Pyle, Duncan, Haeussler, and
+  Wooden]{WellsEtAl2014}
+Ray Wells, David Bukry, Richard Friedman, Douglas Pyle, Robert Duncan, Peter~J.
+  Haeussler, and Joe Wooden.
+\newblock Geologic history of {Siletzia}, a large igneous province in the
+  {Oregon} and {Washington} coast range: Correlation to the geomagnetic
+  polarity time scale and implications for a long-lived yellowstone hotspot.
+\newblock \emph{Geosphere}, 10\penalty0 (4):\penalty0 692--719, 2014.
+\newblock \doi{10.1130/GES01018.1}.
+
+\bibitem[Wessel and Smith(1996)]{WesselSmith1996}
+P{\aa}l Wessel and Walter H.~F. Smith.
+\newblock A global, self-consistent, hierarchical, high-resolution shoreline
+  database.
+\newblock \emph{Journal of Geophysical Research: Solid Earth}, 101\penalty0
+  (B4):\penalty0 8741--8743, 1996.
+\newblock \doi{10.1029/96JB00104}.
+
+\bibitem[Wheeler et~al.(1996)Wheeler, Hoffman, Card, Davidson, Sanford,
+  Okulitch, and Roest]{WheelerEtAl1996}
+J.~O. Wheeler, P.~F. Hoffman, K.~D. Card, A.~Davidson, B.~V. Sanford, A.~V.
+  Okulitch, and W.~R. Roest.
+\newblock Geological map of {Canada}.
+\newblock Geological Survey of Canada, A Series Map 1860A, scale 1:5,000,000,
+  1996.
+\newblock URL
+  \url{https://open.canada.ca/data/en/dataset/4c9f59d6-667f-8285-a75d-25ac73d61e9b}.
+
+\bibitem[Zhang(2023)]{Zhang2023MSS1}
+Keke Zhang.
+\newblock A novel geomagnetic satellite constellation: Science and
+  applications.
+\newblock \emph{Earth and Planetary Physics}, 7\penalty0 (1):\penalty0 4--21,
+  2023.
+\newblock \doi{10.26464/epp2023019}.
+
+\bibitem[Zhang et~al.(2025)Zhang, Du, Yin, Yan, Zhang, Li, Zhang, and
+  Chen]{ZhangEtAl2025EPP}
+Pan Zhang, Jinsong Du, Liang Yin, Qing Yan, Jiaxuan Zhang, Houpu Li, Keke
+  Zhang, and Chao Chen.
+\newblock A high-resolution lithospheric magnetic field model of {China} and
+  surroundings by using {CHAMP}, {Swarm}, {CSES-1}, and {MSS-1} satellite
+  magnetic measurements and aeromagnetic anomaly data.
+\newblock \emph{Earth and Planetary Physics}, 9\penalty0 (3):\penalty0
+  686--696, 2025.
+\newblock \doi{10.26464/epp2025057}.
+
+\end{thebibliography}
