@@ -1,13 +1,5 @@
 # Mathematical Foundations of Revised Spherical Cap Harmonic Analysis
 
-## License
-
-Copyright (c) 2026 R-SCHA contributors. The project-authored handbook PDF and
-the accompanying notes in this directory are licensed under
-[Creative Commons Attribution 4.0 International](../../LICENSES/CC-BY-4.0.txt).
-See [LICENSING.md](../../LICENSING.md) for attribution and third-party exclusions.
-Canonical license: <https://creativecommons.org/licenses/by/4.0/>.
-
 This is the corrected pure-mathematics edition of the R-SCHA handbook.  It
 develops the closed-shell three-dimensional theory from the Laplace equation
 and complementary mixed boundary-value problems, rather than treating the
@@ -52,9 +44,24 @@ proper existence/unique-continuation/ill-posedness distinction, and separates
 $L^2$ boundary projection from the trace regularity required for an
 $H^1(\Omega)$ weak solution.
 
-Known open mathematical questions are not presented as established theorems.
-In particular, the triangular Mehler index set and the complete functional
-status of the combined R-SCHA2D family remain explicitly qualified.
+The complete Mehler expansion uses independent rectangular bounds
+$1\le p\le P_{\max}$ and $0\le m\le M_{\mathrm{Meh}}$. The legacy
+triangular rule $m\le p$ is retained only as an explicitly restricted model;
+its non-density in the full lateral-data and energy spaces is demonstrated by
+the missing $(p,m)=(1,2)$ mode. The combined R-SCHA2D continuation family
+remains qualified as an open functional-analytic question.
+
+## Current audited build
+
+The reviewed edition was compiled on October 24, 2026 with TeX Live 2026.
+It has 167 pages, 24 section modules, 1,222 unique labels, no missing
+cross-references or bibliography keys, and no overfull/underfull box warnings.
+The mathematical audit includes 450 independent high-precision or quadrature
+comparisons; details are in `notes/handbook_audit_20261024.md` and
+`reproducibility/handbook_math_validation.json`.
+
+The AI-use disclosure remains intentionally deferred at the author's request
+and is recorded as a pending editorial item in the audit report.
 
 ## Compilation
 
@@ -67,9 +74,11 @@ pdflatex main.tex
 pdflatex main.tex
 ```
 
-The compiled handbook is `main.pdf`; a ready-to-use `main.bbl` is included.
+The compiled handbook is `main.pdf`; a ready-to-use `main.bbl` is included. The portable `build.ps1` script compiles into `build/` and copies the PDF back to the root.
 
 ## Source organisation
 
 The main text is divided into twenty-four section files under `sections/` and
 assembled through `main.tex`.  Figures are stored in `figures/`.
+
+

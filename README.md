@@ -7,7 +7,7 @@ Repository: https://github.com/ZhangPan-666/RSCHA-v2.0
 Software: [MIT](LICENSE). Mathematical handbook and its accompanying notes:
 [CC BY 4.0](LICENSES/CC-BY-4.0.txt). See [licensing scope](LICENSING.md).
 
-The release ZIP contains both complete source trees, the mathematical foundations handbook, validation records, build wrappers, the canonical-residual lookup table, and license texts. Download [the complete v2.0.1 ZIP](https://github.com/ZhangPan-666/RSCHA-v2.0/releases/download/v2.0.1/RSCHA-v2.0.1.zip); GitHub's automatically generated source archives contain only files committed to the repository.
+The v1.0 release ZIP contains both complete source trees, the mathematical foundations handbook, validation records, build wrappers, the canonical-residual lookup table, and license texts. Download [the complete v1.0 ZIP](https://github.com/ZhangPan-666/RSCHA-v2.0/releases/download/v1.0/RSCHA-v1.0.zip); GitHub's automatically generated source archives contain only files committed to the repository.
 
 ## Contents
 
@@ -42,12 +42,7 @@ Run applications from their source directory or set `RSCHA_CR_TABLE_DIR` to an a
 
 This distribution also includes later application, progress-reporting, and compiler-compatibility changes. The historical acceptance record is not a new certification of every file in this distribution. The documented Work2 synthetic regression covers local OpenMP/MPI output consistency; full cluster-scale validation remains environment dependent. See `validation/VALIDATION_SUMMARY.md` and the source READMEs for scope.
 
-## Accompanying manuscript
-
-The research manuscript *Stable Computation of Revised Spherical Cap Harmonics* is available under [docs/manuscript](docs/manuscript/README.md), with the compiled PDF, a complete source ZIP and revision notes. The editorial revision dated 24 October 2026 (`manuscript-20261024`) is 37 pages with 50 references and four figures: two combined numerical-validation/performance figures and two regional magnetic-field, spectrum and geology figures. The numerical figures are a subset of the complete manuscript's figures.
-
-This revision updates the error-evaluation headings, confirmed funding and first-author affiliations while retaining the manuscript title. It changes no numerical code, figures or historical numerical acceptance record. The software release remains v2.0.1; see the validation scope above.
-
 ## Licensing and external data
 
 Project-authored software and supporting material are licensed under [MIT](LICENSE). The mathematical handbook and its accompanying project-authored notes are licensed under [CC BY 4.0](LICENSES/CC-BY-4.0.txt). See [LICENSING.md](LICENSING.md) for scope and attribution. Third-party model, geology, and coastline datasets retain their own terms and are not relicensed here.
+

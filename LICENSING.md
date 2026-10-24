@@ -37,8 +37,9 @@ by this project.
 
 ## Release coverage
 
-Version `v2.0.1` is the first complete archive that includes these license
-texts. These grants also apply to identical project-authored material in the
-previous `v2.0.0` distribution. Keep the applicable license texts and attribution
-when redistributing that material. The existing `v2.0.0` archive and tag are
-preserved for reproducibility.
+Version `v1.0` is the current complete archive and includes these license
+texts. Keep the applicable license texts and attribution when redistributing
+this material. Historical v2.0 archives remain separate records for reproducibility.
+
+
+
