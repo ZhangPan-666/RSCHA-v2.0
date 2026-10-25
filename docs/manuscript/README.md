@@ -20,3 +20,7 @@ SHA256SUMS.txt checks the files in this manuscript directory. The software-level
 ## Layout update, 25 October 2026
 
 Figure 4 now uses a top-of-page placement so that the following body text continues below its caption on page 29. The figure size, scientific content and total length (38 pages) are unchanged. The manuscript PDF, TeX and source ZIP were rebuilt together and all pages were visually checked.
+
+## Notation update, 25 October 2026
+
+Equation (7) uses the superscripts `int` and `ext` for the internal and external Legendre potential terms. The current PDF, TeX and source ZIP use the same notation. The rebuilt manuscript remains 38 pages; all other extracted page text is unchanged, and the corrected page 29 layout is retained.
