@@ -1,0 +1,42 @@
+{
+  "title": "Regional application model coefficients",
+  "manuscript": "Stable computation of revised spherical cap harmonics",
+  "date": "2026-11-03",
+  "format": "Native R-SCHA model, ASCII single-column",
+  "models": [
+    {
+      "region": "Cascadia",
+      "path": "models/regional_applications/Cascadia/Results_RSCHAModel.dat",
+      "bytes": 2703241,
+      "sha256": "7b3e0158bea496134153fa2bc522d0f7b2b161ab4b933519d8f28138c7b201f2",
+      "parameter_rows": 9,
+      "coefficient_entries": 144124,
+      "cap_centre_longitude_deg": -127.0,
+      "cap_centre_geocentric_latitude_deg": 45.5,
+      "cap_half_angle_deg": 7.5,
+      "internal_index": 378,
+      "external_index": 7,
+      "mehler_limit": 3,
+      "zero_eigenvalue_limit": 3,
+      "outer_radius_m": 6921200.0,
+      "inner_radius_m": 6356200.0
+    },
+    {
+      "region": "Midcontinent",
+      "path": "models/regional_applications/Midcontinent/Results_RSCHAModel.dat",
+      "bytes": 2708941,
+      "sha256": "390642bdce529ba97df7aa96322b70245beadca7916c2c90469b290679aeaabb",
+      "parameter_rows": 9,
+      "coefficient_entries": 144124,
+      "cap_centre_longitude_deg": -89.0,
+      "cap_centre_geocentric_latitude_deg": 45.8,
+      "cap_half_angle_deg": 7.5,
+      "internal_index": 378,
+      "external_index": 7,
+      "mehler_limit": 3,
+      "zero_eigenvalue_limit": 3,
+      "outer_radius_m": 6921200.0,
+      "inner_radius_m": 6356200.0
+    }
+  ]
+}

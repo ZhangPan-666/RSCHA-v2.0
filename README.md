@@ -46,3 +46,8 @@ This distribution also includes later application, progress-reporting, and compi
 
 Project-authored software and supporting material are licensed under [MIT](LICENSE). The mathematical handbook and its accompanying project-authored notes are licensed under [CC BY 4.0](LICENSES/CC-BY-4.0.txt). See [LICENSING.md](LICENSING.md) for scope and attribution. Third-party model, geology, and coastline datasets retain their own terms and are not relicensed here.
 
+## Regional application models
+
+The final [Cascadia and Midcontinent model coefficients](models/regional_applications/README.md)
+used in the manuscript's applications are available in native forward-driver format,
+with geometry metadata and SHA-256 digests.
