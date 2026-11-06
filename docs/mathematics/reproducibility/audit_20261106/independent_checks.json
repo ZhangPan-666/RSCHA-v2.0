@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "wigner_defining_identity_checks": 588,
+  "max_wigner_identity_absolute_error": 2.0139534410903143e-15,
+  "max_wigner_unitarity_error": 1.6590091159892916e-15,
+  "max_coefficient_rotation_error": 2.6131546473217737e-15,
+  "paired_boundary_example": {
+    "A": [
+      [
+        4.0,
+        -3.0
+      ],
+      [
+        -0.125,
+        12.0
+      ]
+    ],
+    "target": [
+      -3.0,
+      12.0
+    ],
+    "paired_coefficients": [
+      0.0,
+      1.0
+    ],
+    "unpaired_boundary_residual": [
+      3.0,
+      -12.0
+    ]
+  },
+  "global_normal_trace_counterexample": {
+    "potential": "u=z",
+    "edge_theta_rad": 1.0471975511965976,
+    "adjacent_normal_derivatives": [
+      -0.5000000000000001,
+      -0.8660254037844386
+    ],
+    "cutoffs": [
+      0.001,
+      1e-06,
+      1e-09
+    ],
+    "seminorm_lower_bound_integrals": [
+      5.523459918528413,
+      12.429218196843383,
+      19.33697147782652
+    ]
+  },
+  "scope": "Finite-degree numerical consistency checks and explicit analytical counterexamples; not a proof of all function-space statements."
+}

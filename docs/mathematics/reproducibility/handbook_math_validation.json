@@ -1,0 +1,144 @@
+{
+  "status": "PASS",
+  "precision_decimal_digits": 45,
+  "comparison_count": 450,
+  "checks": {
+    "Legendre degree recurrence": {
+      "count": 30,
+      "max_scaled_error": 4.304788882405838e-42
+    },
+    "Legendre first and second derivatives": {
+      "count": 60,
+      "max_scaled_error": 0.0
+    },
+    "Schmidt-normalised recurrences": {
+      "count": 54,
+      "max_scaled_error": 1.9267853884466235e-45
+    },
+    "Equivalent Ferrers hypergeometric forms": {
+      "count": 30,
+      "max_scaled_error": 0.0
+    },
+    "Legendre order recurrence (m>=1)": {
+      "count": 24,
+      "max_scaled_error": 5.739718509874451e-42
+    },
+    "Legendre lowering derivative (m>=1)": {
+      "count": 24,
+      "max_scaled_error": 0.0
+    },
+    "Legendre root parameter norm": {
+      "count": 5,
+      "max_scaled_error": 0.0
+    },
+    "SH to cap angular overlap": {
+      "count": 15,
+      "max_scaled_error": 0.0
+    },
+    "Mehler parameter norm": {
+      "count": 10,
+      "max_scaled_error": 9.78139555079964e-46
+    },
+    "Mehler explicit H norm": {
+      "count": 10,
+      "max_scaled_error": 8.99348334118083e-47
+    },
+    "Mehler bilinear boundary integral": {
+      "count": 10,
+      "max_scaled_error": 1.187908057709024e-45
+    },
+    "Constant Lerch norm including large cap": {
+      "count": 8,
+      "max_scaled_error": 0.0
+    },
+    "Constant regularised degree-zero branch": {
+      "count": 4,
+      "max_scaled_error": 0.0
+    },
+    "Radial Neumann endpoint conditions": {
+      "count": 10,
+      "max_scaled_error": 1.6313261169996311e-55
+    },
+    "Radial norms": {
+      "count": 10,
+      "max_scaled_error": 0.0
+    },
+    "Closed SH radial overlaps": {
+      "count": 60,
+      "max_scaled_error": 1.8840693482831033e-50
+    },
+    "Radial ODE and second derivative": {
+      "count": 8,
+      "max_scaled_error": 2.1972359920613132e-42
+    },
+    "Radial zero mean": {
+      "count": 8,
+      "max_scaled_error": 1.8840693482831033e-50
+    },
+    "Radial cross orthogonality": {
+      "count": 20,
+      "max_scaled_error": 5.357030099184411e-50
+    },
+    "One-surface repeated-root condition": {
+      "count": 2,
+      "max_scaled_error": 4.078315292499078e-56
+    },
+    "One-surface repeated-root ODE": {
+      "count": 2,
+      "max_scaled_error": 2.1895288505075267e-47
+    },
+    "Two-boundary coefficient solution": {
+      "count": 4,
+      "max_scaled_error": 0.0
+    },
+    "Spherical field vs Cartesian derivatives": {
+      "count": 3,
+      "max_scaled_error": 1.5917651053441216e-16
+    },
+    "Spherical Hessian vs Cartesian derivatives": {
+      "count": 3,
+      "max_scaled_error": 2.312823254857952e-16
+    },
+    "Harmonic tensor trace": {
+      "count": 3,
+      "max_scaled_error": 1.3877787807814457e-17
+    },
+    "NED rotation orthogonality": {
+      "count": 3,
+      "max_scaled_error": 2.220446049250313e-16
+    },
+    "Six-component tensor rotation": {
+      "count": 3,
+      "max_scaled_error": 2.7531209820492605e-16
+    },
+    "Wigner defining rotation identity": {
+      "count": 6,
+      "max_scaled_error": 3.8863250692214214e-16
+    },
+    "Wigner unitarity": {
+      "count": 3,
+      "max_scaled_error": 8.882067384577149e-16
+    },
+    "All volume energy blocks by quadrature": {
+      "count": 3,
+      "max_scaled_error": 1.518130322103509e-13
+    },
+    "All fixed-surface energy blocks by quadrature": {
+      "count": 3,
+      "max_scaled_error": 1.1135972339867115e-14
+    },
+    "Surface Gram symmetry": {
+      "count": 3,
+      "max_scaled_error": 2.642283841402372e-17
+    },
+    "Surface Gram non-negative spectrum": {
+      "count": 3,
+      "max_scaled_error": 6.622416363171967e-30
+    },
+    "Triangular missing (1,2) radial counterexample": {
+      "count": 6,
+      "max_scaled_error": 4.3682017638463355e-14
+    }
+  },
+  "scope": "Finite representative numerical identities and matrix checks; see handbook audit report for analytical proof review and limits."
+}

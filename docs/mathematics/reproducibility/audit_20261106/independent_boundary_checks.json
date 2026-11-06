@@ -1,0 +1,737 @@
+{
+  "status": "PASS",
+  "precision": 45,
+  "checks": 144,
+  "maximum_scaled_error": 4.780656975628956e-13,
+  "groups": {
+    "Constant": 18,
+    "Legendre": 24,
+    "Mehler": 27,
+    "R-SCHA2D": 12,
+    "Radial": 63
+  },
+  "counterexample_distinct_continuations_at_r2_theta03": 2.242673341846917,
+  "scope": "Finite parameter samples; spectral and function-space assertions were audited analytically, not proved by these tests.",
+  "details": [
+    {
+      "group": "Legendre",
+      "name": "raising",
+      "scaled_error": 6.842277657836021e-49
+    },
+    {
+      "group": "Legendre",
+      "name": "ODE",
+      "scaled_error": 1.7516230804060213e-46
+    },
+    {
+      "group": "Legendre",
+      "name": "raising",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Legendre",
+      "name": "ODE",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Legendre",
+      "name": "raising",
+      "scaled_error": 9.686438295834181e-47
+    },
+    {
+      "group": "Legendre",
+      "name": "ODE",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Legendre",
+      "name": "raising",
+      "scaled_error": 9.233612350744432e-47
+    },
+    {
+      "group": "Legendre",
+      "name": "ODE",
+      "scaled_error": 4.484155085839415e-44
+    },
+    {
+      "group": "Legendre",
+      "name": "lowering",
+      "scaled_error": 9.233612350744432e-47
+    },
+    {
+      "group": "Legendre",
+      "name": "raising",
+      "scaled_error": 2.0506516007858957e-46
+    },
+    {
+      "group": "Legendre",
+      "name": "ODE",
+      "scaled_error": 1.401298464324817e-45
+    },
+    {
+      "group": "Legendre",
+      "name": "lowering",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Legendre",
+      "name": "raising",
+      "scaled_error": 1.9389584573991367e-46
+    },
+    {
+      "group": "Legendre",
+      "name": "ODE",
+      "scaled_error": 5.254869241218064e-46
+    },
+    {
+      "group": "Legendre",
+      "name": "lowering",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Legendre",
+      "name": "raising",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Legendre",
+      "name": "ODE",
+      "scaled_error": 5.605193857299268e-45
+    },
+    {
+      "group": "Legendre",
+      "name": "lowering",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Legendre",
+      "name": "raising",
+      "scaled_error": 9.047650428256539e-47
+    },
+    {
+      "group": "Legendre",
+      "name": "ODE",
+      "scaled_error": 1.793662034335766e-43
+    },
+    {
+      "group": "Legendre",
+      "name": "lowering",
+      "scaled_error": 9.047650428256539e-47
+    },
+    {
+      "group": "Legendre",
+      "name": "raising",
+      "scaled_error": 1.0802722613462418e-46
+    },
+    {
+      "group": "Legendre",
+      "name": "ODE",
+      "scaled_error": 7.174648137343064e-43
+    },
+    {
+      "group": "Legendre",
+      "name": "lowering",
+      "scaled_error": 3.2408167840387255e-46
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.0825768324698076e-60
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 4.3790577010150533e-47
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.8505183982914557e-45
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 6.005368207988402e-50
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 4.7895943604852146e-48
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.7516230804060217e-46
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 2.6969054690583527e-55
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 2.6684882865560593e-47
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 9.479356193517808e-43
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.2571564062422154e-60
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 8.758115402030107e-47
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 5.811952435070932e-45
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 2.392124415532601e-49
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 3.8316754883883836e-47
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 2.005911599195542e-45
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.219033930580687e-54
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.0345523818758432e-45
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 3.939401843723541e-43
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 2.5506500649229426e-60
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.6014010314934197e-45
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.7323493962274598e-43
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.094764425253767e-47
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 3.016255016517695e-45
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.2973478153611968e-43
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 2.1142637964854702e-46
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 4.42054469329882e-45
+    },
+    {
+      "group": "Mehler",
+      "name": "parameter-norm",
+      "scaled_error": 1.2035654116699806e-43
+    },
+    {
+      "group": "Constant",
+      "name": "Lerch-norm",
+      "scaled_error": 9.5551338385796e-50
+    },
+    {
+      "group": "Constant",
+      "name": "regularised-limit",
+      "scaled_error": 4.997915624441649e-14
+    },
+    {
+      "group": "Constant",
+      "name": "Lerch-norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Constant",
+      "name": "regularised-limit",
+      "scaled_error": 4.780656975628956e-13
+    },
+    {
+      "group": "Constant",
+      "name": "Lerch-norm",
+      "scaled_error": 2.1580443288501074e-46
+    },
+    {
+      "group": "Constant",
+      "name": "regularised-limit",
+      "scaled_error": 6.23604507302794e-14
+    },
+    {
+      "group": "Constant",
+      "name": "Lerch-norm",
+      "scaled_error": 2.1925023012475042e-52
+    },
+    {
+      "group": "Constant",
+      "name": "regularised-limit",
+      "scaled_error": 1.2499999131349116e-15
+    },
+    {
+      "group": "Constant",
+      "name": "Lerch-norm",
+      "scaled_error": 4.1053665947016125e-48
+    },
+    {
+      "group": "Constant",
+      "name": "regularised-limit",
+      "scaled_error": 1.249066104397998e-13
+    },
+    {
+      "group": "Constant",
+      "name": "Lerch-norm",
+      "scaled_error": 2.784621218821073e-46
+    },
+    {
+      "group": "Constant",
+      "name": "regularised-limit",
+      "scaled_error": 1.3816007576343804e-14
+    },
+    {
+      "group": "Constant",
+      "name": "Lerch-norm",
+      "scaled_error": 1.6233606574439689e-55
+    },
+    {
+      "group": "Constant",
+      "name": "regularised-limit",
+      "scaled_error": 9.387515644171283e-18
+    },
+    {
+      "group": "Constant",
+      "name": "Lerch-norm",
+      "scaled_error": 3.28429327576129e-47
+    },
+    {
+      "group": "Constant",
+      "name": "regularised-limit",
+      "scaled_error": 1.0802928115927491e-13
+    },
+    {
+      "group": "Constant",
+      "name": "Lerch-norm",
+      "scaled_error": 9.204268236981255e-46
+    },
+    {
+      "group": "Constant",
+      "name": "regularised-limit",
+      "scaled_error": 4.806068463311787e-15
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-a",
+      "scaled_error": 6.525304467998525e-55
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-b",
+      "scaled_error": 3.2187825299286627e-41
+    },
+    {
+      "group": "Radial",
+      "name": "norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 8.552847072295026e-50
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 9.601604655233815e-53
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 3.4211388289180104e-49
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 3.4211388289180104e-49
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-a",
+      "scaled_error": 6.525304467998525e-55
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-b",
+      "scaled_error": 1.2875117889832997e-40
+    },
+    {
+      "group": "Radial",
+      "name": "norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 3.0486222474489107e-51
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 5.387188610888932e-51
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 2.6727647100921956e-51
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 2.8064029455968054e-50
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-a",
+      "scaled_error": 6.525304467998525e-55
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-b",
+      "scaled_error": 5.15004593294425e-40
+    },
+    {
+      "group": "Radial",
+      "name": "norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 5.7422679318387016e-52
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 1.1155402803223642e-51
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 8.352389719038111e-52
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 6.681911775230489e-51
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-a",
+      "scaled_error": 8.156630584998156e-56
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-b",
+      "scaled_error": 2.467628449256895e-46
+    },
+    {
+      "group": "Radial",
+      "name": "norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 7.030891964208644e-51
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 4.3790577010150533e-47
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 3.192849909341515e-46
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-a",
+      "scaled_error": 8.156630584998156e-56
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-b",
+      "scaled_error": 9.825030503999128e-46
+    },
+    {
+      "group": "Radial",
+      "name": "norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 4.0903039709967637e-50
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 2.627434620609032e-46
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-a",
+      "scaled_error": 8.156630584998156e-56
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-b",
+      "scaled_error": 3.925450697217687e-45
+    },
+    {
+      "group": "Radial",
+      "name": "norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 3.4211388289180104e-49
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 4.0359648919516984e-50
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 4.3790577010150533e-47
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-a",
+      "scaled_error": 2.039157646249539e-56
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-b",
+      "scaled_error": 6.751189607314759e-51
+    },
+    {
+      "group": "Radial",
+      "name": "norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 9.16986915589912e-47
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 3.91218070214589e-49
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 8.758115402030107e-47
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 1.1254029680234406e-46
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-a",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-b",
+      "scaled_error": 2.274185858662145e-50
+    },
+    {
+      "group": "Radial",
+      "name": "norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 5.468751915558809e-49
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 2.233367473485712e-46
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-a",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "Neumann-b",
+      "scaled_error": 8.61789594631568e-50
+    },
+    {
+      "group": "Radial",
+      "name": "norm",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 2.1895288505075267e-47
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 5.783292789257373e-49
+    },
+    {
+      "group": "Radial",
+      "name": "internal-overlap",
+      "scaled_error": 2.1895288505075267e-47
+    },
+    {
+      "group": "Radial",
+      "name": "external-overlap",
+      "scaled_error": 1.698039203948289e-46
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "normal-trace",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "normal-trace",
+      "scaled_error": 2.6497349136889905e-169
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "rim-north",
+      "scaled_error": 5.768998969522537e-69
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "normal-trace",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "normal-trace",
+      "scaled_error": 8.156630584998156e-56
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "rim-north",
+      "scaled_error": 1.006077672683739e-68
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "two-trace-internal",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "two-trace-external",
+      "scaled_error": 4.3790577010150533e-47
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "two-trace-internal",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "two-trace-external",
+      "scaled_error": 8.758115402030107e-47
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "two-trace-internal",
+      "scaled_error": 0.0
+    },
+    {
+      "group": "R-SCHA2D",
+      "name": "two-trace-external",
+      "scaled_error": 4.3790577010150533e-47
+    }
+  ]
+}

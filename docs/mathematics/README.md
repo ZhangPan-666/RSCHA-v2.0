@@ -1,84 +1,45 @@
 # Mathematical Foundations of Revised Spherical Cap Harmonic Analysis
 
-This is the corrected pure-mathematics edition of the R-SCHA handbook.  It
-develops the closed-shell three-dimensional theory from the Laplace equation
-and complementary mixed boundary-value problems, rather than treating the
-four coefficient families as preassigned formulas.
+## Current revision: November 6, 2026
 
-## Mathematical scope
+This handbook derives R-SCHA on a spherical-cap shell under the boundary,
+branch, normalisation, trace and convergence assumptions stated in the text.
+It treats the closed-shell four-family expansion separately from classical
+one-surface R-SCHA2D. Volume energy, fixed-surface gradient energy and the
+Legendre-only surface approximation are distinguished.
 
-The project contains:
+The current build has 160 pages and 24 section modules. There are 1177 unique
+labels, no unresolved references or bibliography keys, and no overfull or
+underfull box warnings. These build checks do not certify mathematical
+correctness. The review report records confirmed defects and their fixes,
+analytical counterexamples, checks performed, and remaining scope limits.
 
-- complete derivations of the three-dimensional subpotentials `V1` and `V2`;
-- the Legendre, Mehler, zero-eigenvalue constant, and radial
-  Sturm--Liouville systems;
-- the complete four-family R-SCHA series;
-- orthogonality, componentwise completeness, tensor, coordinate, flux, and
-  boundary-regularity theory;
-- full derivations of the exact shell energy, the exact fixed-surface energy
-  with all surviving cross terms, and the simplified Legendre surface
-  spectrum;
-- exact coefficient projections and the spherical-harmonic-to-R-SCHA map;
-- a concise, separate account of Thébault's classical one-surface R-SCHA2D;
-- a notation register and explicit statements of unresolved mathematical
-  questions.
+See `notes/handbook_audit_20261106.md` for the current review. Earlier audit
+reports describe earlier editions and are retained as historical records.
+The old 450 numerical checks have been rerun; additional checks comprise
+144 boundary/special-function comparisons, 250 energy/tensor/flux comparisons
+and 588 finite-degree Wigner defining-identity comparisons. These are finite
+numerical cross-checks, not a proof that the entire handbook has no errors.
+New scripts and results are in `reproducibility/audit_20261106/`.
 
-The handbook intentionally omits algorithms for root finding,
-special-function evaluation, iterative inversion, and other numerical
-implementation details.
+## Figures
 
-## Correction status
+Main basis-function and first/second derivative mode panels all use 3D cap
+displays. Curve plots show all four borders. The dedicated Mehler index
+diagram and repeated index-selection discussion remain removed. Numerical
+illustration definitions and scripts are in `figures/`.
 
-This edition removes all Pan Zhang citations and attribution.  It also fixes
-the zero-mode `V2` projection normalisation, the sign of the Mehler bilinear
-Wronskian identity, the null-space statement for the continuous fixed-surface
-full-gradient Gram form, and the trace-space formulation of the mixed
-boundary problem.  The former coordinate-frame illustration was removed;
-the analytical coordinate formulas and the separate cap-rotation figure are
-retained.
+## Build
 
-This corrected edition additionally repairs the Legendre cap-norm sign,
-reconciles the Wigner-$D$ defining identity with the coefficient-space
-transpose, replaces the incorrect non-unique-continuation argument by the
-proper existence/unique-continuation/ill-posedness distinction, and separates
-$L^2$ boundary projection from the trace regularity required for an
-$H^1(\Omega)$ weak solution.
+On the configured Windows/TeX Live installation run `./build.ps1`, or run
+pdflatex, bibtex8, and two further pdflatex passes on `main.tex`. The script
+uses `build/` and copies the final PDF to both root PDF filenames.
 
-The complete Mehler expansion uses independent rectangular bounds
-$1\le p\le P_{\max}$ and $0\le m\le M_{\mathrm{Meh}}$. The legacy
-triangular rule $m\le p$ is retained only as an explicitly restricted model;
-its non-density in the full lateral-data and energy spaces is demonstrated by
-the missing $(p,m)=(1,2)$ mode. The combined R-SCHA2D continuation family
-remains qualified as an open functional-analytic question.
+The 24 section files are assembled by `main.tex`; source filenames are not
+the final printed section numbers (the one-surface section is ordered after
+the three-dimensional radial theory). The assembled PDF and all coefficients
+must be interpreted with the conventions and hypotheses stated in the text.
 
-## Current audited build
+## Download and source
 
-The reviewed edition was compiled on October 24, 2026 with TeX Live 2026.
-It has 167 pages, 24 section modules, 1,222 unique labels, no missing
-cross-references or bibliography keys, and no overfull/underfull box warnings.
-The mathematical audit includes 450 independent high-precision or quadrature
-comparisons; details are in `notes/handbook_audit_20261024.md` and
-`reproducibility/handbook_math_validation.json`.
-
-The AI-use disclosure remains intentionally deferred at the author's request
-and is recorded as a pending editorial item in the audit report.
-
-## Compilation
-
-Run:
-
-```bash
-pdflatex main.tex
-bibtex8 main
-pdflatex main.tex
-pdflatex main.tex
-```
-
-The compiled handbook is `main.pdf`; a ready-to-use `main.bbl` is included. The portable `build.ps1` script compiles into `build/` and copies the PDF back to the root.
-
-## Source organisation
-
-The main text is divided into twenty-four section files under `sections/` and
-assembled through `main.tex`.  Figures are stored in `figures/`.
-
-
+The current PDF is [available here](Mathematical%20Foundations%20of%20Revised%20Spherical%20Cap%20Harmonic.pdf). The complete portable LaTeX source, figures, notes and numerical check records are in [handbook-source-20261106.zip](handbook-source-20261106.zip). Extract the archive and run `build.ps1`. The v1.0 software release ZIP is a historical snapshot and contains the earlier handbook. This update does not change the numerical software or certify new software test results.

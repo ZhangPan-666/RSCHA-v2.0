@@ -1,0 +1,1031 @@
+{
+  "status": "PASS",
+  "precision_digits": 45,
+  "comparisons": 250,
+  "maximum_scaled_error": 2.975960857642425e-43,
+  "checks": [
+    {
+      "name": "Cartesian-to-NED Hessian 0/0.41/00",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/0.41/01",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/0.41/02",
+      "scaled_error": 2.1895288505075267e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/0.41/11",
+      "scaled_error": 8.758115402030107e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/0.41/12",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/0.41/22",
+      "scaled_error": 3.982729777831131e-59
+    },
+    {
+      "name": "Cartesian-to-NED field 0/0.41/0",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 0/0.41/1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 0/0.41/2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Harmonic Hessian trace 0/0.41",
+      "scaled_error": 8.75811540203409e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/1.23/00",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/1.23/01",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/1.23/02",
+      "scaled_error": 4.3790577010150533e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/1.23/11",
+      "scaled_error": 2.1895288505075267e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/1.23/12",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 0/1.23/22",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 0/1.23/0",
+      "scaled_error": 3.0357654736389445e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 0/1.23/1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 0/1.23/2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Harmonic Hessian trace 0/1.23",
+      "scaled_error": 2.1895288505075267e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/0.41/00",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/0.41/01",
+      "scaled_error": 2.7305132546532577e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/0.41/02",
+      "scaled_error": 7.608418849264927e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/0.41/11",
+      "scaled_error": 5.862708935095611e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/0.41/12",
+      "scaled_error": 5.0304008839970784e-48
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/0.41/22",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 1/0.41/0",
+      "scaled_error": 3.9180473134855973e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 1/0.41/1",
+      "scaled_error": 6.664640616967455e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 1/0.41/2",
+      "scaled_error": 2.8492582217957277e-47
+    },
+    {
+      "name": "Harmonic Hessian trace 1/0.41",
+      "scaled_error": 1.5326701953552687e-46
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/1.23/00",
+      "scaled_error": 4.58028288786834e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/1.23/01",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/1.23/02",
+      "scaled_error": 2.825015307889989e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/1.23/11",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/1.23/12",
+      "scaled_error": 6.846225486750385e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 1/1.23/22",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 1/1.23/0",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 1/1.23/1",
+      "scaled_error": 5.797073734087692e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 1/1.23/2",
+      "scaled_error": 3.969593504859761e-47
+    },
+    {
+      "name": "Harmonic Hessian trace 1/1.23",
+      "scaled_error": 8.758115402030107e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/0.41/00",
+      "scaled_error": 6.680859384412379e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/0.41/01",
+      "scaled_error": 6.970400338649557e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/0.41/02",
+      "scaled_error": 5.739508310873373e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/0.41/11",
+      "scaled_error": 8.546397500537993e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/0.41/12",
+      "scaled_error": 6.869837763880071e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/0.41/22",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 2/0.41/0",
+      "scaled_error": 3.191629335735384e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 2/0.41/1",
+      "scaled_error": 1.7748592385964953e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 2/0.41/2",
+      "scaled_error": 3.8827415872590267e-47
+    },
+    {
+      "name": "Harmonic Hessian trace 2/0.41",
+      "scaled_error": 2.627434620609032e-46
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/1.23/00",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/1.23/01",
+      "scaled_error": 3.285506321476821e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/1.23/02",
+      "scaled_error": 5.140742572157228e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/1.23/11",
+      "scaled_error": 7.668869369366955e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/1.23/12",
+      "scaled_error": 1.489876961642213e-46
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 2/1.23/22",
+      "scaled_error": 1.18838445235996e-46
+    },
+    {
+      "name": "Cartesian-to-NED field 2/1.23/0",
+      "scaled_error": 9.603017118460816e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 2/1.23/1",
+      "scaled_error": 1.4089050325545042e-46
+    },
+    {
+      "name": "Cartesian-to-NED field 2/1.23/2",
+      "scaled_error": 7.353510977304452e-47
+    },
+    {
+      "name": "Harmonic Hessian trace 2/1.23",
+      "scaled_error": 1.7516230804060213e-46
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/0.41/00",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/0.41/01",
+      "scaled_error": 3.7701830494909415e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/0.41/02",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/0.41/11",
+      "scaled_error": 1.0626723876582898e-46
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/0.41/12",
+      "scaled_error": 6.776994022585433e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/0.41/22",
+      "scaled_error": 1.0228829022053116e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 3/0.41/0",
+      "scaled_error": 5.152378322910053e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 3/0.41/1",
+      "scaled_error": 4.741904225573194e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 3/0.41/2",
+      "scaled_error": 4.889677376488019e-48
+    },
+    {
+      "name": "Harmonic Hessian trace 3/0.41",
+      "scaled_error": 5.473822126268817e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/1.23/00",
+      "scaled_error": 3.595769699681392e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/1.23/01",
+      "scaled_error": 8.081917786739817e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/1.23/02",
+      "scaled_error": 2.7127383399261497e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/1.23/11",
+      "scaled_error": 2.968924728582551e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/1.23/12",
+      "scaled_error": 4.081446553547748e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 3/1.23/22",
+      "scaled_error": 3.2056438847262013e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 3/1.23/0",
+      "scaled_error": 7.449384808211065e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 3/1.23/1",
+      "scaled_error": 1.2751938799813706e-46
+    },
+    {
+      "name": "Cartesian-to-NED field 3/1.23/2",
+      "scaled_error": 1.092351386052398e-46
+    },
+    {
+      "name": "Harmonic Hessian trace 3/1.23",
+      "scaled_error": 8.758115402030107e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/0.41/00",
+      "scaled_error": 8.558431691924645e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/0.41/01",
+      "scaled_error": 4.3790577010150533e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/0.41/02",
+      "scaled_error": 5.485070825217311e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/0.41/11",
+      "scaled_error": 1.1677487202706808e-46
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/0.41/12",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/0.41/22",
+      "scaled_error": 4.328561116230559e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 4/0.41/0",
+      "scaled_error": 3.704125532206381e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 4/0.41/1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 4/0.41/2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Harmonic Hessian trace 4/0.41",
+      "scaled_error": 7.006492321624085e-46
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/1.23/00",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/1.23/01",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/1.23/02",
+      "scaled_error": 3.0303934045735314e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/1.23/11",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/1.23/12",
+      "scaled_error": 4.3790577010150533e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 4/1.23/22",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 4/1.23/0",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 4/1.23/1",
+      "scaled_error": 8.758115402030107e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 4/1.23/2",
+      "scaled_error": 4.462320278647476e-47
+    },
+    {
+      "name": "Harmonic Hessian trace 4/1.23",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/0.41/00",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/0.41/01",
+      "scaled_error": 8.145440844328799e-56
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/0.41/02",
+      "scaled_error": 4.3790576996038714e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/0.41/11",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/0.41/12",
+      "scaled_error": 1.094764428794026e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/0.41/22",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED field 5/0.41/0",
+      "scaled_error": 2.1895288481085176e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 5/0.41/1",
+      "scaled_error": 6.018446702485204e-56
+    },
+    {
+      "name": "Cartesian-to-NED field 5/0.41/2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Harmonic Hessian trace 5/0.41",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/1.23/00",
+      "scaled_error": 2.7649553131171895e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/1.23/01",
+      "scaled_error": 1.0947644252537633e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/1.23/02",
+      "scaled_error": 5.473822134695088e-48
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/1.23/11",
+      "scaled_error": 9.216517710390633e-48
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/1.23/12",
+      "scaled_error": 4.1053665947016125e-48
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 5/1.23/22",
+      "scaled_error": 1.5916236482935652e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 5/1.23/0",
+      "scaled_error": 1.8537796784086717e-56
+    },
+    {
+      "name": "Cartesian-to-NED field 5/1.23/1",
+      "scaled_error": 1.0947644252537633e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 5/1.23/2",
+      "scaled_error": 1.5493157363240394e-47
+    },
+    {
+      "name": "Harmonic Hessian trace 5/1.23",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/0.41/00",
+      "scaled_error": 2.639826052744934e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/0.41/01",
+      "scaled_error": 2.1895288586529675e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/0.41/02",
+      "scaled_error": 3.4042403730968656e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/0.41/11",
+      "scaled_error": 2.639826052744934e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/0.41/12",
+      "scaled_error": 3.540262766167767e-56
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/0.41/22",
+      "scaled_error": 3.778817883781019e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 6/0.41/0",
+      "scaled_error": 2.825764447207055e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 6/0.41/1",
+      "scaled_error": 1.09476443127221e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 6/0.41/2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Harmonic Hessian trace 6/0.41",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/1.23/00",
+      "scaled_error": 1.0084340739700439e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/1.23/01",
+      "scaled_error": 2.7369110631344083e-48
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/1.23/02",
+      "scaled_error": 4.40939539972999e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/1.23/11",
+      "scaled_error": 2.5210851849251095e-47
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/1.23/12",
+      "scaled_error": 4.1053665947016125e-48
+    },
+    {
+      "name": "Cartesian-to-NED Hessian 6/1.23/22",
+      "scaled_error": 4.673620488918867e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 6/1.23/0",
+      "scaled_error": 2.790330909833116e-47
+    },
+    {
+      "name": "Cartesian-to-NED field 6/1.23/1",
+      "scaled_error": 5.473822126268817e-48
+    },
+    {
+      "name": "Cartesian-to-NED field 6/1.23/2",
+      "scaled_error": 9.726407466414035e-48
+    },
+    {
+      "name": "Harmonic Hessian trace 6/1.23",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/0/Int",
+      "scaled_error": 1.740407882691673e-46
+    },
+    {
+      "name": "Closed-shell flux 0.7853981633974483/Int",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/0/Ext",
+      "scaled_error": 6.21900890306441e-47
+    },
+    {
+      "name": "Closed-shell flux 0.7853981633974483/Ext",
+      "scaled_error": 8.804617922019008e-45
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/0/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Closed-shell flux 0.7853981633974483/Meh1",
+      "scaled_error": 2.4792986231828743e-49
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/0/Meh2",
+      "scaled_error": 1.30811109119172e-46
+    },
+    {
+      "name": "Closed-shell flux 0.7853981633974483/Meh2",
+      "scaled_error": 4.9174867137216294e-48
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/0/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Closed-shell flux 0.7853981633974483/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Int/Ext",
+      "scaled_error": 1.4879804288212124e-44
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Int/Ext",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Int/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Int/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Int/Meh2",
+      "scaled_error": 3.719951072053031e-45
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Int/Meh2",
+      "scaled_error": 5.780342681811952e-47
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Int/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Int/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Ext/Meh1",
+      "scaled_error": 1.0415863001748487e-43
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Ext/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Ext/Meh2",
+      "scaled_error": 1.3391823859390912e-43
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Ext/Meh2",
+      "scaled_error": 5.686608717572998e-47
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Ext/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Ext/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Meh1/Meh2",
+      "scaled_error": 7.298130913558996e-44
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Meh1/Meh2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Meh1/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Meh1/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/0/Meh2/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/0/Meh2/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/1/Int",
+      "scaled_error": 1.4861224284226682e-46
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/1/Ext",
+      "scaled_error": 1.7327847218710667e-46
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/1/Meh1",
+      "scaled_error": 1.2465410674909767e-46
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/1/Meh2",
+      "scaled_error": 6.388717539954174e-47
+    },
+    {
+      "name": "Volume diagonal 0.7853981633974483/1/Cons",
+      "scaled_error": 5.576829864217749e-47
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Int/Ext",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Int/Ext",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Int/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Int/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Int/Meh2",
+      "scaled_error": 3.719951072053031e-45
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Int/Meh2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Int/Cons",
+      "scaled_error": 2.2295226659571953e-50
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Int/Cons",
+      "scaled_error": 1.3947659894015505e-50
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Ext/Meh1",
+      "scaled_error": 1.19038434305697e-43
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Ext/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Ext/Meh2",
+      "scaled_error": 2.975960857642425e-43
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Ext/Meh2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Ext/Cons",
+      "scaled_error": 5.160946871525814e-49
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Ext/Cons",
+      "scaled_error": 3.396513803251827e-49
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Meh1/Meh2",
+      "scaled_error": 4.2237572087655546e-44
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Meh1/Meh2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Meh1/Cons",
+      "scaled_error": 7.758691735904482e-45
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Meh1/Cons",
+      "scaled_error": 9.884198006385497e-48
+    },
+    {
+      "name": "Volume off-diagonal 0.7853981633974483/1/Meh2/Cons",
+      "scaled_error": 1.0773886502829045e-44
+    },
+    {
+      "name": "Fixed-surface cross block 0.7853981633974483/1/Meh2/Cons",
+      "scaled_error": 1.3157835334186717e-46
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/0/Int",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Closed-shell flux 1.5707963267948966/Int",
+      "scaled_error": 1.100577240252376e-45
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/0/Ext",
+      "scaled_error": 7.620453642798967e-47
+    },
+    {
+      "name": "Closed-shell flux 1.5707963267948966/Ext",
+      "scaled_error": 2.201154480504752e-45
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/0/Meh1",
+      "scaled_error": 1.2487595376251993e-46
+    },
+    {
+      "name": "Closed-shell flux 1.5707963267948966/Meh1",
+      "scaled_error": 3.3216025731375614e-49
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/0/Meh2",
+      "scaled_error": 4.959867412593269e-46
+    },
+    {
+      "name": "Closed-shell flux 1.5707963267948966/Meh2",
+      "scaled_error": 6.163598094585959e-48
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/0/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Closed-shell flux 1.5707963267948966/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Int/Ext",
+      "scaled_error": 1.8599755360265155e-45
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Int/Ext",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Int/Meh1",
+      "scaled_error": 1.8599755360265155e-45
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Int/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Int/Meh2",
+      "scaled_error": 3.254957188046402e-45
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Int/Meh2",
+      "scaled_error": 4.466329988997593e-47
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Int/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Int/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Ext/Meh1",
+      "scaled_error": 1.4879804288212124e-44
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Ext/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Ext/Meh2",
+      "scaled_error": 1.9994737012285042e-44
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Ext/Meh2",
+      "scaled_error": 6.387855151071625e-47
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Ext/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Ext/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Meh1/Meh2",
+      "scaled_error": 8.792395283857152e-44
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Meh1/Meh2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Meh1/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Meh1/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/0/Meh2/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/0/Meh2/Cons",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/1/Int",
+      "scaled_error": 6.923166423122798e-47
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/1/Ext",
+      "scaled_error": 2.378987105893669e-46
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/1/Meh1",
+      "scaled_error": 1.7997377937248528e-46
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/1/Meh2",
+      "scaled_error": 4.911689423364292e-46
+    },
+    {
+      "name": "Volume diagonal 1.5707963267948966/1/Cons",
+      "scaled_error": 7.629266166666208e-47
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Int/Ext",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Int/Ext",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Int/Meh1",
+      "scaled_error": 9.299877680132578e-46
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Int/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Int/Meh2",
+      "scaled_error": 1.3949816520198867e-45
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Int/Meh2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Int/Cons",
+      "scaled_error": 1.36536065422016e-46
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Int/Cons",
+      "scaled_error": 1.1198881332882313e-46
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Ext/Meh1",
+      "scaled_error": 1.8599755360265155e-44
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Ext/Meh1",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Ext/Meh2",
+      "scaled_error": 2.975960857642425e-44
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Ext/Meh2",
+      "scaled_error": 0.0
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Ext/Cons",
+      "scaled_error": 6.8174476893566446e-46
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Ext/Cons",
+      "scaled_error": 5.699285416749513e-46
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Meh1/Meh2",
+      "scaled_error": 4.604423217529147e-44
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Meh1/Meh2",
+      "scaled_error": 4.660830642057748e-47
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Meh1/Cons",
+      "scaled_error": 3.836138210561885e-45
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Meh1/Cons",
+      "scaled_error": 1.0394687347658718e-47
+    },
+    {
+      "name": "Volume off-diagonal 1.5707963267948966/1/Meh2/Cons",
+      "scaled_error": 5.41435186225768e-45
+    },
+    {
+      "name": "Fixed-surface cross block 1.5707963267948966/1/Meh2/Cons",
+      "scaled_error": 3.9122170966147965e-46
+    }
+  ],
+  "h1_without_l2_gradient_trace_example": [
+    {
+      "N": 10,
+      "volume_energy": 1.5497677311665408,
+      "outer_surface_energy": 7.407704239103048
+    },
+    {
+      "N": 100,
+      "volume_energy": 1.634983900184893,
+      "outer_surface_energy": 12.009738935464133
+    },
+    {
+      "N": 1000,
+      "volume_energy": 1.64393456668156,
+      "outer_surface_energy": 16.61487628778225
+    },
+    {
+      "N": 10000,
+      "volume_energy": 1.6448340718480599,
+      "outer_surface_energy": 21.220046143936823
+    }
+  ],
+  "scope": "Seven Cartesian harmonic functions at two off-axis points; finite energy/flux blocks at two cap angles and two azimuthal orders. Not an arbitrary-parameter proof."
+}
