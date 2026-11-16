@@ -37,6 +37,30 @@
       "zero_eigenvalue_limit": 3,
       "outer_radius_m": 6921200.0,
       "inner_radius_m": 6356200.0
+    },
+    {
+      "region": "Australia",
+      "manuscript": "Revised spherical cap harmonic modeling of the lithospheric magnetic gradient tensor over Australia",
+      "path": "models/regional_applications/Australia/Results_RSCHAModel.dat",
+      "bytes": 7618009,
+      "sha256": "598b1f624762089ebfc0fee9dc501b11b442157cc533b58b3ad6bbfcf2784f9b",
+      "parameter_rows": 9,
+      "coefficient_entries": 374236,
+      "cap_centre_longitude_deg": 133.0,
+      "cap_centre_geocentric_latitude_deg": -27.0,
+      "cap_half_angle_deg": 22.0,
+      "evaluation_half_angle_deg": 21.0,
+      "internal_index": 610,
+      "external_index": 15,
+      "mehler_limit": 3,
+      "zero_eigenvalue_limit": 3,
+      "outer_radius_m": 6921200.0,
+      "inner_radius_m": 6356200.0,
+      "height_reference_radius_m": 6371200,
+      "coefficient_norm_penalty": 0.001,
+      "iteration_count": 1200,
+      "relative_normal_equation_residual": 0.00078672,
+      "stopping_status": "iteration limit"
     }
   ]
 }
