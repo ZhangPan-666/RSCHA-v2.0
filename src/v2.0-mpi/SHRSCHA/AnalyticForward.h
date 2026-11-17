@@ -69,8 +69,6 @@ struct RegionalModel {
   double longitude=0,latitude=90;
   Geometry geometry;
   int internal=0,external=0,mehler=0,constant=0;
-  // Optional active side truncation; legacy storage still uses a square Mehler block.
-  int side_radial_limit=-1,side_order_limit=-1;
   std::vector<double> coefficients,roots;
   int count()const{return R_SCHA::coefficient_count(internal,external,mehler,constant);}
 };
@@ -86,9 +84,7 @@ inline RegionalModel project_model(RegionalModel model,SHCoefficients internal,
   }
   if(model.internal>2048 || model.external>2048 || model.mehler>1024 || model.constant>2048)
     throw std::invalid_argument("Regional truncation exceeds this implementation's guard");
-  if(model.side_radial_limit>model.mehler || model.side_order_limit>model.mehler ||
-      model.side_radial_limit < -1 || model.side_order_limit < -1)
-    throw std::invalid_argument("Active side limits exceed legacy Mehler storage");
+
   const int N=std::max(internal.degree,external.degree);
   internal.g.resize(SHRotation::triangular_size(N));internal.h.resize(internal.g.size());
   external.g.resize(internal.g.size());external.h.resize(internal.g.size());
@@ -98,7 +94,7 @@ inline RegionalModel project_model(RegionalModel model,SHCoefficients internal,
     SHRotation::geographic_to_cap(model.longitude,model.latitude,N,external.g,external.h);
   }
   const int K=std::max(model.internal,model.external),ti=(model.internal+1)*(model.internal+2)/2;
-  const int te=(model.external+1)*(model.external+2)/2,tm=model.mehler*(model.mehler+1);
+  const int te=(model.external+1)*(model.external+2)/2,tm=model.mehler*(model.constant+1);
   model.coefficients.assign(model.count(),0);
   const auto root_count=static_cast<std::size_t>((K+1)*(K+2)/2);
   // A supplied root cache follows the legacy API contract: it must correspond
@@ -112,8 +108,8 @@ inline RegionalModel project_model(RegionalModel model,SHCoefficients internal,
   const int maximum=std::max({model.internal,model.external,model.mehler,model.constant});
   for(int m=execution_rank();m<=maximum;m+=execution_size()) {
     const int ki=std::max(0,model.internal-m+1),ke=std::max(0,model.external-m+1);
-    const int radial=model.side_radial_limit>=0?model.side_radial_limit:model.mehler;
-    const int side_order=model.side_order_limit>=0?model.side_order_limit:model.mehler;
+    const int radial=model.mehler;
+    const int side_order=model.constant;
     const int P=m<=side_order?radial:0;
     std::vector<double> roots;
     for(int k=m;k<=K;++k)roots.push_back(model.roots[k*(k+1)/2+m]);
@@ -132,7 +128,7 @@ inline RegionalModel project_model(RegionalModel model,SHCoefficients internal,
       const int ix=k*(k+1)/2+m;model.coefficients[2*ti+ix]=rc[ki+k-m];model.coefficients[2*ti+te+ix]=rs[ki+k-m];
     }
     for(int p=1;p<=P;++p) {
-      const int ix=(p-1)*(model.mehler+1)+m;
+      const int ix=(p-1)*(model.constant+1)+m;
       model.coefficients[2*(ti+te)+ix]=rc[ki+ke+p-1];
       model.coefficients[2*(ti+te)+tm+ix]=rs[ki+ke+p-1];
     }

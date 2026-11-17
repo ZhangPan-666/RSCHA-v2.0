@@ -194,7 +194,7 @@ int main(int argc, char **argv) {
 
   const int Num_CoefIn = (K_Max_Internal + 1) * (K_Max_Internal + 2) / 2;
   const int Num_CoefEx = (K_Max_External + 1) * (K_Max_External + 2) / 2;
-  const int Num_CoefMe = P_Max * (P_Max + 1);
+  const int Num_CoefMe = P_Max * (M_Max + 1);
   const int Num_CoefCo = M_Max + 1;
   const int Num_Coef = coefficient_count(K_Max_Internal, K_Max_External, P_Max, M_Max);
   if (NumData <= 0 || m0.size() != static_cast<std::size_t>(Num_Coef) ||
@@ -371,7 +371,7 @@ int main(int argc, char **argv) {
       m_Constant(Num_CoefCo);
   Count = 0;
   for (int i = 1; i <= P_Max; i++) {
-    for (int j = 0; j <= P_Max; j++) {
+    for (int j = 0; j <= M_Max; j++) {
       p[Count] = i;
       m_Mehler[Count] = j;
       Count++;

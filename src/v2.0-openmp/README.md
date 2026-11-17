@@ -21,6 +21,14 @@ Work1 defaults: IncludeTMI=true, IncludeVector=false, IncludeDiffTMI=true, Inclu
 
 Work2读取Results_RSCHAModel.dat和Parameters_Coordinates.dat，输出Results_ForwardResults.dat；Work3读取Parameters_Modelling.dat和Parameters_SHModel.dat，外部SH及侧边配置文件可选，输出Results_RSCHAModel.dat及谱和元数据。Work1初值、权重和先验文件必须准备。两测区请分别用data/Work1及data/Work2存放资料和结果。
 
+### 建模截断参数
+
+`Parameters_Modelling.dat` 的第 6 行 `P_Max` 是 Mehler 径向上限，第 7 行
+`M_Max` 是 Mehler 与 Constant 共用的周向上限。Mehler 取
+`p = 1, …, P_Max`、`m = 0, …, M_Max`，Constant 取 `m = 0, …, M_Max`。
+两行可独立设定。Work3 可通过 `Parameters_SideProjection.dat` 的两行
+非负整数依次覆盖这两个值。系数块长度和文件格式见[用户手册](../../docs/software/rscha_user_manual.pdf)。
+
 ### Work2 OpenMP 正演进度条（2026-10-16）
 
 OpenMP 版 Work2 原先只有阶段日志，现在在 V/B/T kernel 正演阶段增加坐标完成进度。每完成一个坐标，由原子计数器累加；约每阶段25次进入命名的 OpenMP critical 区域输出一行，避免线程输出交错及进度倒退。串行回退分支也会逐点计数。

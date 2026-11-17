@@ -50,6 +50,14 @@ run.pbs still selects WORK=1/2/3 and DATA_DIR. Work1 now performs the existing o
 
 Work2 gathers only each rank's owned entries for the ten VBT fields, instead of collecting sparse full-length vectors from every rank. Geographic coordinate filtering, basis evaluation, tensor rotation, and the 13-column output format remain unchanged.
 
+### 建模截断参数
+
+`Parameters_Modelling.dat` 的第 6 行 `P_Max` 是 Mehler 径向上限，第 7 行
+`M_Max` 是 Mehler 与 Constant 共用的周向上限。Mehler 取
+`p = 1, …, P_Max`、`m = 0, …, M_Max`，Constant 取 `m = 0, …, M_Max`。
+两行可独立设定。Work3 可通过 `Parameters_SideProjection.dat` 的两行
+非负整数依次覆盖这两个值。系数块长度和文件格式见[用户手册](../../docs/software/rscha_user_manual.pdf)。
+
 ### Work2 正演进度条
 
 Work2 的 `forward local VBT calculation` 阶段现在由 rank 0 输出全局进度条。所有 MPI rank 按相同的本地工作轮次调用一次 `MPI_Allreduce` 汇总已完成坐标数，因此不会因不同 rank 的计算速度不同而错位；计算结果、坐标分配、MPI 汇集和输出文件格式不变。

@@ -51,11 +51,12 @@ int main() try {
   const double Max_Radius = MatrixTemp[7][0];
   const double Min_Radius = MatrixTemp[8][0];
   check_geometry(Lon0, Lat0, Theta0, Min_Radius, Max_Radius);
-  const int Num_Coef = coefficient_count(K_Max_Internal, K_Max_External, P_Max, M_Max);
+  const int mehler_order = mehler_order_for_count(K_Max_Internal, K_Max_External, P_Max, M_Max, MatrixTemp.size() - 9);
+  const int Num_Coef = static_cast<int>(MatrixTemp.size() - 9);
 
   const int Num_CoefIn = (K_Max_Internal + 1) * (K_Max_Internal + 2) / 2;
   const int Num_CoefEx = (K_Max_External + 1) * (K_Max_External + 2) / 2;
-  const int Num_CoefMe = P_Max * (P_Max + 1);
+  const int Num_CoefMe = P_Max * (mehler_order + 1);
   const int Num_CoefCo = M_Max + 1;
 
   if (MatrixTemp.size() != static_cast<std::size_t>(Num_Coef) + 9) {
@@ -141,7 +142,7 @@ int main() try {
       m_Constant(Num_CoefCo);
   Count = 0;
   for (int i = 1; i <= P_Max; i++) {
-    for (int j = 0; j <= P_Max; j++) {
+    for (int j = 0; j <= mehler_order; j++) {
       p[Count] = i;
       m_Mehler[Count] = j;
       Count++;

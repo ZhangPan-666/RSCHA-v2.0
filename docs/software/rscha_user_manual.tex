@@ -1,0 +1,694 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,longtable,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{newtxtext,newtxmath}
+
+\hypersetup{
+  hypertexnames=false,
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  urlcolor=blue!50!black,
+  citecolor=blue!50!black,
+  pdftitle={RSCHA Program Suite User Manual},
+  pdfauthor={OpenAI}
+}
+
+\definecolor{accent}{RGB}{31,78,121}
+\definecolor{lightaccent}{RGB}{235,242,250}
+\definecolor{codebg}{RGB}{248,248,248}
+
+\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{accent}}{\thesubsubsection}{0.7em}{}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{RSCHA Program Suite User Manual}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlist[itemize]{leftmargin=2em}
+\setlist[enumerate]{leftmargin=2.2em}
+\setstretch{1.08}
+
+\lstdefinestyle{plaincode}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{black!20},
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{2.5cm}
+  {\Huge\bfseries RSCHA Program Suite\\[0.4em]User Manual\par}
+  \vspace{1cm}
+  {\Large Standard English Documentation for the Current Source Implementation\par}
+  \vspace{1.6cm}
+  \begin{minipage}{0.88\textwidth}
+    \centering
+    \setlength{\fboxsep}{14pt}
+    \colorbox{lightaccent}{\parbox{0.9\textwidth}{\centering
+    This document describes the current RSCHA workflow and its projection adapters:\\[0.3em]
+    Work1 inversion, Work2 forward evaluation, and Work3 SH localization.\\[0.3em]
+    It is intended as a strict operational manual based on the actual source code structure, default file names, parameter checks, input formats, and output formats.}}
+  \end{minipage}
+  \vfill
+  {\large Source-aligned operational reference\par}
+  \vspace{0.6cm}
+  {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Purpose and Scope}
+
+This program suite is used to construct, localize, and evaluate regional magnetic field models based on Revised Spherical Cap Harmonic Analysis (R-SCHA). In its current form, the code base provides three programs in serial and MPI versions:
+\begin{enumerate}
+  \item \texttt{Work1\_RSCHAInversion.cpp}: inversion from observations to RSCHA coefficients.
+  \item \texttt{Work2\_RSCHAForward.cpp}: forward calculation from an existing RSCHA model.
+  \item \texttt{Work3\_LocalizeSHModel.cpp}: localization of a spherical harmonic model into an RSCHA model.
+\end{enumerate}
+
+The implementation uses four basis families internally: internal Legendre, external Legendre, Mehler, and constant terms. The programs are designed to exchange a common RSCHA model file, so the complete workflow can start either from observations or from an existing spherical harmonic model.
+
+This manual is intentionally operational rather than theoretical. It focuses on how to prepare files, how to run each program, what each file must contain, which automatic checks are performed, and what outputs are produced.
+
+\section{Program Structure}
+
+\subsection{Main programs}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.34\textwidth} >{\raggedright\arraybackslash}p{0.60\textwidth}}
+\toprule
+Program & Function \\
+\midrule
+\endhead
+\texttt{Work1\_RSCHAInversion.cpp} & Reads modelling and inversion parameters, observation data, data weights, standard deviations, initial model, model weights, and prior model; builds the RSCHA kernel system; performs inversion; writes reconstructed data, model coefficients, and model spectrum. \\
+\addlinespace
+\texttt{Work2\_RSCHAForward.cpp} & Reads an existing RSCHA model and a coordinate list; evaluates the local potential, field components, and second-order tensor components at all valid coordinates; writes the forward results to file. \\
+\addlinespace
+\texttt{Work3\_LocalizeSHModel.cpp} & Reads modelling parameters and a spherical harmonic coefficient file; rotates and localizes the spherical harmonic model into RSCHA coefficient form; writes the RSCHA model and its spectrum. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Shared support components}
+
+The executables depend on a common set of headers. The most important ones are:
+\begin{itemize}
+  \item \texttt{R\_SCHA.h}: non-integer root computation, kernel generation, text matrix I/O, parameter reading, data checking, and result writing.
+  \item \texttt{Basis Function.h}: Legendre, Mehler, and constant basis evaluations.
+  \item \texttt{CRTable.h}: lazy loading of the canonical-residual and normalization table package.
+  \item \texttt{LocalizeSH2RSCHA.h}: spherical harmonic localization into RSCHA coefficients.
+  \item \texttt{CoordinateTransformation.h}: coordinate and vector-component transformations between geographic and spherical cap systems.
+  \item \texttt{Inversion.h}: preconditioned BiCGSTAB inversion with robust weighting support.
+\end{itemize}
+
+\section{Preparation Before Compilation or Execution}
+
+\subsection{Runtime table package}
+
+The production basis layer uses the \path{cr.bin} lookup table. The GitHub
+repository README gives its download location and build setup. Run from
+the prepared source directory or set \texttt{RSCHA\_CR\_TABLE\_DIR} to
+the absolute directory containing \path{cr.bin}. Missing, invalid, or out-of-range table sections use the
+production analytic or direct fallback, which can be slower. The production
+programs do not require the Bremer reference binaries or an
+\texttt{Initialize.h} edit.
+
+\subsection{Compiler notes}
+
+Use \path{scripts/build_windows.bat} or \path{scripts/build_linux.sh}
+in the GitHub distribution. The Windows build uses Intel oneAPI C++ with
+OpenMP and Intel MPI for the MPI version. Each driver builds as a separate
+executable.
+
+\subsection{Text file parsing rules}
+
+Work1 and Work2 use the shared \texttt{readmatrix()} routine. Work3 uses the strict model-table parser. The following rules apply:
+\begin{itemize}
+  \item Each file must contain only numeric values.
+  \item Use commas or whitespace for all programs. Work1/Work2 also accept semicolons; the model-table parser does not.
+  \item Empty lines are ignored.
+  \item Each file must follow its specified row and column structure; SH inputs require four columns in every non-empty row.
+  \item Header rows, units rows, comments, and mixed-format content are not supported.
+\end{itemize}
+
+If any row has an inconsistent column count, the read operation fails immediately.
+
+\section{Global Modelling Parameters}
+
+The central modelling file is \texttt{Parameters\_Modelling.dat}. In all programs that use it, this file must contain exactly \textbf{9 rows and 1 column}, in the following order:
+
+\begin{center}
+\begin{tabular}{cl}
+\toprule
+Row & Meaning \\
+\midrule
+1 & \texttt{Lon0} - longitude of spherical cap center \\
+2 & \texttt{Lat0} - latitude of spherical cap center \\
+3 & \texttt{Theta0} - half-aperture angle of the spherical cap \\
+4 & \texttt{K\_Max\_Internal} - maximum truncation index for internal Legendre basis \\
+5 & \texttt{K\_Max\_External} - maximum truncation index for external Legendre basis \\
+6 & \texttt{P\_Max} - highest Mehler radial index \\
+7 & \texttt{M\_Max} - highest azimuthal order for Mehler and constant terms \\
+8 & \texttt{Max\_Radius} - upper spherical boundary radius \\
+9 & \texttt{Min\_Radius} - lower spherical boundary radius \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Parameter constraints}
+
+The code enforces the following checks:
+\begin{itemize}
+  \item \texttt{Lon0} must lie in $[-180,180]$.
+  \item \texttt{Lat0} must lie in $[-90,90]$.
+  \item \texttt{Theta0} must satisfy $0 < \texttt{Theta0} \le 90$.
+  \item \texttt{K\_Max\_Internal}, \texttt{K\_Max\_External}, \texttt{P\_Max}, and \texttt{M\_Max} must all be non-negative.
+  \item \texttt{Max\_Radius} must be strictly greater than \texttt{Min\_Radius}.
+\end{itemize}
+
+\subsection{Radius unit convention}
+
+In the present implementation, radii should be supplied consistently in \textbf{meters}. This convention is the safest interpretation of the current source because:
+\begin{itemize}
+  \item \texttt{Work3\_LocalizeSHModel.cpp} uses \texttt{RE = 6371.2e3} internally.
+  \item Some reporting lines convert radii to kilometers only for display by dividing by 1000.
+\end{itemize}
+
+For reliable operation, all radius-like quantities should therefore use the same meter-based unit system:
+\begin{itemize}
+  \item \texttt{Min\_Radius}
+  \item \texttt{Max\_Radius}
+  \item all observation radii
+  \item all forward-evaluation radii
+\end{itemize}
+
+\section{Coefficient Counts and Model Dimension}
+
+The total number of RSCHA coefficients is determined by the selected truncation indices. The code defines:
+\begin{align*}
+N_{\mathrm{In}} &= \frac{(K_{\mathrm{Max\_Internal}}+1)(K_{\mathrm{Max\_Internal}}+2)}{2},\\
+N_{\mathrm{Ex}} &= \frac{(K_{\mathrm{Max\_External}}+1)(K_{\mathrm{Max\_External}}+2)}{2},\\
+N_{\mathrm{Me}} &= P_{\mathrm{Max}}(M_{\mathrm{Max}}+1),\\
+N_{\mathrm{Co}} &= M_{\mathrm{Max}} + 1,
+\end{align*}
+and
+\[
+N_{\mathrm{Coef}} = 2\,(N_{\mathrm{In}} + N_{\mathrm{Ex}} + N_{\mathrm{Me}} + N_{\mathrm{Co}}).
+\]
+
+For each $p=1,\ldots,P_{\max}$, the Mehler block stores orders
+$m=0,\ldots,M_{\max}$ in sequence. The constant-family block is ordered
+by $m=0,\ldots,M_{\max}$. Each family stores the cosine block followed
+by the sine block, including the unused $m=0$ sine slots.
+The initial model, model weights and prior model each use this dimension.
+
+\section{Program 1: Inversion Workflow}
+
+\subsection{Role of \texttt{Work1\_RSCHAInversion.cpp}}
+
+This program constructs an RSCHA model directly from observation data. It currently supports four data branches:
+\begin{itemize}
+  \item TMI data,
+  \item three-component vector data,
+  \item along-track differenced TMI data,
+  \item along-track differenced vector data.
+\end{itemize}
+
+By default, Work1 enables single-point TMI and both along-track difference
+branches. Set \texttt{IncludeVector=true} in the driver when all three
+single-point vector input files are available.
+
+\subsection{Input files used by \texttt{Work1}}
+
+The inversion program currently expects the following fixed file names:
+\begin{itemize}
+  \item \texttt{Parameters\_Modelling.dat}
+  \item \texttt{Parameters\_Inversion.dat}
+  \item \texttt{Data\_TMI.dat}
+  \item \texttt{Data\_Vector.dat}
+  \item \texttt{Data\_ALongTrackDiffTMI.dat}
+  \item \texttt{Data\_ALongTrackDiffVector.dat}
+  \item \texttt{Parameters\_DataWeightTMI.dat}
+  \item \texttt{Parameters\_DataWeightVector.dat}
+  \item \texttt{Parameters\_DataWeightALongTrackDiffTMI.dat}
+  \item \texttt{Parameters\_DataWeightALongTrackDiffVector.dat}
+  \item \texttt{Parameters\_SigmaTMI.dat}
+  \item \texttt{Parameters\_SigmaVector.dat}
+  \item \texttt{Parameters\_SigmaALongTrackDiffTMI.dat}
+  \item \texttt{Parameters\_SigmaALongTrackDiffVector.dat}
+  \item \texttt{Parameters\_InitialModel.dat}
+  \item \texttt{Parameters\_ModelWeight.dat}
+  \item \texttt{Parameters\_PriorModel.dat}
+\end{itemize}
+
+\subsection{Inversion-control file}
+
+\texttt{Parameters\_Inversion.dat} must contain exactly \textbf{5 rows and 1 column}:
+\begin{center}
+\begin{tabular}{cl}
+\toprule
+Row & Meaning \\
+\midrule
+1 & \texttt{epsilon} - unregularized data-fit threshold \\
+2 & \texttt{damping} - damping parameter \\
+3 & \texttt{Max\_Iteration} - maximum number of iterations \\
+4 & \texttt{RobustSwitch} - robust weighting mode selector \\
+5 & \texttt{RobustConstant} - robust weighting constant \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The solver reports one of three termination reasons: normal-equation
+convergence, the data-fitting tolerance, or the iteration limit. The
+\texttt{epsilon} test uses unweighted data RMSE and is enabled only when
+\texttt{damping} is zero. With positive damping, an initially fitted data
+vector cannot bypass the prior-model contribution. The current weighted
+normal equations are tested using a relative preconditioned residual;
+step vectors are normalized by their residual scale to avoid an absolute
+small-denominator cutoff. A numerical breakdown raises an error instead
+of silently assigning a zero step. Reaching the iteration limit returns
+the current iterate and is not reported as convergence. With robust
+weights, stationarity of a weighted subproblem does not certify a global
+minimum of the robust objective.
+
+\subsection{Observation data file formats}
+
+\subsubsection{TMI data}
+
+\texttt{Data\_TMI.dat} must contain \textbf{6 columns} in the following order:
+\begin{center}
+\texttt{Longitude, Latitude, Radius, TMI, Inc, Dec}
+\end{center}
+
+The companion files must have:
+\begin{itemize}
+  \item \texttt{Parameters\_DataWeightTMI.dat}: one column
+  \item \texttt{Parameters\_SigmaTMI.dat}: one column
+\end{itemize}
+
+\subsubsection{Vector data}
+
+\texttt{Data\_Vector.dat} must contain \textbf{6 columns}:
+\begin{center}
+\texttt{Longitude, Latitude, Radius, Bx, By, Bz}
+\end{center}
+
+The companion files must have:
+\begin{itemize}
+  \item \texttt{Parameters\_DataWeightVector.dat}: three columns for \texttt{Bx}, \texttt{By}, and \texttt{Bz}
+  \item \texttt{Parameters\_SigmaVector.dat}: three columns for \texttt{Bx}, \texttt{By}, and \texttt{Bz}
+\end{itemize}
+
+\subsubsection{Along-track differenced TMI data}
+
+\texttt{Data\_ALongTrackDiffTMI.dat} must contain \textbf{12 columns}:
+\begin{center}
+\texttt{Lon1, Lat1, R1, DiffTMI1, Inc1, Dec1, Lon2, Lat2, R2, DiffTMI2, Inc2, Dec2}
+\end{center}
+
+The companion files must have:
+\begin{itemize}
+  \item \texttt{Parameters\_DataWeightALongTrackDiffTMI.dat}: one column
+  \item \texttt{Parameters\_SigmaALongTrackDiffTMI.dat}: one column
+\end{itemize}
+
+\subsubsection{Along-track differenced vector data}
+
+\texttt{Data\_ALongTrackDiffVector.dat} must contain \textbf{12 columns}:
+\begin{center}
+\texttt{Lon1, Lat1, R1, DiffBx1, DiffBy1, DiffBz1, Lon2, Lat2, R2, DiffBx2, DiffBy2, DiffBz2}
+\end{center}
+
+The companion files must have:
+\begin{itemize}
+  \item \texttt{Parameters\_DataWeightALongTrackDiffVector.dat}: three columns
+  \item \texttt{Parameters\_SigmaALongTrackDiffVector.dat}: three columns
+\end{itemize}
+
+\subsection{Model vector files}
+
+The following files must all be single-column numeric files:
+\begin{itemize}
+  \item \texttt{Parameters\_InitialModel.dat}
+  \item \texttt{Parameters\_ModelWeight.dat}
+  \item \texttt{Parameters\_PriorModel.dat}
+\end{itemize}
+
+Each of these files must contain exactly $N_{\mathrm{Coef}}$ rows.
+
+\subsection{Automatic geometric screening}
+
+Before the inversion is assembled, observation points are transformed into the spherical cap system and screened automatically. A point is deleted if any of the following conditions is true:
+\begin{itemize}
+  \item $\Theta \ge \Theta_0$
+  \item $\Theta < 1.0 \times 10^{-3}$ degrees
+  \item $R < \texttt{Min\_Radius}$
+  \item $R > \texttt{Max\_Radius}$
+\end{itemize}
+
+This means that the program does \textbf{not} simply warn about invalid points. Instead, such points are removed from the active data set before inversion.
+
+\subsection{Inversion outputs}
+
+\texttt{Work1} writes the following files:
+\begin{itemize}
+  \item \texttt{Recons\_TMIData.dat}
+  \item \texttt{Recons\_VectorData.dat}
+  \item \texttt{Recons\_ALongTrackDiffTMIData.dat}
+  \item \texttt{Recons\_ALongTrackDiffVectorData.dat}
+  \item \texttt{Results\_RSCHAModel.dat}
+  \item \texttt{Results\_RSCHASpectrum.dat}
+\end{itemize}
+
+\subsubsection{Format of reconstructed-data files}
+
+\paragraph{\texttt{Recons\_TMIData.dat}} contains 6 columns:
+\begin{center}
+\texttt{Longitude, Latitude, Radius, ObservedTMI, ReconstructedTMI, Residual}
+\end{center}
+
+\paragraph{\texttt{Recons\_VectorData.dat}} contains 12 columns:
+\begin{center}
+\texttt{Longitude, Latitude, Radius, Bx, By, Bz, ReconsBx, ReconsBy, ReconsBz, ResBx, ResBy, ResBz}
+\end{center}
+
+\paragraph{\texttt{Recons\_ALongTrackDiffTMIData.dat}} stores the two-point geometry and the observed, reconstructed, and residual differenced TMI values.
+
+\paragraph{\texttt{Recons\_ALongTrackDiffVectorData.dat}} stores the two-point geometry and the observed, reconstructed, and residual differenced vector values for both track points.
+
+\subsubsection{Format of the model file}
+
+\texttt{Results\_RSCHAModel.dat} is the central exchange file used by the program suite. Its structure is:
+\begin{enumerate}
+  \item first 9 rows: the same modelling parameters as in \texttt{Parameters\_Modelling.dat}
+  \item subsequent rows: one RSCHA coefficient per row
+\end{enumerate}
+
+\subsubsection{Format of the spectrum file}
+
+\texttt{Results\_RSCHASpectrum.dat} contains 2 columns:
+\begin{center}
+\texttt{n\_spectrum, spectrum}
+\end{center}
+
+\section{Program 2: Forward Calculation Workflow}
+
+\subsection{Role of \texttt{Work2\_RSCHAForward.cpp}}
+
+This program evaluates an existing RSCHA model at user-specified coordinates. It computes the local scalar potential, the three magnetic components, and the second-order tensor components.
+
+\subsection{Input files used by \texttt{Work2}}
+
+The current implementation uses the following fixed names:
+\begin{itemize}
+  \item \texttt{Results\_RSCHAModel.dat}
+  \item \texttt{Parameters\_Coordinates.dat}
+\end{itemize}
+
+\subsection{Coordinate file format}
+
+\texttt{Parameters\_Coordinates.dat} must contain \textbf{3 columns}:
+\begin{center}
+\texttt{Longitude, Latitude, Radius}
+\end{center}
+
+\subsection{Model-file validation}
+
+The forward program first reads \texttt{Results\_RSCHAModel.dat}. It requires:
+\begin{itemize}
+  \item exactly one column,
+  \item more than 9 rows,
+  \item a coefficient block whose length matches the layout inferred from the
+  header and coefficient count. Current models have $9+N_{\mathrm{Coef}}$
+  rows. Work2 also reads earlier models whose Mehler azimuthal stride was
+  $P_{\max}+1$.
+\end{itemize}
+
+If that check fails, the code treats the model file as damaged.
+
+\subsection{Automatic screening of forward coordinates}
+
+As in the inversion workflow, the coordinate list is transformed into spherical cap coordinates and screened. A coordinate is deleted if:
+\begin{itemize}
+  \item $\Theta \ge \Theta_0$
+  \item $\Theta < 1.0 \times 10^{-3}$ degrees
+  \item $R < \texttt{Min\_Radius}$
+  \item $R > \texttt{Max\_Radius}$
+\end{itemize}
+
+Therefore, points outside the modelling region or too close to the cap center do not appear in the final forward output.
+
+\subsection{Forward output}
+
+The output file is:
+\begin{itemize}
+  \item \texttt{Results\_ForwardResults.dat}
+\end{itemize}
+
+Each valid row contains the following 13 values:
+\begin{enumerate}
+  \item Longitude
+  \item Latitude
+  \item Radius
+  \item local potential value
+  \item $B_x$
+  \item $B_y$
+  \item $B_z$
+  \item $T_{xx}$
+  \item $T_{xy}$
+  \item $T_{yy}$
+  \item $T_{zx}$
+  \item $T_{zy}$
+  \item $T_{zz}$
+\end{enumerate}
+
+The source code applies output scaling factors to some quantities before writing them to file. The potential is scaled by $10^{-6}$, and the tensor components are scaled by $10^{3}$. Users should keep this built-in output scaling in mind when interpreting the numerical values.
+
+\section{Program 3: Spherical Harmonic Localization Workflow}
+
+\subsection{Role of \texttt{Work3\_LocalizeSHModel.cpp}}
+
+This program converts a spherical harmonic model into RSCHA coefficient form over a specified spherical cap domain. It is intended for cases where the starting point is an existing global or regional spherical harmonic model rather than observation data. It uses a passive Wigner rotation and unified analytic boundary projection with internal/external source cross-blocks. The side-family coefficients include the radius factor $R_E/a$.
+
+\begin{lstlisting}[style=plaincode]
+Work3_LocalizeSHModel.exe [input_directory] [output_directory]
+\end{lstlisting}
+Input defaults to the current directory, and output defaults to the input directory.
+
+\subsection{Input files used by \texttt{Work3}}
+
+The required files are \texttt{Parameters\_Modelling.dat} and
+\texttt{Parameters\_SHModel.dat}. The optional
+\texttt{Parameters\_SHModel\_External.dat} supplies external SH coefficients;
+if absent, the external source is zero. Optional
+\texttt{Parameters\_SideProjection.dat} has two nonnegative integer rows:
+the Mehler radial cutoff $P_{\max}$ and the common azimuthal cutoff
+$M_{\max}$ for both side families. These rows override rows 6 and 7 of
+\texttt{Parameters\_Modelling.dat} for Work3.
+
+\subsection{Spherical harmonic model format}
+
+\texttt{Parameters\_SHModel.dat} must contain \textbf{4 columns}:
+\begin{center}
+\texttt{n, m, gnm, hnm}
+\end{center}
+
+The input is a complete $n=0,\ldots,N$ triangle in degree/order sequence, including the $n=0$ placeholder. Internal and external tables may have different $N$ and are padded to a common degree. The real Schmidt semi-normalization excludes the Condon--Shortley phase; $R_E=6371200$ meters. The magnetic projection starts at $n=1$, and $m=0$ sine coefficients are ignored.
+
+\subsection{Internal localization stages}
+
+The program rotates both source tables into the cap frame, constructs the
+regional roots, evaluates the four internal/external source cross-blocks
+and the two side families, and packs the regional coefficients. Near-equal
+degrees use the cap-integral limit. The metadata records the radial
+and azimuthal cutoffs used to construct the model.
+
+\subsection{Localization outputs}
+
+The program writes:
+\begin{itemize}
+  \item \texttt{Results\_RSCHAModel.dat}
+  \item \texttt{Results\_RSCHASpectrum.dat}
+  \item \texttt{Projection\_Metadata.txt}
+\end{itemize}
+
+The regional coefficient model retains the format used by inversion and can be consumed directly by \texttt{Work2\_RSCHAForward.cpp}. The spectrum contains the two Legendre families; the separate text metadata records projection conventions and side limits.
+
+\section{Recommended Standard Workflows}
+
+\subsection{Workflow A: From observations to forward evaluation}
+
+Use this path when the starting point is observation data.
+
+\begin{enumerate}
+  \item Set \texttt{RSCHA\_CR\_TABLE\_DIR} to the directory containing \path{cr.bin}.
+  \item Prepare \texttt{Parameters\_Modelling.dat} and \texttt{Parameters\_Inversion.dat}.
+  \item Prepare all observation, weight, sigma, initial-model, model-weight, and prior-model files required by \texttt{Work1}.
+  \item Run \texttt{Work1\_RSCHAInversion.exe} to generate \texttt{Results\_RSCHAModel.dat}.
+  \item Prepare \texttt{Parameters\_Coordinates.dat}.
+  \item Run \texttt{Work2\_RSCHAForward.exe} to obtain the field values on the requested coordinate set.
+\end{enumerate}
+
+\subsection{Workflow B: From spherical harmonic model to forward evaluation}
+
+Use this path when the starting point is an existing spherical harmonic model.
+
+\begin{enumerate}
+  \item Set \texttt{RSCHA\_CR\_TABLE\_DIR} to the directory containing \path{cr.bin}.
+  \item Prepare \texttt{Parameters\_Modelling.dat}.
+  \item Prepare \texttt{Parameters\_SHModel.dat}.
+  \item Run \texttt{Work3\_LocalizeSHModel.exe} to generate \texttt{Results\_RSCHAModel.dat}.
+  \item Prepare \texttt{Parameters\_Coordinates.dat}.
+  \item Run \texttt{Work2\_RSCHAForward.exe}.
+\end{enumerate}
+
+\section{Strict Usage Notes}
+
+\subsection{Use only pure numeric input files}
+
+Do not include headers, units, labels, or comments in any matrix file.
+
+\subsection{Keep all radii consistent}
+
+Do not mix meters and kilometers across files. The safest current convention is meters everywhere.
+
+\subsection{Do not assume boundary points will be retained}
+
+The code removes coordinates outside the cap, on the cap edge in the implemented screening sense, or too close to the cap center.
+
+\subsection{Do not hand-edit the coefficient block casually}
+
+Because the coefficient ordering is defined by the program logic and depends on the selected truncation parameters, manual editing of the coefficient rows in \texttt{Results\_RSCHAModel.dat} is not recommended unless the exact packing order is fully understood.
+
+\subsection{Current implementation is file-name driven}
+
+Work1 and Work2 use their documented fixed file names in the working directory. Work3 accepts input/output directory arguments while retaining fixed names inside those directories. No source edit is needed to choose these directory or model paths.
+
+\section{Minimal File Templates}
+
+The following blocks show only the required structure, not real values.
+
+\subsection*{\texttt{Parameters\_Modelling.dat}}
+\begin{lstlisting}[style=plaincode]
+Lon0
+Lat0
+Theta0
+K_Max_Internal
+K_Max_External
+P_Max
+M_Max
+Max_Radius
+Min_Radius
+\end{lstlisting}
+
+\subsection*{\texttt{Parameters\_Inversion.dat}}
+\begin{lstlisting}[style=plaincode]
+epsilon
+damping
+Max_Iteration
+RobustSwitch
+RobustConstant
+\end{lstlisting}
+
+\subsection*{\texttt{Data\_TMI.dat}}
+\begin{lstlisting}[style=plaincode]
+lon lat radius tmi inc dec
+\end{lstlisting}
+
+\subsection*{\texttt{Data\_Vector.dat}}
+\begin{lstlisting}[style=plaincode]
+lon lat radius bx by bz
+\end{lstlisting}
+
+\subsection*{\texttt{Data\_ALongTrackDiffTMI.dat}}
+\begin{lstlisting}[style=plaincode]
+lon1 lat1 r1 diffTMI1 inc1 dec1 lon2 lat2 r2 diffTMI2 inc2 dec2
+\end{lstlisting}
+
+\subsection*{\texttt{Data\_ALongTrackDiffVector.dat}}
+\begin{lstlisting}[style=plaincode]
+lon1 lat1 r1 diffBx1 diffBy1 diffBz1 lon2 lat2 r2 diffBx2 diffBy2 diffBz2
+\end{lstlisting}
+
+\subsection*{\texttt{Parameters\_Coordinates.dat}}
+\begin{lstlisting}[style=plaincode]
+lon lat radius
+\end{lstlisting}
+
+\subsection*{\texttt{Parameters\_SHModel.dat}}
+\begin{lstlisting}[style=plaincode]
+n m gnm hnm
+\end{lstlisting}
+
+\section{Validated Scope and Numerical Limits}
+
+The current release contains only Work1 inversion, Work2 forward
+calculation, and Work3 SH projection, each in serial and MPI form.
+All C++ numerical experiments were rerun after source cleanup and the
+near-order logarithmic repair. The special-function kernel now forms
+endpoint normalization from positive factors and preserves both parts
+of double-double logarithms through anchors and recurrence scaling.
+No input-format change is required for this repair.
+
+The independent-reference suite contains 40,995 requests, with a
+primary-grid maximum scaled value or angular-derivative error of
+$2.15\times10^{-9}$. The boundary grid maximum is $1.11\times10^{-8}$.
+The fixed six-hour experiment records 27,994,222
+post-warmup samples with no production status failures. Its retained
+264 dispute records (248
+distinct inputs) pass independent adjudication; the maximum new-method
+error is $1.16\times10^{-9}$. Raw Bremer differences
+and unavailable comparisons are preserved and are not counted as agreement.
+
+The performance experiment covers 1--20 threads for each family and
+720 parameter-cost points with five trials per point. These measurements
+are specific to the tested machine and workloads. Work3 projection
+controls include 36 rotation and 35 forward boundary checks, with
+serial/three-rank MPI interoperability tested through degree 185.
+They do not certify degree-3000 accuracy or performance.
+
+The primary special-function claim is restricted to the documented
+parameter ranges. Finite grids and the retained dispute queue do not
+prove a bound throughout the continuous domain or cover every unavailable
+reference. Flush-to-zero can remove ordinary subnormal outputs while
+mathematical logarithms remain available. Read the signed-log and derivative
+status information when outputs approach underflow. Full data, policies,
+and source hashes are in \path{Testv2.0/results/acceptance.json} and
+\path{Testv2.0/results/validation.json}; the final \path{release.json}
+fixes the accepted delivery files.
+
+\section{Final Remarks}
+
+This manual documents the present source implementation as an operational software package. It should therefore be read together with the code itself whenever a discrepancy is suspected. In particular, users should pay close attention to:
+\begin{itemize}
+  \item runtime-table directory configuration,
+  \item fixed input and output file names,
+  \item strict matrix-file formatting,
+  \item radius-unit consistency,
+  \item automatic deletion of invalid coordinates,
+  \item coefficient-vector length consistency.
+\end{itemize}
+
+\end{document}

@@ -42,7 +42,7 @@ inline RegionalModel read_regional(const RSCHACompat::path& path,bool coefficien
   model.geometry.validate();R_SCHA::check_geometry(model.longitude,model.latitude,model.geometry.aperture_deg,
                                                model.geometry.lower,model.geometry.upper);
   if(coefficients) {
-    if(table.size()!=static_cast<std::size_t>(9+model.count()))throw std::runtime_error("Invalid regional coefficient count");
+    R_SCHA::mehler_order_for_count(model.internal,model.external,model.mehler,model.constant,table.size()-9);
     for(std::size_t i=9;i<table.size();++i)model.coefficients.push_back(table[i][0]);
   }else if(table.size()!=9)throw std::runtime_error("Modelling parameters must contain exactly nine rows");
   return model;

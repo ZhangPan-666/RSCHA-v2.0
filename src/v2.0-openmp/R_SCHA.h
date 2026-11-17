@@ -90,11 +90,22 @@ inline int checked_index(double value) {
 inline int coefficient_count(int internal, int external, int mehler, int constant) {
   const long double count = (internal + 1.0L) * (internal + 2.0L) +
       (external + 1.0L) * (external + 2.0L) +
-      2.0L * mehler * (mehler + 1.0L) + 2.0L * (constant + 1.0L);
+      2.0L * mehler * (constant + 1.0L) + 2.0L * (constant + 1.0L);
   if (internal < 0 || external < 0 || mehler < 0 || constant < 0 ||
       count > std::numeric_limits<int>::max())
     throw std::invalid_argument("Invalid or excessive model dimensions.");
   return static_cast<int>(count);
+}
+
+
+inline int mehler_order_for_count(int ki, int ke, int p, int m, std::size_t length) {
+  const int total = coefficient_count(ki, ke, p, m);
+  if (length == static_cast<std::size_t>(total))
+    return m;
+  const long long legacy = static_cast<long long>(total) + 2LL * p * (static_cast<long long>(p) - m);
+  if (legacy >= 0 && length == static_cast<std::size_t>(legacy))
+    return p;
+  throw std::runtime_error("Invalid R-SCHA coefficient count");
 }
 
 inline void check_geometry(double longitude, double latitude, double angle,
@@ -2139,6 +2150,7 @@ struct CoefPacks {
 inline CoefPacks Sort_Coefficient(const std::vector<double> &Coefficient,
                                   int K_Max_Internal, int K_Max_External,
                                   int P_Max, int M_Max) {
+  const int mehler_order = mehler_order_for_count(K_Max_Internal, K_Max_External, P_Max, M_Max, Coefficient.size());
   CoefPacks out;
   out.Gikm.assign(K_Max_Internal + 1,
                   std::vector<double>(K_Max_Internal + 1, 0.0));
@@ -2146,7 +2158,7 @@ inline CoefPacks Sort_Coefficient(const std::vector<double> &Coefficient,
   out.Gekm.assign(K_Max_External + 1,
                   std::vector<double>(K_Max_External + 1, 0.0));
   out.Hekm = out.Gekm;
-  out.Gpm.assign(P_Max + 1, std::vector<double>(P_Max + 1, 0.0));
+  out.Gpm.assign(P_Max + 1, std::vector<double>(mehler_order + 1, 0.0));
   out.Hpm = out.Gpm;
   out.G0m.assign(M_Max + 1, 0.0);
   out.H0m.assign(M_Max + 1, 0.0);
@@ -2170,11 +2182,11 @@ inline CoefPacks Sort_Coefficient(const std::vector<double> &Coefficient,
       out.Hekm[k][m] = Coefficient.at(Num++);
 
   for (int p = 1; p <= P_Max; ++p)
-    for (int m = 0; m <= P_Max; ++m)
+    for (int m = 0; m <= mehler_order; ++m)
       out.Gpm[p][m] = Coefficient.at(Num++);
 
   for (int p = 1; p <= P_Max; ++p)
-    for (int m = 0; m <= P_Max; ++m)
+    for (int m = 0; m <= mehler_order; ++m)
       out.Hpm[p][m] = Coefficient.at(Num++);
 
   for (int m = 0; m <= M_Max; ++m)

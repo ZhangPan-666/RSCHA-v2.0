@@ -23,8 +23,7 @@ int run(int argc,ArgumentChar** argv) {
       throw std::invalid_argument("Side projection requires two rows: radial_p_count, azimuth_m_max");
     const int radial=R_SCHA::checked_index(side[0][0]),order=R_SCHA::checked_index(side[1][0]);
     if(radial>1024 || order>1024)throw std::invalid_argument("Side projection exceeds storage guard");
-    model.side_radial_limit=radial;model.side_order_limit=order;
-    model.mehler=std::max(radial,order);model.constant=std::max(model.constant,order);
+    model.mehler=radial;model.constant=order;
   }
   model=SHRSCHA::project_model(model,internal,external);
   std::vector<double> degree,spectrum;
@@ -42,11 +41,11 @@ int run(int argc,ArgumentChar** argv) {
       <<"\nexternal_SH_input="<<(has_external?"present":"zero")
       <<"\nside_radius_factor=R_E/a\nR_E="<<std::setprecision(17)<<model.geometry.reference
       <<"\nspectrum_scope=internal and external Legendre families only\n"
-      <<"side_configuration="<<(explicit_side?"independent active limits, legacy padded storage":"legacy coupled limits")
-      <<"\nside_radial_p="<<(explicit_side?model.side_radial_limit:model.mehler)
-      <<"\nside_azimuth_m="<<(explicit_side?model.side_order_limit:model.mehler)
+      <<"side_configuration="<<"shared azimuthal cutoff"
+      <<"\nside_radial_p="<<model.mehler
+      <<"\nside_azimuth_m="<<model.constant
       <<"\nside_storage_P="<<model.mehler<<"\nconstant_m="<<model.constant
-      <<"\nside_high_orders_truncated="<<(std::max(model.constant,explicit_side?model.side_order_limit:model.mehler)<std::max(internal.degree,external.degree)?"yes":"no")<<'\n';
+      <<"\nside_high_orders_truncated="<<(model.constant<std::max(internal.degree,external.degree)?"yes":"no")<<'\n';
   meta.close();if(!meta)throw std::runtime_error("Metadata write failed");
   std::cout<<"Unified SH -> R-SCHA projection complete: "<<model.coefficients.size()<<" coefficients.\n";
   return 0;
