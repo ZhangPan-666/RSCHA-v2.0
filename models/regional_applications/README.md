@@ -6,7 +6,8 @@ Regional R-SCHA coefficients for the Cascadia, North American Midcontinent and A
 |---|---|---|---:|
 | Cascadia | [Results_RSCHAModel.dat](Cascadia/Results_RSCHAModel.dat) | -127 degrees, 45.5 degrees | 144,124 |
 | Midcontinent | [Results_RSCHAModel.dat](Midcontinent/Results_RSCHAModel.dat) | -89 degrees, 45.8 degrees | 144,124 |
-| Australia | [Results_RSCHAModel.dat](Australia/Results_RSCHAModel.dat) | 133 degrees, -27 degrees | 374,236 |
+| Australia (M = 3) | [Results_RSCHAModel.dat](Australia/Results_RSCHAModel.dat) | 133 degrees, -27 degrees | 374,236 |
+| Australia (M = 60) | [Results_RSCHAModel.dat](Australia/M60/Results_RSCHAModel.dat) | 133 degrees, -27 degrees | 374,692 |
 
 ## File format
 
@@ -21,8 +22,8 @@ coefficients or discard stored zero-order sine entries.
 | 3 | Cap half-angle | degrees |
 | 4 | Internal Legendre truncation index | integer |
 | 5 | External Legendre truncation index | integer |
-| 6 | Mehler-family truncation limit | integer |
-| 7 | Zero-eigenvalue-family order limit | integer |
+| 6 | Mehler radial cutoff P | integer |
+| 7 | Shared azimuthal cutoff M for the Mehler and zero-eigenvalue branches | integer |
 | 8 | Outer shell radius | metres |
 | 9 | Inner shell radius | metres |
 
@@ -32,14 +33,13 @@ paper is 6.5 degrees. These native coefficients use the software's family-specif
 normalizations and reference-radius convention; they are not global spherical
 harmonic Gauss coefficients.
 
-See the [Australian model notes](Australia/README.md) for its geometry and radius convention.
+See the Australian model notes for [M = 3](Australia/README.md) and [M = 60](Australia/M60/README.md).
 
 The coefficient blocks follow the public forward driver's order: internal
 Legendre cosine and sine blocks, external Legendre cosine
 and sine blocks, Mehler cosine and sine blocks, and
 zero-eigenvalue cosine and sine blocks (4 each). Within a Legendre block the
-indices run k = 0,...,K and m = 0,...,k. Mehler indices run p = 1,...,3 and
-m = 0,...,3; zero-eigenvalue orders run m = 0,...,3.
+indices run k = 0,...,K and m = 0,...,k. Mehler indices run p = 1,...,P and m = 0,...,M. The zero-eigenvalue branch has orders m = 0,...,M.
 
 ## Forward evaluation
 
