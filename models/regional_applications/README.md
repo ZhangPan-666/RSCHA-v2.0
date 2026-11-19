@@ -6,8 +6,7 @@ Regional R-SCHA coefficients for the Cascadia, North American Midcontinent and A
 |---|---|---|---:|
 | Cascadia | [Results_RSCHAModel.dat](Cascadia/Results_RSCHAModel.dat) | -127 degrees, 45.5 degrees | 144,124 |
 | Midcontinent | [Results_RSCHAModel.dat](Midcontinent/Results_RSCHAModel.dat) | -89 degrees, 45.8 degrees | 144,124 |
-| Australia (M = 3) | [Results_RSCHAModel.dat](Australia/Results_RSCHAModel.dat) | 133 degrees, -27 degrees | 374,236 |
-| Australia (M = 60) | [Results_RSCHAModel.dat](Australia/M60/Results_RSCHAModel.dat) | 133 degrees, -27 degrees | 374,692 |
+| Australia | [Results_RSCHAModel.dat](Australia/M60/Results_RSCHAModel.dat) | 133 degrees, -27 degrees | 374,692 |
 
 ## File format
 
@@ -33,7 +32,7 @@ paper is 6.5 degrees. These native coefficients use the software's family-specif
 normalizations and reference-radius convention; they are not global spherical
 harmonic Gauss coefficients.
 
-See the Australian model notes for [M = 3](Australia/README.md) and [M = 60](Australia/M60/README.md).
+See the [Australian model notes](Australia/README.md).
 
 The coefficient blocks follow the public forward driver's order: internal
 Legendre cosine and sine blocks, external Legendre cosine
