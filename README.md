@@ -9,7 +9,7 @@ Software: [MIT](LICENSE). Mathematical handbook and its accompanying notes:
 [CC BY 4.0](LICENSES/CC-BY-4.0.txt). See [licensing scope](LICENSING.md).
 
 Use the main branch for the current sources, [program user manual](docs/software/rscha_user_manual.pdf), and [mathematical handbook](docs/mathematics/README.md).
-The [v1.0 release ZIP](https://github.com/ZhangPan-666/RSCHA-v2.0/releases/download/v1.0/RSCHA-v1.0.zip) contains the original distribution and its lookup table.
+The [v2.0 release ZIP](https://github.com/ZhangPan-666/RSCHA-v2.0/releases/download/v2.0.0/GitHub_Release_v2.0_20261017.zip) contains the original distribution and its lookup table.
 
 ## Contents
 
@@ -25,7 +25,7 @@ The applications are `Work1_RSCHAInversion` (regional inversion), `Work2_RSCHAFo
 
 ## Build and run
 
-Extract `large_assets/cr.bin` (158,806,776 bytes) from the v1.0 release ZIP and place it in the same relative path in the current checkout. The preparation scripts verify the table against its SHA-256 and copy it into each source directory.
+Extract `large_assets/cr.bin` (158,806,776 bytes) from the v2.0 release ZIP and place it in the same relative path in the current checkout. The preparation scripts verify the table against its SHA-256 and copy it into each source directory.
 
 On Linux, use a C++14 compiler and a matching MPI C++ wrapper.
 
