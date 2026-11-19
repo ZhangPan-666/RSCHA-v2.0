@@ -6,7 +6,7 @@ Regional R-SCHA coefficients for the Cascadia, North American Midcontinent and A
 |---|---|---|---:|
 | Cascadia | [Results_RSCHAModel.dat](Cascadia/Results_RSCHAModel.dat) | -127 degrees, 45.5 degrees | 144,124 |
 | Midcontinent | [Results_RSCHAModel.dat](Midcontinent/Results_RSCHAModel.dat) | -89 degrees, 45.8 degrees | 144,124 |
-| Australia | [Results_RSCHAModel.dat](Australia/M60/Results_RSCHAModel.dat) | 133 degrees, -27 degrees | 374,692 |
+| Australia | [Results_RSCHAModel.dat](Australia/Results_RSCHAModel.dat) | 133 degrees, -27 degrees | 374,236 |
 
 ## File format
 
