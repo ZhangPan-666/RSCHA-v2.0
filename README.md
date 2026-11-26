@@ -13,8 +13,8 @@ The [v2.0 release ZIP](https://github.com/ZhangPan-666/RSCHA-v2.0/releases/downl
 
 ## Contents
 
-- `src/v2.0-openmp/`: OpenMP drivers and headers, including the `SHRSCHA/` localization implementation.
-- `src/v2.0-mpi/`: MPI drivers and headers, including `SHRSCHA/`.
+- [OpenMP source and instructions](src/v2.0-openmp/README.md), including the `SHRSCHA/` localization implementation.
+- [MPI source and instructions](src/v2.0-mpi/README.md), including `SHRSCHA/`.
 - `docs/software/`: program user manual and Work3 projection guide.
 - `docs/mathematics/`: mathematical handbook PDF, LaTeX source archive, and audit records.
 - `validation/`: historical acceptance record, validation scope, and checksums.

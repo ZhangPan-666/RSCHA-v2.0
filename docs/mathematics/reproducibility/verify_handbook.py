@@ -1,19 +1,24 @@
 """Independent equation checks for the October 2026 handbook revision.
 
-Run from this directory or any working directory: python verify_handbook.py.
+In the extracted handbook source, run python verify_handbook.py.
+From the repository, pass the extracted handbook directory as a positional argument.
 Requires numpy, scipy and mpmath. This is a finite numerical cross-check,
 not a proof of every theorem or a high-degree stress test of the C++ runtime.
 """
 from pathlib import Path
+from argparse import ArgumentParser
 import sys, json, math
 from collections import defaultdict
 import numpy as np
 import mpmath as mp
 from scipy.special import lpmv, roots_legendre
 
-ROOT=Path(__file__).resolve().parents[1]
-if not (ROOT/'figures'/'code'/'basis.py').exists():
-    ROOT=Path(r'E:\OneDrive\学习\参考文献\修正球冠谐分析\Mathematical Fundations of RSCHA')
+parser = ArgumentParser(description='Run the handbook equation checks.')
+parser.add_argument('handbook_root', nargs='?', type=Path, default=Path(__file__).resolve().parents[1],
+                    help='directory containing figures/code/basis.py')
+ROOT = parser.parse_args().handbook_root.resolve()
+if not (ROOT/'figures'/'code'/'basis.py').is_file():
+    parser.error('extract the handbook source archive and pass its root directory')
 sys.path.insert(0,str(ROOT/'figures'/'code'))
 import basis as plotted
 mp.mp.dps=45

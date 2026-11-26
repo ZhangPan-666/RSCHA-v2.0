@@ -1,21 +1,21 @@
-# Work3：SH 到 R-SCHA 的旋转与解析投影
+# Work3: Rotation and analytical projection from SH to R-SCHA
 
-按[仓库说明](../../README.md)准备查找表并编译。程序可以从源代码目录运行，也可将 `RSCHA_CR_TABLE_DIR` 设为包含 `cr.bin` 的绝对路径。
+Follow the [build instructions](../../README.md#build-and-run) to prepare the lookup table and compile. Run the program from its source directory or set `RSCHA_CR_TABLE_DIR` to the absolute path of the directory containing `cr.bin`.
 
-## Work3：双源 SH 正投影
+## Forward projection of two SH sources
 
 ```text
 Work3_LocalizeSHModel.exe [input_directory] [output_directory]
 ```
 
-可省略两个目录参数，输入默认当前目录、输出默认输入目录。输入保留 Parameters_Modelling.dat、Parameters_SHModel.dat，新增可选 Parameters_SHModel_External.dat；缺省外部源为零。程序直接写输出，建议每次指定不同输出目录。
+Both directory arguments are optional. The input directory defaults to the current directory, and the output directory defaults to the input directory. Supply `Parameters_Modelling.dat` and `Parameters_SHModel.dat`. If `Parameters_SHModel_External.dat` is omitted, the external source is zero. Choose a separate output directory for each run to keep its results together.
 
-SH 输入为 n=0..N 完整三角表，按 n/m 排序，四列 n,m,g,h。采用实 Schmidt 半归一化、无 Condon–Shortley 相位，R_E=6371200 米。磁场入口 n_min=1，n=0 为占位行；m=0 正弦项不参与实势函数。两份源可以有不同最大度数，补零到共同 N。
+Supply a complete triangular SH table from `n = 0` to `N`, sorted by degree and order, with columns `n`, `m`, `g`, and `h`. Use real Schmidt semi-normalization without the Condon–Shortley phase and a reference radius of 6,371,200 m. Magnetic synthesis starts at `n = 1`. The `n = 0` row is a placeholder, and the `m = 0` sine coefficient makes no contribution to the real potential. The internal and external inputs may have different maximum degrees. Pad them with zeros to the same `N`.
 
-建模参数九行顺序：帽心经度、纬度、半角（度）、内部 Legendre 最大 k、外部 Legendre 最大 k、Mehler 径向上限 p、Mehler 与 Constant 共用的周向上限 m、上球面半径、下球面半径（米）。
+The nine modeling parameters are the cap-center longitude, latitude, and half-angle in degrees, the internal and external Legendre cutoffs `k`, the radial Mehler cutoff `p`, the azimuthal cutoff `m` shared by the Mehler and constant families, and the outer and inner sphere radii in meters, in that order.
 
-可选 `Parameters_SideProjection.dat` 含两行非负整数，依次覆盖建模参数的第 6、7 行。Mehler 的每个余弦或正弦系数块有 `P_Max*(M_Max+1)` 项，按径向阶优先排列。Constant 的每块有 `M_Max+1` 项。实际使用的截断写入 `Projection_Metadata.txt`。
+The optional `Parameters_SideProjection.dat` accepts two lines with one nonnegative integer each. They override rows 6 and 7 of the modeling parameters. Each Mehler cosine or sine block contains `P_Max*(M_Max+1)` entries, ordered first by radial index. Each constant-family block contains `M_Max+1` entries. `Projection_Metadata.txt` records the cutoffs used in the run.
 
-Results_RSCHAModel.dat 保留原九行头部和四族 G/H 排列，可由当前 Work2 直接读取；另输出 Projection_Metadata.txt 和 Results_RSCHASpectrum.dat。该谱仅包含两族 Legendre。
+`Results_RSCHAModel.dat` retains the nine-line header and the four-family `G`/`H` order read by Work2. The program also writes `Projection_Metadata.txt` and `Results_RSCHASpectrum.dat`. The spectrum covers the two Legendre families.
 
-新实现用逐度 Wigner 被动旋转，包含 ii/ie/ei/ee 四个源交叉块和两族侧边界。Mehler、常数族现在包含 R_E/a，因此相对旧版这两族按此比例改变。近重合度数用帽区积分求极限。旧 LocalizeSH2RSCHA.h 内部源 API 已委托新模块，要求完整三角表、n_Start=1，传入根缓存应对应相同半角和截断。
+The implementation uses degree-by-degree passive Wigner rotation, four source cross-blocks (`ii`, `ie`, `ei`, and `ee`), and both side-boundary families. The Mehler and constant families include a factor of `R_E/a`, which sets their scale relative to the earlier implementation. For nearly coincident degrees, integration over the cap yields the limiting value. The internal-source API in `LocalizeSH2RSCHA.h` calls the same implementation. Supply a complete triangular table, set `n_Start=1`, and use a root cache for the same cap half-angle and cutoffs.
