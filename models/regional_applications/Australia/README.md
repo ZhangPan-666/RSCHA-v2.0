@@ -2,11 +2,7 @@
 
 *Calculating magnetic gradient tensor fields of the lithosphere from airborne total magnetic intensity and satellite magnetic vector data by revised spherical cap harmonic analysis*.
 
-The inversion combines a regional airborne TMI
-compilation with a satellite-derived field at degrees 16 to 120. The stored
-solution uses a coefficient-norm penalty of 0.001 and 1,200 iterations. It
-reached the iteration limit with a relative normal-equation residual of
-7.87e-4. Its fit and spatial stability are reported in the manuscript.
+The near-surface total-field grid uses degrees 16–90 of the satellite-derived spherical harmonic model for long-wavelength restoration. The same model supplies vector data at degrees 16–120 on the 300, 350, 400, 450 and 500 km layers. The regional solution uses a coefficient-norm penalty of 0.001. At iteration 1,200 its relative normal-equation residual is 0.000545. The RMSE over 2,213,244 valid near-surface grid inputs is 12.34 nT.
 
 [Results_RSCHAModel.dat](Results_RSCHAModel.dat) uses the single-column
 R-SCHA format described in the [regional model catalog](../README.md).
@@ -23,7 +19,7 @@ For forward evaluation, place the model in the working directory of
 latitude in degrees north, and geocentric radius in metres. Use the
 geographic north, east and down output for comparison with the paper.
 
-The [raw coefficient file](https://raw.githubusercontent.com/ZhangPan-666/RSCHA-v2.0/main/models/regional_applications/Australia/Results_RSCHAModel.dat) has SHA-256 `598b1f624762089ebfc0fee9dc501b11b442157cc533b58b3ad6bbfcf2784f9b`.
+The [raw coefficient file](https://raw.githubusercontent.com/ZhangPan-666/RSCHA-v2.0/main/models/regional_applications/Australia/Results_RSCHAModel.dat) has SHA-256 `73e7bdf8b7abe8ffa98ab3700e42f0ee1098599ac1b2f9507df1de424dfa6bc7`.
 
 ## Source data
 

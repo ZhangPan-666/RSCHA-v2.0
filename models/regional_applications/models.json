@@ -42,8 +42,8 @@
       "region": "Australia",
       "manuscript": "Calculating magnetic gradient tensor fields of the lithosphere from airborne total magnetic intensity and satellite magnetic vector data by revised spherical cap harmonic analysis",
       "path": "models/regional_applications/Australia/Results_RSCHAModel.dat",
-      "bytes": 7618009,
-      "sha256": "598b1f624762089ebfc0fee9dc501b11b442157cc533b58b3ad6bbfcf2784f9b",
+      "bytes": 7613987,
+      "sha256": "73e7bdf8b7abe8ffa98ab3700e42f0ee1098599ac1b2f9507df1de424dfa6bc7",
       "parameter_rows": 9,
       "coefficient_entries": 374236,
       "cap_centre_longitude_deg": 133.0,
@@ -59,8 +59,16 @@
       "height_reference_radius_m": 6371200,
       "coefficient_norm_penalty": 0.001,
       "iteration_count": 1200,
-      "relative_normal_equation_residual": 0.00078672,
-      "stopping_status": "iteration limit"
+      "relative_normal_equation_residual": 0.0005452403306600825,
+      "stopping_status": "iteration limit",
+      "airborne_longwave_SH_degrees": [
+        16,
+        90
+      ],
+      "satellite_layer_SH_degrees": [
+        16,
+        120
+      ]
     }
   ]
 }
