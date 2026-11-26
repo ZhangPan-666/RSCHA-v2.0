@@ -53,8 +53,4 @@ Project-authored software and supporting material are licensed under [MIT](LICEN
 
 ## Regional application models
 
-The final [Cascadia and Midcontinent model coefficients](models/regional_applications/README.md)
-
-used in the manuscript's applications are available in native forward-driver format,
-
-with geometry metadata and SHA-256 digests.
+The [regional model catalog](models/regional_applications/README.md) provides coefficients, geometry, and SHA-256 digests for Cascadia, the North American Midcontinent, and Australia. The [Australian model documentation](models/regional_applications/Australia/README.md) includes the data sources and instructions for evaluating the field and tensor.

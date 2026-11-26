@@ -1,5 +1,7 @@
 # Australian lithospheric magnetic model
 
+*Calculating magnetic gradient tensor fields of the lithosphere from airborne total magnetic intensity and satellite magnetic vector data by revised spherical cap harmonic analysis*.
+
 The inversion combines a regional airborne TMI
 compilation with a satellite-derived field at degrees 16 to 120. The stored
 solution uses a coefficient-norm penalty of 0.001 and 1,200 iterations. It
@@ -21,4 +23,12 @@ For forward evaluation, place the model in the working directory of
 latitude in degrees north, and geocentric radius in metres. Use the
 geographic north, east and down output for comparison with the paper.
 
-SHA-256 for the complete model file 598b1f624762089ebfc0fee9dc501b11b442157cc533b58b3ad6bbfcf2784f9b.
+The [raw coefficient file](https://raw.githubusercontent.com/ZhangPan-666/RSCHA-v2.0/main/models/regional_applications/Australia/Results_RSCHAModel.dat) has SHA-256 `598b1f624762089ebfc0fee9dc501b11b442157cc533b58b3ad6bbfcf2784f9b`.
+
+## Source data
+
+The near-surface compilation uses the [2019 Geoscience Australia TMI grid](https://doi.org/10.26186/5e9cf3f2c0f1d). Original satellite observations are available from [GFZ for CHAMP](https://isdc.gfz.de/champ-isdc/access-to-the-champ-data), [ESA for Swarm](https://swarm-diss.eo.esa.int/), and the [Macao Science Satellite-1 data portal](https://mss.must.edu.mo/data_download.html).
+
+## Funding for the Australian study
+
+This work was supported by a Major Project of the Gansu Joint Research Fund (Grant No. 26JRRA1245), the Talent Support Program of Lanzhou Resources & Environment Voc-Tech University (Grant No. X2026RC-37), the National Natural Science Foundation of China (Grant Nos. 42574077, 42250103, and 42674085), and the Natural Science Foundation of Hubei Province (Grant No. 2024AFE003).
